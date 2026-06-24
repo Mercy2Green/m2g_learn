@@ -235,6 +235,83 @@ class ToolEnv(ABC):
 
         return result
 
+    def _get_tool_world_corners(self) -> List[np.ndarray]:
+        """Compute world-frame corners of the tool by applying the Pymunk body
+        rigid transform (position + rotation) to each local block corner array.
+
+        This must match the transform Pymunk applies to the collision shapes
+        attached to self.tool_body, so the rendered geometry exactly overlays
+        the physics geometry.
+
+        When possible (Pymunk shapes are attached to the body), we cross-check
+        against the actual shape vertices as a self-diagnostic.
+        """
+        if self.current_tool is None or self.tool_body is None:
+            return []
+
+        # Extract body pose as float64 arrays
+        pos = np.array(
+            [float(self.tool_body.position.x), float(self.tool_body.position.y)],
+            dtype=np.float64,
+        )
+        angle = float(self.tool_body.angle)
+        cos_a = np.cos(angle)
+        sin_a = np.sin(angle)
+        rot = np.array(
+            [[cos_a, -sin_a],
+             [sin_a,  cos_a]],
+            dtype=np.float64,
+        )
+
+        world_corners: List[np.ndarray] = []
+        for local_corners in self.current_tool.abs_corners:
+            local_corners = np.asarray(local_corners, dtype=np.float64)
+            if local_corners.ndim != 2 or local_corners.shape[1] != 2:
+                continue
+            # local_corners @ rot.T + pos  is the same as
+            # rot @ local_corners.T  then transpose + pos
+            world_corners.append(local_corners @ rot.T + pos)
+
+        # Self-consistency check: compare rendered corners against Pymunk shape vertices.
+        # This verifies the rendering matches the actual collision geometry.
+        try:
+            pymunk_shape_vertices: List[np.ndarray] = []
+            for shape in self.tool_body.shapes:
+                if hasattr(shape, "get_vertices"):
+                    verts = np.array(
+                        [[v.x, v.y] for v in shape.get_vertices()], dtype=np.float64
+                    )
+                    pymunk_shape_vertices.append(verts)
+            # They should match in count and roughly in position
+            if len(world_corners) != len(pymunk_shape_vertices):
+                import warnings
+                warnings.warn(
+                    f"Geometry mismatch: rendered {len(world_corners)} blocks "
+                    f"but Pymunk has {len(pymunk_shape_vertices)} shapes. "
+                    f"Rendering may not match collision geometry."
+                )
+            else:
+                for i, (rendered, pymunk_verts) in enumerate(
+                    zip(world_corners, pymunk_shape_vertices)
+                ):
+                    # First frame near anchor might be still at (0,0); skip if so
+                    if np.linalg.norm(rendered.mean(axis=0)) < 1.0:
+                        continue
+                    # Pymunk get_vertices() returns local frame vertices.
+                    # Apply same rigid transform for comparison.
+                    pymunk_world = pymunk_verts @ rot.T + pos
+                    diff = np.abs(rendered - pymunk_world)
+                    if diff.max() > 0.5:
+                        import warnings
+                        warnings.warn(
+                            f"Block {i}: rendered vs Pymunk max diff = {diff.max():.2f} px. "
+                            f"Inconsistency > 0.5 px."
+                        )
+        except Exception:
+            pass  # Non-critical; silently skip the self-check
+
+        return world_corners
+
     def _render_frame(self, step: int, total_steps: int) -> None:
         """Render the current state to the renderer."""
         if self.renderer is None or self.current_tool is None:
@@ -248,14 +325,28 @@ class ToolEnv(ABC):
         if self.trajectory_points:
             self.renderer.draw_trajectory(self.trajectory_points)
 
-        # Draw tool ON TOP of trajectory
-        if self.current_tool:
-            if self.tool_body:
-                bx, by = self.tool_body.position
-                shifted = [
-                    np.array([c[0] + bx, c[1] + by]) for c in self.current_tool.abs_corners
-                ]
-                self.renderer.draw_tool(shifted, block_labels=True)
+        # Draw tool ON TOP of trajectory, using the same rigid transform
+        # that Pymunk applies to the kinematic body's collision shapes.
+        world_corners = self._get_tool_world_corners()
+        if world_corners:
+            self.renderer.draw_tool(world_corners, block_labels=True)
+
+        # Draw anchor cross at tool body position
+        if self.tool_body is not None:
+            ax = float(self.tool_body.position.x)
+            ay = float(self.tool_body.position.y)
+            self.renderer.draw_cross(ax, ay, size=8, color=(255, 255, 0))
+
+        # Debug overlay: block count, position, angle
+        if self.tool_body is not None:
+            px = float(self.tool_body.position.x)
+            py = float(self.tool_body.position.y)
+            pa = float(self.tool_body.angle)
+            n_blocks = len(world_corners) if world_corners else 0
+            self.renderer.draw_text(
+                f"blocks={n_blocks} pos=({px:.1f},{py:.1f}) angle={pa:.2f}",
+                10, 30, color=(200, 200, 200),
+            )
 
         # Draw info text
         self.renderer.draw_title(f"{self.config.task_name.upper()} | Step {step}/{total_steps}")

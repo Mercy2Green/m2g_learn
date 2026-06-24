@@ -141,6 +141,11 @@ class Renderer:
         if self.screen is None:
             return
         for i, corners in enumerate(corners_list):
+            # Defensive: ensure corners is a proper (N, 2) array with N >= 3
+            corners = np.asarray(corners, dtype=np.float64)
+            if corners.ndim != 2 or corners.shape[1] != 2 or corners.shape[0] < 3:
+                continue
+
             color_idx = i % len(self.TOOL_BLOCK_COLORS)
             fill_color = self.TOOL_BLOCK_COLORS[color_idx] if block_labels else COLOR_TOOL
             outline_color = self.TOOL_BLOCK_OUTLINES[color_idx] if block_labels else COLOR_TOOL_OUTLINE
@@ -149,8 +154,6 @@ class Renderer:
                 (int(c[0] * self.display_scale), int(c[1] * self.display_scale))
                 for c in corners
             ]
-            if len(scaled_corners) < 3:
-                continue
 
             # Fill with solid color
             pygame.draw.polygon(self.screen, fill_color, scaled_corners)
@@ -164,6 +167,20 @@ class Renderer:
                 cy = int(np.mean([c[1] for c in scaled_corners]))
                 label = self.font.render(str(i), True, (255, 255, 255))
                 self.screen.blit(label, (cx - label.get_width() // 2, cy - label.get_height() // 2))
+
+    def draw_cross(self, x: float, y: float, size: float = 6,
+                   color: Tuple[int, int, int] = (0, 0, 0)) -> None:
+        """Draw a cross (X) marker at a world position.
+
+        Useful for marking the tool anchor point.
+        """
+        if self.screen is None:
+            return
+        sx = int(x * self.display_scale)
+        sy = int(y * self.display_scale)
+        s = int(size * self.display_scale)
+        pygame.draw.line(self.screen, color, (sx - s, sy - s), (sx + s, sy + s), 2)
+        pygame.draw.line(self.screen, color, (sx - s, sy + s), (sx + s, sy - s), 2)
 
     def draw_circle(self, x: float, y: float, radius: float, color: Tuple[int, int, int]) -> None:
         """Draw a filled circle."""
