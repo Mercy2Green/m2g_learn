@@ -1,1 +1,12 @@
 .vscode/settings.json
+
+
+20260622Fourlegged_tool_aware/code/.venv
+
+20260622Fourlegged_tool_aware/code/outputs
+*.lock
+
+
+*.pyc
+
+*.DS_Store
