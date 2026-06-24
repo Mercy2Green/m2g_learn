@@ -165,3 +165,18 @@ Any project-specific classifier is explicitly labeled `custom sanity check, not 
 - Each proposed first-stage experiment names an existing 2025–2026 baseline.
 - AIGC is positioned as filtered supporting data, not default action supervision.
 - Mobile/quadruped papers are used for setting/execution, not tool-awareness novelty.
+
+## 11. Intersection-Focus Follow-Up
+
+- Re-audited the corpus using `AIGC/sim × mobile/quadruped × tool-aware`.
+- Added GET-USE as sparse direct L3 evidence.
+- Added SAGA as L2C, RAKOMO as L2A, and RIGVid as L2B.
+- Reclassified every indexed work by intersection level, platform, data type, tool-aware role and weekend role.
+- Rebuilt the PPT around the three-way intersection instead of separate mobile/tool/AIGC surveys.
+- Updated the gap statement: direct L3 evidence exists, but no runnable quadruped-arm necessity/four-mode baseline was found.
+
+## 12. Final Consistency Fix on 2026-06-24
+
+- Re-sorted `20260623_论文索引.csv` into the required weekend order: P0-Intersection → P0-Mobile-Sim → P0-Tool-Sim → P0-Runnable → P1-Later AIGC/Policy → Background/Remove。
+- Confirmed the index contains 27 entries, all dated 2025 or 2026, with no missing required intersection fields。
+- Confirmed the PPT has 18 slides and the paper-card file has 5 reading groups。
