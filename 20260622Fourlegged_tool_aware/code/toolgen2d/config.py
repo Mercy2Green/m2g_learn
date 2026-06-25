@@ -58,6 +58,14 @@ class TaskConfig:
     reward_inside_weight: float = 20.0
     penalty_outside_weight: float = 2.0
 
+    # Continuous chain geometry (blocks are attached end-to-end, not floating)
+    continuous_chain: bool = True
+    joint_overlap: float = 4.0  # pixels of overlap between consecutive blocks
+
+    # Joint connector circles (fills gaps visually at block joints)
+    add_joint_connectors: bool = True
+    joint_connector_radius: float = 8.0
+
 
 # Specific configs
 HOOK_CONFIG = TaskConfig(

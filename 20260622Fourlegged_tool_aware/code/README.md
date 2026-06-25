@@ -84,6 +84,8 @@ uv run python -m toolgen2d.train \
 | `--seed` | `0` | 全局随机种子 |
 | `--render-every` | `0` | 每 N 代自动弹出 pygame 窗口播放最佳工具运动（0=不开启） |
 | `--render-final` | 无 | 加上此标志，训练结束后弹窗展示最终最佳工具 rollout |
+| `--save-gif` | 无 | 加上此标志，训练结束后自动保存最终最佳工具的运动 GIF 到输出目录 |
+| `--save-interval` | `0` | 每 N 代保存一次中间过程的 rollout GIF 到 `rollouts/` 子文件夹（0=不开启） |
 | `--output-dir` | 自动 | 输出目录（默认 `outputs/{task}/seed_{seed}/`） |
 
 ## 实时可视化
@@ -130,6 +132,38 @@ uv run python -m toolgen2d.train \
     --render-every 10 --render-final
 ```
 
+### 自动保存 GIF（`--save-gif`）
+
+训练结束时自动将最终最佳工具的运动动画保存为 GIF，无需单独执行 visualize 命令：
+
+```bash
+uv run python -m toolgen2d.train \
+    --task hook --generations 80 --population 64 --seed 0 \
+    --save-gif
+```
+
+GIF 保存到 `outputs/hook/seed_0/best_rollout.gif`。
+
+### 保存中间过程的 GIF（`--save-interval`）
+
+每 N 代自动保存当前最佳工具的 rollout GIF 到 `rollouts/` 子文件夹（headless，不弹窗）。适合事后回顾工具的形态演化过程。
+
+```bash
+# 每 10 代保存一次 GIF，输出到 outputs/hook/seed_0/rollouts/
+uv run python -m toolgen2d.train \
+    --task hook --generations 200 --population 64 --seed 0 \
+    --save-interval 10
+```
+
+```bash
+# 每 10 代保存一次 GIF，输出到 outputs/hook/seed_0/rollouts/
+uv run python -m toolgen2d.train \
+    --task sweeper --generations 80 --population 64 --seed 0 \
+    --save-interval 10
+```
+
+生成的文件：`outputs/hook/seed_0/rollouts/gen_0000.gif`, `gen_0010.gif`, `gen_0020.gif`, ...
+
 ## 离线可视化
 
 训练结束后，也可以单独用 visualize 命令回放最佳工具的 rollout。
@@ -146,8 +180,8 @@ uv run python -m toolgen2d.visualize \
 # Sweeper 最佳工具的运动回放
 uv run python -m toolgen2d.visualize \
     --task sweeper \
-    --checkpoint outputs/sweeper/seed_1/best.json \
-    --gif outputs/sweeper/seed_1/best_rollout.gif
+    --checkpoint outputs/sweeper/seed_0/best.json \
+    --gif outputs/sweeper/seed_0/best_rollout.gif
 ```
 
 ### 无窗口模式（服务器 / headless）

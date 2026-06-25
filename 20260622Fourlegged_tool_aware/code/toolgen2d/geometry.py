@@ -98,28 +98,31 @@ def decode_tool(params: np.ndarray, config: TaskConfig) -> ToolGeometry:
         # Update cumulative angle (relative to previous block orientation)
         cum_angle += angle
 
-        # Compute the center of this block in world frame:
-        # The block's position is defined relative to the previous block's endpoint.
-        # For the first block, prev_x, prev_y is (0,0) — the anchor.
-        # The block's center is offset from the attachment point by half its length
-        # along its orientation.
         cos_a = np.cos(cum_angle)
         sin_a = np.sin(cum_angle)
 
-        # Attachment point = previous block's endpoint
-        attach_x, attach_y = prev_x, prev_y
+        if config.continuous_chain:
+            # In continuous_chain mode, dx/dy are intentionally ignored to enforce
+            # physical connectivity. The current block starts at (or slightly before)
+            # the previous block's endpoint, with a small overlap for visual continuity.
+            # We keep dx/dy in the parameter vector for backward compatibility with
+            # existing checkpoints and optimizer dimensionality.
+            overlap = float(getattr(config, "joint_overlap", 4.0))
+            start_x = prev_x - overlap * cos_a
+            start_y = prev_y - overlap * sin_a
+            center_x = start_x + (length / 2.0) * cos_a
+            center_y = start_y + (length / 2.0) * sin_a
+        else:
+            # Legacy mode: use dx/dy offsets from previous endpoint
+            # Attachment point = previous block's endpoint
+            attach_x, attach_y = prev_x, prev_y
 
-        # Block center = attachment point + offset along block orientation
-        # The dx, dy are in the LOCAL frame of the previous block's orientation,
-        # but we add the half-length offset in the current block's orientation.
-        # Interpretation: dx/dy define where this block starts relative to previous
-        # block's endpoint in the PREVIOUS block's frame.
-        # Then the block extends forward by length/2 along its own angle.
-        local_dx_world = dx * np.cos(prev_angle) - dy * np.sin(prev_angle)
-        local_dy_world = dx * np.sin(prev_angle) + dy * np.cos(prev_angle)
+            # dx, dy are in the LOCAL frame of the previous block's orientation
+            local_dx_world = dx * np.cos(prev_angle) - dy * np.sin(prev_angle)
+            local_dy_world = dx * np.sin(prev_angle) + dy * np.cos(prev_angle)
 
-        center_x = attach_x + local_dx_world + (length / 2.0) * cos_a
-        center_y = attach_y + local_dy_world + (length / 2.0) * sin_a
+            center_x = attach_x + local_dx_world + (length / 2.0) * cos_a
+            center_y = attach_y + local_dy_world + (length / 2.0) * sin_a
 
         abs_positions.append((center_x, center_y))
         abs_angles.append(cum_angle)
@@ -198,6 +201,41 @@ def compute_sweeper_width_score(tool: ToolGeometry) -> float:
         return 0.0
     ys = [p[1] for p in tool.abs_positions]
     return max(ys) - min(ys)
+
+
+def compute_connection_gaps(tool: ToolGeometry) -> List[float]:
+    """Estimate the gap (distance) between consecutive block endpoints.
+
+    For each pair (i, i+1), computes the distance from block i's endpoint
+    to block i+1's start point. In a perfectly continuous chain with overlap,
+    this should be close to the configured joint_overlap value.
+
+    Returns a list of gaps of length (n_blocks - 1), or empty if < 2 blocks.
+    """
+    gaps: List[float] = []
+    n = len(tool.abs_positions)
+    if n < 2:
+        return gaps
+
+    for i in range(n - 1):
+        # Block i: center + half-length along its angle
+        cx_i, cy_i = tool.abs_positions[i]
+        a_i = tool.abs_angles[i]
+        len_i = tool.blocks[i].length
+        end_i_x = cx_i + 0.5 * len_i * np.cos(a_i)
+        end_i_y = cy_i + 0.5 * len_i * np.sin(a_i)
+
+        # Block i+1: center - half-length along its angle
+        cx_j, cy_j = tool.abs_positions[i + 1]
+        a_j = tool.abs_angles[i + 1]
+        len_j = tool.blocks[i + 1].length
+        start_j_x = cx_j - 0.5 * len_j * np.cos(a_j)
+        start_j_y = cy_j - 0.5 * len_j * np.sin(a_j)
+
+        gap = np.sqrt((end_i_x - start_j_x) ** 2 + (end_i_y - start_j_y) ** 2)
+        gaps.append(float(gap))
+
+    return gaps
 
 
 def compute_self_overlap_penalty(tool: ToolGeometry) -> float:

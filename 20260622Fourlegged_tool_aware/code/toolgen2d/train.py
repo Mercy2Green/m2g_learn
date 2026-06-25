@@ -20,7 +20,7 @@ from toolgen2d.config import get_config
 from toolgen2d.envs import HookEnv, SweeperEnv
 from toolgen2d.optim import CEMOptimizer, RandomSearchOptimizer
 from toolgen2d.optim.cem import CEMConfig
-from toolgen2d.geometry import decode_tool, param_bounds_array
+from toolgen2d.geometry import decode_tool, param_bounds_array, compute_connection_gaps
 from toolgen2d.render import Renderer
 
 
@@ -59,6 +59,10 @@ def save_best_tool(params: np.ndarray, task_name: str, output_dir: str) -> None:
     config = get_config(task_name)
     tool = decode_tool(params, config)
 
+    # Compute connection gaps for diagnostic
+    gaps = compute_connection_gaps(tool)
+    max_gap = float(max(gaps)) if gaps else 0.0
+
     # Save as JSON
     data = {
         "task": task_name,
@@ -75,6 +79,8 @@ def save_best_tool(params: np.ndarray, task_name: str, output_dir: str) -> None:
             }
             for b in tool.blocks
         ],
+        "connection_gaps": [float(g) for g in gaps],
+        "max_connection_gap": max_gap,
     }
     with open(os.path.join(output_dir, "best.json"), "w") as f:
         json.dump(data, f, indent=2)
@@ -85,6 +91,25 @@ def save_best_tool(params: np.ndarray, task_name: str, output_dir: str) -> None:
         xs = [c[0] for c in corners] + [corners[0][0]]
         ys = [c[1] for c in corners] + [corners[0][1]]
         ax.fill(xs, ys, alpha=0.7, color="steelblue", edgecolor="navy", linewidth=2)
+
+    # Draw small black circles at connection points (block endpoints that should touch)
+    n = len(tool.abs_positions)
+    for i in range(n - 1):
+        cx_i, cy_i = tool.abs_positions[i]
+        a_i = tool.abs_angles[i]
+        len_i = tool.blocks[i].length
+        # Endpoint of block i = center + half-length along its angle
+        ep_x = cx_i + 0.5 * len_i * np.cos(a_i)
+        ep_y = cy_i + 0.5 * len_i * np.sin(a_i)
+        ax.plot(ep_x, ep_y, "ko", markersize=6, zorder=5)
+    # Also mark the anchor start
+    if n > 0:
+        ax.plot(0.0, 0.0, "k^", markersize=8, zorder=5, label="Anchor")
+        ax.legend(fontsize=8)
+
+    # Subtitle showing max gap
+    subtitle = f"max_connection_gap = {max_gap:.1f} px"
+    ax.set_xlabel(subtitle, fontsize=9, color="gray")
 
     ax.set_xlim(-100, 200)
     ax.set_ylim(-150, 150)
@@ -161,6 +186,10 @@ def main():
                         help="Render every N generations with pygame window (0 = never)")
     parser.add_argument("--render-final", action="store_true",
                         help="Open pygame window for final best rollout")
+    parser.add_argument("--save-gif", action="store_true",
+                        help="Save a GIF of the final best rollout to output directory")
+    parser.add_argument("--save-interval", type=int, default=0,
+                        help="Save a rollout GIF every N generations to rollouts/ subfolder (0 = never)")
     parser.add_argument("--output-dir", type=str, default=None,
                         help="Output directory (default: outputs/{task}/seed_{seed})")
     args = parser.parse_args()
@@ -183,10 +212,32 @@ def main():
     # Create evaluation function
     eval_fn = make_evaluate_fn(args.task, args.seed)
 
+    # Create rollouts subfolder if saving intermediate GIFs
+    rollouts_dir = os.path.join(output_dir, "rollouts")
+    if args.save_interval > 0:
+        os.makedirs(rollouts_dir, exist_ok=True)
+
     # --- Per-generation render callback ---
     def render_callback(best_params: np.ndarray, gen: int, total_gens: int) -> None:
-        """Render current best tool rollout in a pygame window."""
+        """Render current best tool rollout in a pygame window (if applicable)
+        and save a GIF to rollouts/ if --save-interval is set.
+        """
         current_best_params[0] = best_params
+
+        # Save intermediate GIF every --save-interval generations
+        if args.save_interval > 0 and gen % args.save_interval == 0:
+            import imageio.v3 as iio
+            env_snap = create_env(args.task, args.seed)
+            try:
+                snap_result = env_snap.run_rollout(best_params, render=False, gif_frames=True)
+                if snap_result.frames:
+                    gif_path = os.path.join(rollouts_dir, f"gen_{gen:04d}.gif")
+                    iio.imwrite(gif_path, snap_result.frames, fps=30)
+                    console.print(f"  [dim]Saved rollout GIF → {gif_path} ({len(snap_result.frames)} frames)[/dim]")
+            finally:
+                env_snap.close()
+
+        # Interactive render (pygame window)
         if args.render_every <= 0 or gen % args.render_every != 0:
             return
         env = create_env(args.task, args.seed)
@@ -256,8 +307,17 @@ def main():
     final_result = env.run_rollout(
         result.best_params,
         render=args.render_final,
+        gif_frames=args.save_gif,  # collect frames if saving GIF
     )
     env.close()
+
+    # Save GIF if requested
+    if args.save_gif and final_result.frames:
+        import imageio.v3 as iio
+        gif_path = os.path.join(output_dir, "best_rollout.gif")
+        console.print(f"Saving GIF to {gif_path}...")
+        iio.imwrite(gif_path, final_result.frames, fps=30)
+        console.print(f"[green]✓[/green] GIF saved to {gif_path} ({len(final_result.frames)} frames)")
 
     console.print(f"\n[bold]Final Rollout Metrics:[/bold]")
     console.print(f"  Reward: {final_result.reward:.2f}")

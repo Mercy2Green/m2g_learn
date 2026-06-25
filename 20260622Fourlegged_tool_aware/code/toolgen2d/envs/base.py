@@ -7,6 +7,8 @@ from typing import List, Tuple, Dict, Any, Optional
 import numpy as np
 import pymunk
 
+import pygame
+
 from toolgen2d.config import (
     TaskConfig, WORLD_WIDTH, WORLD_HEIGHT,
     PHYSICS_DT, COLLTYPE_TOOL, COLLTYPE_TARGET,
@@ -181,6 +183,27 @@ class ToolEnv(ABC):
             self.space.add(shape)
             self.tool_shapes.append(shape)
 
+        # Add optional joint connector circles at each block joint.
+        # These fill gaps visually and physically at the connection points,
+        # making bent tools continuous at joints.
+        if self.config.add_joint_connectors and len(self.current_tool.abs_positions) >= 2:
+            radius = float(self.config.joint_connector_radius)
+            for i in range(len(self.current_tool.abs_positions) - 1):
+                cx_i, cy_i = self.current_tool.abs_positions[i]
+                a_i = self.current_tool.abs_angles[i]
+                len_i = self.current_tool.blocks[i].length
+                # Block i's endpoint = center + half-length along angle (in local frame)
+                ep_x = cx_i + 0.5 * len_i * np.cos(a_i)
+                ep_y = cy_i + 0.5 * len_i * np.sin(a_i)
+                # This point is already in local frame of the body (body at (0,0) angle=0).
+                # Create a Circle shape at that local position.
+                circ = pymunk.Circle(self.tool_body, radius, offset=(float(ep_x), float(ep_y)))
+                circ.collision_type = COLLTYPE_TOOL
+                circ.friction = 0.5
+                circ.elasticity = 0.3
+                self.space.add(circ)
+                self.tool_shapes.append(circ)
+
         # Set the body to the initial trajectory position for rendering
         start_x, start_y, start_angle = trajectory[0]
         self.tool_body.position = (start_x, start_y)
@@ -285,6 +308,23 @@ class ToolEnv(ABC):
         world_corners = self._get_tool_world_corners()
         if world_corners:
             self.renderer.draw_tool(world_corners, block_labels=True)
+
+        # Draw joint connector circles (Circle shapes from tool_shapes)
+        if self.tool_body is not None:
+            for shape in self.tool_shapes:
+                if hasattr(shape, "radius") and hasattr(shape, "offset"):
+                    # Circle shape on a kinematic body
+                    w = self.tool_body.local_to_world(shape.offset)
+                    self.renderer.draw_circle(
+                        float(w.x), float(w.y),
+                        float(shape.radius),
+                        color=(60, 120, 200),  # same as tool fill
+                    )
+                    # Small outline
+                    sx = int(float(w.x) * self.renderer.display_scale)
+                    sy = int(float(w.y) * self.renderer.display_scale)
+                    sr = int(float(shape.radius) * self.renderer.display_scale)
+                    pygame.draw.circle(self.renderer.screen, (30, 60, 120), (sx, sy), sr, 2)
 
         # Draw anchor cross at tool body position
         if self.tool_body is not None:
