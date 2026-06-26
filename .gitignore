@@ -12,3 +12,7 @@
 *.DS_Store
 
 20260622Fourlegged_tool_aware/ppt
+
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/*
+!20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/.gitkeep
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/.env

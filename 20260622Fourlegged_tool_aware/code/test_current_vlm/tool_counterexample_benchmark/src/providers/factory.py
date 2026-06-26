@@ -5,12 +5,14 @@ from typing import Any
 from .base import VLMProvider
 from .gemini_provider import GeminiProvider
 from .mock_provider import MockProvider
+from .openai_compatible_provider import OpenAICompatibleProvider
 from .openai_provider import OpenAIProvider
 from .qwen_provider import QwenProvider
 
 
 PROVIDERS: dict[str, type[VLMProvider]] = {
     "mock": MockProvider,
+    "openai_compatible": OpenAICompatibleProvider,
     "openai": OpenAIProvider,
     "qwen": QwenProvider,
     "gemini": GeminiProvider,

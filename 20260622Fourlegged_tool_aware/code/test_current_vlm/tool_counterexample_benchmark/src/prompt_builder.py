@@ -3,29 +3,48 @@ from __future__ import annotations
 from typing import Any
 
 
-RESPONSE_SCHEMA_TEXT = """
-请只输出一个 JSON 对象，不要输出 markdown 或额外解释。JSON schema:
-{
-  "task_understanding": "string",
-  "plan": ["step1", "step2", "step3"],
-  "uses_tool_or_container": "yes/no",
-  "tool_or_container": "string or none",
-  "will_search_for_tool_if_not_visible": "yes/no",
-  "estimated_number_of_trips": "single/few/multiple/unknown",
-  "efficiency_consideration": "string",
-  "safety_or_stability_consideration": "string",
-  "reason": "string",
-  "failure_risk": "string"
-}
-"""
+GENERAL_LEAKAGE_TERMS = [
+    "工具",
+    "容器",
+    "托盘",
+    "袋子",
+    "箱子",
+    "盒子",
+    "篮子",
+    "背包",
+    "洗衣篮",
+    "扫把",
+    "簸箕",
+    "抹布",
+    "纸巾",
+    "长杆",
+    "杆子",
+    "tool",
+    "container",
+    "tray",
+    "bag",
+    "box",
+    "basket",
+    "backpack",
+    "broom",
+    "dustpan",
+    "cloth",
+    "tissue",
+    "rod",
+    "stick",
+]
 
 
 def build_prompt(task: dict[str, Any], prompt_set: dict[str, Any]) -> tuple[str, str, list[str]]:
-    system_prompt = f"{prompt_set['system_prompt'].strip()}\n\n{RESPONSE_SCHEMA_TEXT.strip()}"
+    response_schema_text = str(prompt_set.get("response_schema_text", "")).strip()
+    system_prompt = prompt_set["system_prompt"].strip()
+    if response_schema_text:
+        system_prompt = f"{system_prompt}\n\n{response_schema_text}"
     user_template = prompt_set["user_prompt_template"]
+    scene_note = task.get("scene_note", "") if prompt_set.get("include_scene_note", False) else ""
     user_prompt = user_template.format(
         instruction=task.get("instruction", ""),
-        scene_note=task.get("scene_note", ""),
+        scene_note=scene_note,
         task_id=task.get("task_id", ""),
         task_name=task.get("name", ""),
     ).strip()
@@ -34,10 +53,11 @@ def build_prompt(task: dict[str, Any], prompt_set: dict[str, Any]) -> tuple[str,
 
 
 def find_prompt_leakage(task: dict[str, Any], user_prompt: str) -> list[str]:
-    """Check task-specific answer terms in the task/user text only.
+    """Check answer terms in the task/user text only.
 
-    The required output schema contains tool-related field names, so schema text is
-    intentionally excluded from this check.
+    The system prompt may contain response schema fields for diagnostic probes, so
+    leakage checks intentionally focus on the user-facing task prompt.
     """
-    terms = task.get("invalid_prompt_leakage_terms") or []
-    return sorted({term for term in terms if term and term in user_prompt})
+    terms = list(task.get("invalid_prompt_leakage_terms") or []) + GENERAL_LEAKAGE_TERMS
+    lowered = user_prompt.lower()
+    return sorted({term for term in terms if term and term.lower() in lowered})

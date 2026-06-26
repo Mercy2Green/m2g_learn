@@ -48,15 +48,14 @@ def normalize_response(parsed: dict[str, Any]) -> dict[str, Any]:
     normalized = dict(parsed)
     normalized["plan"] = _normalize_plan(normalized.get("plan"))
     normalized["uses_tool_or_container"] = _normalize_yes_no(normalized.get("uses_tool_or_container"))
-    normalized["will_search_for_tool_if_not_visible"] = _normalize_yes_no(
-        normalized.get("will_search_for_tool_if_not_visible")
-    )
+    normalized["will_search_for_tool_if_not_visible"] = _normalize_yes_no(normalized.get("will_search_for_tool_if_not_visible"))
     normalized["estimated_number_of_trips"] = _normalize_trip_count(normalized.get("estimated_number_of_trips"))
     for key in [
         "task_understanding",
         "tool_or_container",
         "efficiency_consideration",
         "safety_or_stability_consideration",
+        "uncertainty_or_missing_information",
         "reason",
         "failure_risk",
     ]:

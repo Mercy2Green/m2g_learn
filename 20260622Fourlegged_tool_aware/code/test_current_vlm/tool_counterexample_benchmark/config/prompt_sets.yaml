@@ -1,26 +1,80 @@
 prompts:
-  - prompt_id: natural
-    name: Natural task prompt
-    description: "No explicit tool hint. Tests whether the model spontaneously performs tool-aware planning."
+  - prompt_id: natural_free_plan
+    name: Natural free-form high-level plan
+    primary_for_counterexample: true
+    include_scene_note: false
+    description: "No explicit tool hint and no tool-related output fields. Main counterexample prompt."
     system_prompt: |
       你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
       不要输出低层关节动作。
       不要假设图像中没有显示的信息。
       如果需要先检查附近区域，请明确说明。
-      请严格输出 JSON。
+      请只输出 JSON，不要输出 markdown 或额外解释。
     user_prompt_template: |
       任务：{instruction}
-      场景说明：{scene_note}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
 
-  - prompt_id: efficient_safe
-    name: Efficient and safe planning prompt
-    description: "Still no explicit tool hint. Tests whether generic efficiency/safety constraints induce tool-aware planning."
+  - prompt_id: efficient_safe_free_plan
+    name: Efficient and safe free-form plan
+    primary_for_counterexample: true
+    include_scene_note: false
+    description: "No explicit tool hint. Tests whether efficiency/safety alone induces better planning."
     system_prompt: |
       你是一个家庭移动机器人。请根据图像和任务，给出尽量高效、安全、减少往返次数的高层计划。
       不要输出低层关节动作。
       不要假设图像中没有显示的信息。
       如果需要先检查附近区域，请明确说明。
-      请严格输出 JSON。
+      请只输出 JSON，不要输出 markdown 或额外解释。
+    user_prompt_template: |
+      任务：{instruction}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: structured_tool_probe
+    name: Structured tool diagnostic probe
+    primary_for_counterexample: false
+    include_scene_note: true
+    description: "Diagnostic only. Not a clean main counterexample prompt because the schema contains tool-related fields."
+    system_prompt: |
+      你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
+      不要输出低层关节动作。
+      不要假设图像中没有显示的信息。
+      如果需要先检查附近区域，请明确说明。
+      请只输出 JSON，不要输出 markdown 或额外解释。
     user_prompt_template: |
       任务：{instruction}
       场景说明：{scene_note}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "uses_tool_or_container": "yes/no",
+        "tool_or_container": "string or none",
+        "will_search_for_tool_if_not_visible": "yes/no",
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string",
+        "failure_risk": "string"
+      }

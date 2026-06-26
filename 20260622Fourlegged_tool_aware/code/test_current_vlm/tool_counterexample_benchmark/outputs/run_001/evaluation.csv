@@ -1,3 +1,0 @@
-task_id,task_name,image_path,model_id,provider,prompt_id,pass_fail,failure_types_detected,counterexample_strength_hint,notes
-task_001,multi_bottles_visible_container,__placeholder_image__,mock,mock,natural,pass,,invalid_or_unclear,Heuristic check passed.
-task_001,multi_bottles_visible_container,__placeholder_image__,mock,mock,efficient_safe,pass,,invalid_or_unclear,Heuristic check passed.

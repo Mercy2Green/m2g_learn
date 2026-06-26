@@ -22,10 +22,19 @@ def write_evaluation_csv(path: str | Path, evaluations: list[dict[str, Any]]) ->
         "image_path",
         "model_id",
         "provider",
+        "provider_label",
+        "model_name",
+        "strength_role",
         "prompt_id",
+        "prompt_type",
+        "primary_for_counterexample",
         "pass_fail",
         "failure_types_detected",
         "counterexample_strength_hint",
+        "inferred_uses_helper",
+        "inferred_searches_helper",
+        "inferred_one_by_one",
+        "plan_summary",
         "notes",
     ]
     with Path(path).open("w", encoding="utf-8", newline="") as handle:
@@ -61,10 +70,14 @@ def write_summary(
     raw_path: str,
     parsed_path: str,
 ) -> None:
+    primary_rows = [row for row in evaluations if row.get("primary_for_counterexample") is True]
+    probe_rows = [row for row in evaluations if row.get("primary_for_counterexample") is not True]
     counts = Counter(row.get("pass_fail", "") for row in evaluations)
+    primary_counts = Counter(row.get("pass_fail", "") for row in primary_rows)
+    probe_counts = Counter(row.get("pass_fail", "") for row in probe_rows)
+    strength_counts = Counter(row.get("counterexample_strength_hint", "") for row in primary_rows)
     failure_counts = Counter()
-    strength_counts = Counter(row.get("counterexample_strength_hint", "") for row in evaluations)
-    for row in evaluations:
+    for row in primary_rows:
         failure_counts.update(row.get("failure_types_detected", []))
 
     lines: list[str] = [
@@ -76,50 +89,80 @@ def write_summary(
         f"- Models tested: {', '.join(model.get('model_id', '') for model in models)}",
         f"- Prompt settings: {', '.join(prompt.get('prompt_id', '') for prompt in prompts)}",
         f"- Total evaluated rows: {len(evaluations)}",
+        "- Structured probe is diagnostic only and is not clean main counterexample evidence.",
         "",
-        "## Overall pass/fail summary",
-        "| Status | Count |",
-        "| --- | ---: |",
+        "## Provider and model information",
+        "| Model | Provider | Provider label | Model name | Strength role |",
+        "| --- | --- | --- | --- | --- |",
     ]
-    for status in ["pass", "fail", "needs_review", "parse_error", "skipped"]:
-        lines.append(f"| {status} | {counts.get(status, 0)} |")
+    for model in models:
+        lines.append(
+            f"| {model.get('model_id', '')} | {model.get('provider', '')} | {model.get('provider_label', '')} | "
+            f"{model.get('model_name', '')} | {model.get('strength_role', '')} |"
+        )
 
-    lines.extend(["", "## Counterexample strength hints", "| Hint | Count |", "| --- | ---: |"])
+    lines.extend(["", "## Prompt type", "| Prompt | Type | Primary | Description |", "| --- | --- | --- | --- |"])
+    for prompt in prompts:
+        prompt_type = "primary clean prompt" if prompt.get("primary_for_counterexample") else "structured probe"
+        description = str(prompt.get("description", "")).replace("|", "\\|")
+        lines.append(f"| {prompt.get('prompt_id', '')} | {prompt_type} | {prompt.get('primary_for_counterexample', False)} | {description} |")
+
+    lines.extend(["", "## Overall pass/fail summary", "| Scope | Pass | Fail | Review | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: | ---: |"])
+    lines.append(_status_row("all", counts))
+    lines.append(_status_row("primary_clean", primary_counts))
+    lines.append(_status_row("structured_probe", probe_counts))
+
+    lines.extend(["", "## Clean counterexample strength hints", "| Hint | Count |", "| --- | ---: |"])
     for hint in ["strong_candidate", "medium_candidate", "weak_candidate", "invalid_or_unclear"]:
         lines.append(f"| {hint} | {strength_counts.get(hint, 0)} |")
 
-    lines.extend(["", "## Failure type counts", "| Failure type | Count | Description |", "| --- | ---: | --- |"])
-    for failure, count in failure_counts.most_common():
-        lines.append(f"| {failure} | {count} | {FAILURE_TAXONOMY.get(failure, '')} |")
+    lines.extend(["", "## Primary clean failure type counts", "| Failure type | Count | Description |", "| --- | ---: | --- |"])
+    if failure_counts:
+        for failure, count in failure_counts.most_common():
+            lines.append(f"| {failure} | {count} | {FAILURE_TAXONOMY.get(failure, '')} |")
+    else:
+        lines.append("| - | 0 | - |")
 
     for title, hint in [
-        ("Strong candidate counterexamples", "strong_candidate"),
-        ("Medium candidate counterexamples", "medium_candidate"),
-        ("Cases needing manual review", "invalid_or_unclear"),
+        ("Strong clean candidate counterexamples", "strong_candidate"),
+        ("Medium clean candidate counterexamples", "medium_candidate"),
+        ("Weak clean candidate counterexamples", "weak_candidate"),
     ]:
-        lines.extend(["", f"## {title}", "| Task | Image | Model | Prompt | Status | Failures | Notes |", "| --- | --- | --- | --- | --- | --- | --- |"])
-        subset = [row for row in evaluations if row.get("counterexample_strength_hint") == hint]
-        if title == "Cases needing manual review":
-            subset = [row for row in evaluations if row.get("pass_fail") in {"needs_review", "parse_error", "skipped"}]
+        lines.extend(["", f"## {title}", "| Task | Image | Model | Prompt | Status | Failures | Plan summary | Notes |", "| --- | --- | --- | --- | --- | --- | --- | --- |"])
+        subset = [row for row in primary_rows if row.get("counterexample_strength_hint") == hint]
         if not subset:
-            lines.append("| - | - | - | - | - | - | - |")
+            lines.append("| - | - | - | - | - | - | - | - |")
         for row in subset[:50]:
             lines.append(_eval_table_row(row))
 
-    lines.extend(["", "## Per-task table", "| Task | Pass | Fail | Review | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: | ---: |"])
-    for task_id, rows in _group_by(evaluations, "task_id").items():
-        counter = Counter(row.get("pass_fail", "") for row in rows)
+    lines.extend(["", "## Cases needing manual review", "| Task | Image | Model | Prompt | Type | Status | Notes |", "| --- | --- | --- | --- | --- | --- | --- |"])
+    review_rows = [row for row in evaluations if row.get("pass_fail") in {"needs_review", "parse_error", "skipped"}]
+    if not review_rows:
+        lines.append("| - | - | - | - | - | - | - |")
+    for row in review_rows[:80]:
+        notes = str(row.get("notes", "")).replace("|", "\\|")
         lines.append(
-            f"| {task_id} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | "
-            f"{counter.get('needs_review', 0)} | {counter.get('parse_error', 0)} | {counter.get('skipped', 0)} |"
+            f"| {row.get('task_id')} | {Path(str(row.get('image_path', ''))).name} | {row.get('model_id')} | "
+            f"{row.get('prompt_id')} | {row.get('prompt_type')} | {row.get('pass_fail')} | {notes} |"
         )
 
-    lines.extend(["", "## Per-model table", "| Model | Provider | Pass | Fail | Review | Parse error | Skipped |", "| --- | --- | ---: | ---: | ---: | ---: | ---: |"])
+    lines.extend(["", "## Structured probe results", "| Task | Image | Model | Prompt | Status | Failures | Plan summary | Notes |", "| --- | --- | --- | --- | --- | --- | --- | --- |"])
+    if not probe_rows:
+        lines.append("| - | - | - | - | - | - | - | - |")
+    for row in probe_rows[:80]:
+        lines.append(_eval_table_row(row))
+
+    lines.extend(["", "## Per-task table", "| Task | Pass | Fail | Review | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: | ---: |"])
+    for task_id, rows in _group_by(evaluations, "task_id").items():
+        lines.append(_status_row(task_id, Counter(row.get("pass_fail", "") for row in rows)))
+
+    lines.extend(["", "## Per-model table", "| Model | Provider label | Strength role | Pass | Fail | Review | Parse error | Skipped |", "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |"])
     for model_id, rows in _group_by(evaluations, "model_id").items():
         counter = Counter(row.get("pass_fail", "") for row in rows)
-        provider = rows[0].get("provider", "") if rows else ""
+        provider_label = rows[0].get("provider_label", "") if rows else ""
+        strength_role = rows[0].get("strength_role", "") if rows else ""
         lines.append(
-            f"| {model_id} | {provider} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | "
+            f"| {model_id} | {provider_label} | {strength_role} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | "
             f"{counter.get('needs_review', 0)} | {counter.get('parse_error', 0)} | {counter.get('skipped', 0)} |"
         )
 
@@ -149,7 +192,7 @@ def write_failed_cases(
     }
     failed = [row for row in evaluations if row.get("pass_fail") in {"fail", "needs_review", "parse_error", "skipped"}]
     grouped = _group_by(failed, "task_id")
-    lines = ["# Failed and Review Cases", ""]
+    lines = ["# Failed and Review Cases", "", "Heuristic labels are an automatic first pass. Review raw plans before using a case as paper evidence.", ""]
     if not grouped:
         lines.append("No failed or review cases.")
     for task_id, rows in grouped.items():
@@ -170,19 +213,29 @@ def write_failed_cases(
             plan = "; ".join(parsed.get("plan", [])) if parsed else row.get("notes", "")
             failures = ", ".join(row.get("failure_types_detected", [])) or "-"
             lines.append(
-                f"- {row.get('model_id')} / {row.get('prompt_id')}: {row.get('pass_fail').upper()} "
-                f"- {failures}. {row.get('notes', '')} Plan: {plan}"
+                f"- {row.get('model_id')} / {row.get('prompt_id')} / {row.get('prompt_type')}: "
+                f"{row.get('pass_fail').upper()} - {failures}. {row.get('notes', '')} "
+                f"Inference: helper={row.get('inferred_uses_helper')}, search={row.get('inferred_searches_helper')}, "
+                f"one_by_one={row.get('inferred_one_by_one')}. Plan: {plan}"
             )
         lines.extend(["", "### Failure types", ", ".join(sorted({f for row in rows for f in row.get("failure_types_detected", [])})) or "-", ""])
     Path(path).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def _status_row(scope: str, counter: Counter[str]) -> str:
+    return (
+        f"| {scope} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | "
+        f"{counter.get('needs_review', 0)} | {counter.get('parse_error', 0)} | {counter.get('skipped', 0)} |"
+    )
+
+
 def _eval_table_row(row: dict[str, Any]) -> str:
     failures = ", ".join(row.get("failure_types_detected", [])) or "-"
     notes = str(row.get("notes", "")).replace("|", "\\|")
+    plan = str(row.get("plan_summary", "")).replace("|", "\\|")
     return (
         f"| {row.get('task_id')} | {Path(str(row.get('image_path', ''))).name} | {row.get('model_id')} | "
-        f"{row.get('prompt_id')} | {row.get('pass_fail')} | {failures} | {notes} |"
+        f"{row.get('prompt_id')} | {row.get('pass_fail')} | {failures} | {plan} | {notes} |"
     )
 
 

@@ -1,17 +1,74 @@
 models:
-  - model_id: qwen_default
-    provider: qwen
+  - model_id: bailian_qwen_vl_plus
+    provider: openai_compatible
+    provider_label: bailian
     enabled: true
-    model_name: "${QWEN_MODEL}"
-    temperature: 0.0
+    api_key_env: BAILIAN_API_KEY
+    base_url: "${BAILIAN_BASE_URL}"
+    model_name: qwen-vl-plus
+    strength_role: qwen_main
+    temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 60
     retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: bailian_qwen_vl_max
+    provider: openai_compatible
+    provider_label: bailian
+    enabled: false
+    api_key_env: BAILIAN_API_KEY
+    base_url: "${BAILIAN_BASE_URL}"
+    model_name: qwen-vl-max
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: bailian_qwen_omni_turbo
+    provider: openai_compatible
+    provider_label: bailian
+    enabled: false
+    api_key_env: BAILIAN_API_KEY
+    base_url: "${BAILIAN_BASE_URL}"
+    model_name: qwen-omni-turbo
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: dashscope_qwen_vl_plus
+    provider: openai_compatible
+    provider_label: dashscope
+    enabled: false
+    api_key_env: DASHSCOPE_API_KEY
+    base_url: "${DASHSCOPE_BASE_URL}"
+    model_name: qwen-vl-plus
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
 
   - model_id: openai_default
     provider: openai
+    provider_label: openai
     enabled: false
     model_name: "${OPENAI_MODEL}"
+    strength_role: closed_strong
     temperature: 0.0
     max_tokens: 1024
     timeout_seconds: 60
@@ -19,8 +76,10 @@ models:
 
   - model_id: gemini_default
     provider: gemini
+    provider_label: gemini
     enabled: false
     model_name: "${GEMINI_MODEL}"
+    strength_role: closed_strong
     temperature: 0.0
     max_tokens: 1024
     timeout_seconds: 60
@@ -28,8 +87,10 @@ models:
 
   - model_id: mock
     provider: mock
+    provider_label: mock
     enabled: true
-    model_name: "mock"
+    model_name: mock
+    strength_role: mock
     temperature: 0.0
     max_tokens: 1024
     timeout_seconds: 5

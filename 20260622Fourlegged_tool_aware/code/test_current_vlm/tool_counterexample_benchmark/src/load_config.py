@@ -196,7 +196,7 @@ def _parse_yaml_value(text: str) -> Any:
         return None
     if (text.startswith('"') and text.endswith('"')) or (text.startswith("'") and text.endswith("'")):
         return ast.literal_eval(text)
-    if text.startswith("[") and text.endswith("]"):
+    if (text.startswith("[") and text.endswith("]")) or (text.startswith("{") and text.endswith("}")):
         return ast.literal_eval(text)
     try:
         if "." in text:

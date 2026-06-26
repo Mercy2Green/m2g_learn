@@ -3,7 +3,7 @@ tasks:
     name: multi_bottles_visible_container
     image_dir: images/task_001_multi_bottles_visible_container
     instruction: "卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。"
-    scene_note: "Kitchen counter with 4-6 bottles or cans and other nearby household objects."
+    scene_note: "Human annotation only; not used in primary prompts. Kitchen counter with 4-6 bottles or cans and normal household context."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["tray", "bag", "box", "basket"]
@@ -20,7 +20,7 @@ tasks:
     name: multi_bottles_no_visible_container
     image_dir: images/task_002_multi_bottles_no_visible_container
     instruction: "卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。"
-    scene_note: "Kitchen counter with 4-6 bottles or cans; the current view does not show an obvious carrying aid."
+    scene_note: "Human annotation only; not used in primary prompts. Kitchen counter with 4-6 bottles or cans; current view intentionally shows only the drinks and ordinary counter context."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["tray", "bag", "box", "basket"]
@@ -38,7 +38,7 @@ tasks:
     name: meeting_items_backpack
     image_dir: images/task_003_meeting_items_backpack
     instruction: "我们五分钟后要出门，请帮我把要带的东西收拾好。"
-    scene_note: "Desk with phone, charger, notebook, keys, cup, and a personal carry item nearby."
+    scene_note: "Human annotation only; not used in primary prompts. Desk with phone, charger, notebook, keys, cup, and normal departure context."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["backpack", "bag"]
@@ -56,7 +56,7 @@ tasks:
     name: snacks_drinks_tray
     image_dir: images/task_004_snacks_drinks_tray
     instruction: "客厅里有几个人在聊天，请拿些喝的和吃的过去。"
-    scene_note: "Kitchen area with drinks, snacks, cups, and nearby household serving items."
+    scene_note: "Human annotation only; not used in primary prompts. Kitchen area with drinks, snacks, cups, and normal household context."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["tray", "basket", "box"]
@@ -74,7 +74,7 @@ tasks:
     name: used_cups_dishes
     image_dir: images/task_005_used_cups_dishes
     instruction: "请把这些用过的杯子和盘子收回厨房。"
-    scene_note: "Dining table with multiple used cups, plates, and bowls; nearby household items may be visible."
+    scene_note: "Human annotation only; not used in primary prompts. Dining table with multiple used cups, plates, and bowls."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["tray", "basin", "basket"]
@@ -91,7 +91,7 @@ tasks:
     name: scattered_small_objects
     image_dir: images/task_006_scattered_small_objects
     instruction: "请把地上的小东西收起来。"
-    scene_note: "Floor with scattered small objects such as blocks, pieces, caps, or coins."
+    scene_note: "Human annotation only; not used in primary prompts. Floor with scattered small objects such as blocks, pieces, caps, or coins."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["box", "dustpan", "broom", "basket"]
@@ -108,7 +108,7 @@ tasks:
     name: laundry_basket
     image_dir: images/task_007_laundry_basket
     instruction: "请把这些衣服收起来，拿到洗衣区。"
-    scene_note: "Bedroom or living area with several clothes or towels on the floor."
+    scene_note: "Human annotation only; not used in primary prompts. Bedroom or living area with several clothes or towels on the floor."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["laundry basket", "storage box", "basket"]
@@ -125,7 +125,7 @@ tasks:
     name: remote_under_sofa
     image_dir: images/task_008_remote_under_sofa
     instruction: "请把沙发下面的遥控器拿出来。"
-    scene_note: "Remote control or small ball is under a sofa; nearby long household objects may be visible."
+    scene_note: "Human annotation only; not used in primary prompts. Remote control or small ball is under a sofa."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["broom", "stick", "rod"]
@@ -142,7 +142,7 @@ tasks:
     name: dirty_floor_or_table
     image_dir: images/task_009_dirty_floor_or_table
     instruction: "这里有点脏，请清理一下。"
-    scene_note: "Tabletop or floor with crumbs, water, or stains; nearby household cleaning items may be visible."
+    scene_note: "Human annotation only; not used in primary prompts. Tabletop or floor with crumbs, water, or stains."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["tissue", "cloth", "broom", "dustpan"]
@@ -159,7 +159,7 @@ tasks:
     name: fragile_objects
     image_dir: images/task_010_fragile_objects
     instruction: "请把这些东西安全拿到餐桌上。"
-    scene_note: "Kitchen counter with fragile or unstable objects such as eggs, glasses, or fruit."
+    scene_note: "Human annotation only; not used in primary prompts. Kitchen counter with fragile or unstable objects such as eggs, glasses, or fruit."
     expected_behavior:
       should_use_tool_or_container: true
       expected_tool_or_container_types: ["tray", "box", "padded box"]
@@ -176,7 +176,7 @@ tasks:
     name: single_bottle_tool_unnecessary
     image_dir: images/task_011_single_bottle_tool_unnecessary
     instruction: "请把这瓶水拿给我。"
-    scene_note: "A single bottle is directly reachable; other household items may also be visible."
+    scene_note: "Human annotation only; not used in primary prompts. A single bottle is directly reachable."
     expected_behavior:
       should_use_tool_or_container: false
       expected_tool_or_container_types: []

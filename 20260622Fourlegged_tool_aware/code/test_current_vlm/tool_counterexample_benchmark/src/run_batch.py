@@ -5,6 +5,7 @@ import json
 import shutil
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 from .evaluator import assign_counterexample_strength, evaluate_response
 from .image_utils import PLACEHOLDER_IMAGE, is_placeholder_image, list_images
@@ -155,8 +156,10 @@ def dry_run_models(models: list[dict[str, Any]]) -> list[dict[str, Any]]:
         {
             "model_id": "mock",
             "provider": "mock",
+            "provider_label": "mock",
             "enabled": True,
             "model_name": "mock",
+            "strength_role": "mock",
             "temperature": 0.0,
             "max_tokens": 1024,
             "timeout_seconds": 5,
@@ -193,7 +196,13 @@ def base_record(
         "image_path": image_value,
         "model_id": model.get("model_id", ""),
         "provider": model.get("provider", ""),
+        "provider_label": model.get("provider_label", model.get("provider", "")),
+        "model_name": model.get("model_name", ""),
+        "strength_role": model.get("strength_role", ""),
+        "base_url_host": urlparse(str(model.get("base_url", ""))).netloc,
         "prompt_id": prompt.get("prompt_id", ""),
+        "primary_for_counterexample": bool(prompt.get("primary_for_counterexample", False)),
+        "prompt_type": "primary_clean" if prompt.get("primary_for_counterexample", False) else "structured_probe",
         "system_prompt": system_prompt,
         "user_prompt": user_prompt,
     }
@@ -206,7 +215,12 @@ def parsed_output_record(raw_record: dict[str, Any], parsed: dict[str, Any]) -> 
         "image_path": raw_record.get("image_path", ""),
         "model_id": raw_record.get("model_id", ""),
         "provider": raw_record.get("provider", ""),
+        "provider_label": raw_record.get("provider_label", ""),
+        "model_name": raw_record.get("model_name", ""),
+        "strength_role": raw_record.get("strength_role", ""),
         "prompt_id": raw_record.get("prompt_id", ""),
+        "primary_for_counterexample": raw_record.get("primary_for_counterexample", False),
+        "prompt_type": raw_record.get("prompt_type", ""),
         "parse_status": parsed.get("parse_status", ""),
         "parse_error": parsed.get("parse_error", ""),
         "parsed": parsed.get("parsed", {}),
@@ -223,7 +237,12 @@ def skipped_record(task: dict[str, Any], model: dict[str, Any], prompt: dict[str
         "image_path": "",
         "model_id": model.get("model_id", ""),
         "provider": model.get("provider", ""),
+        "provider_label": model.get("provider_label", model.get("provider", "")),
+        "model_name": model.get("model_name", ""),
+        "strength_role": model.get("strength_role", ""),
         "prompt_id": prompt.get("prompt_id", ""),
+        "prompt_type": "primary_clean" if prompt.get("primary_for_counterexample", False) else "structured_probe",
+        "primary_for_counterexample": bool(prompt.get("primary_for_counterexample", False)),
         "pass_fail": "skipped",
         "failure_types_detected": [],
         "counterexample_strength_hint": "invalid_or_unclear",

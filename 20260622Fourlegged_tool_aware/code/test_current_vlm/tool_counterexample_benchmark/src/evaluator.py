@@ -18,6 +18,62 @@ FAILURE_TAXONOMY: dict[str, str] = {
 }
 
 
+GENERAL_HELPER_KEYWORDS = [
+    "工具",
+    "辅助物",
+    "容器",
+    "托盘",
+    "盘子",
+    "袋子",
+    "箱子",
+    "盒子",
+    "篮子",
+    "背包",
+    "洗衣篮",
+    "收纳箱",
+    "扫把",
+    "簸箕",
+    "抹布",
+    "纸巾",
+    "长杆",
+    "杆子",
+    "tool",
+    "helper",
+    "container",
+    "tray",
+    "bag",
+    "box",
+    "basket",
+    "backpack",
+    "broom",
+    "dustpan",
+    "cloth",
+    "tissue",
+    "rod",
+    "stick",
+]
+HELPER_TYPE_SYNONYMS = {
+    "tray": ["托盘", "tray"],
+    "bag": ["袋子", "包", "bag"],
+    "box": ["箱子", "盒子", "box"],
+    "basket": ["篮子", "basket"],
+    "backpack": ["背包", "backpack"],
+    "basin": ["盆", "basin"],
+    "dustpan": ["簸箕", "dustpan"],
+    "broom": ["扫把", "broom"],
+    "laundry basket": ["洗衣篮", "laundry basket"],
+    "storage box": ["收纳箱", "storage box"],
+    "stick": ["长杆", "杆子", "stick"],
+    "rod": ["长杆", "杆子", "rod"],
+    "tissue": ["纸巾", "tissue"],
+    "cloth": ["抹布", "cloth"],
+    "padded box": ["软垫", "padded box"],
+}
+SEARCH_KEYWORDS = ["寻找", "查找", "检查附近", "查看附近", "搜索附近", "附近是否", "look for", "search nearby", "check nearby"]
+ONE_BY_ONE_KEYWORDS = ["逐个", "一个个", "一瓶一瓶", "一件一件", "每次一个", "one by one", "one-by-one", "each item"]
+DIRECT_ONLY_KEYWORDS = ["直接抓取", "直接拿", "逐个抓取", "直接夹取", "directly grasp", "pick up directly"]
+
+
 def evaluate_response(
     task: dict[str, Any],
     parsed_record: dict[str, Any],
@@ -25,16 +81,26 @@ def evaluate_response(
     prompt: dict[str, Any],
     image_path: str,
 ) -> dict[str, Any]:
+    primary = bool(prompt.get("primary_for_counterexample", False))
     base = {
         "task_id": task.get("task_id", ""),
         "task_name": task.get("name", ""),
         "image_path": image_path,
         "model_id": model.get("model_id", ""),
         "provider": model.get("provider", ""),
+        "provider_label": model.get("provider_label", model.get("provider", "")),
+        "model_name": model.get("model_name", ""),
+        "strength_role": model.get("strength_role", ""),
         "prompt_id": prompt.get("prompt_id", ""),
+        "prompt_type": "primary_clean" if primary else "structured_probe",
+        "primary_for_counterexample": primary,
         "pass_fail": "needs_review",
         "failure_types_detected": [],
         "counterexample_strength_hint": "invalid_or_unclear",
+        "inferred_uses_helper": "unknown",
+        "inferred_searches_helper": "unknown",
+        "inferred_one_by_one": "no",
+        "plan_summary": "",
         "notes": "",
     }
 
@@ -42,8 +108,6 @@ def evaluate_response(
         base.update(
             {
                 "pass_fail": "parse_error",
-                "failure_types_detected": [],
-                "counterexample_strength_hint": "invalid_or_unclear",
                 "notes": parsed_record.get("parse_error", "parse_error"),
             }
         )
@@ -53,49 +117,81 @@ def evaluate_response(
     expected = task.get("expected_behavior", {})
     failures: list[str] = []
     notes: list[str] = []
+    inference = infer_helper_use_from_plan(parsed, task)
+    base.update(inference)
+    base["plan_summary"] = "; ".join(parsed.get("plan", []))[:500]
 
-    uses_tool = parsed.get("uses_tool_or_container", "unknown")
-    searches = parsed.get("will_search_for_tool_if_not_visible", "unknown")
+    if primary:
+        uses_helper = inference["inferred_uses_helper"]
+        searches_helper = inference["inferred_searches_helper"]
+        one_by_one = inference["inferred_one_by_one"] == "yes"
+    else:
+        uses_helper = parsed.get("uses_tool_or_container", "unknown")
+        searches_helper = parsed.get("will_search_for_tool_if_not_visible", "unknown")
+        one_by_one = inference["inferred_one_by_one"] == "yes"
+        notes.append("Structured probe: diagnostic only, not clean counterexample evidence.")
+
     trips = parsed.get("estimated_number_of_trips", "unknown")
-    plan_text = " ".join(parsed.get("plan", [])).lower()
 
     if expected.get("should_use_tool_or_container") is True:
-        if uses_tool == "no":
+        if uses_helper == "no":
             failures.extend(_task_failures(task, ["F1_aggregation_failure", "F4_container_affordance_miss", "F6_tool_necessity_miss"]))
-            notes.append("Expected tool/container use, but model said no.")
-        elif uses_tool == "unknown":
-            notes.append("Tool/container use is unclear.")
+            notes.append("Expected helper use, but plan does not indicate one.")
+        elif uses_helper == "unknown":
+            notes.append("Helper use is unclear from plan text.")
 
     if expected.get("should_search_for_tool_if_not_visible") is True:
-        if searches == "no":
+        if searches_helper == "no":
             failures.extend(_task_failures(task, ["F2_tool_search_failure", "F10_search_or_fallback_miss"]))
-            notes.append("Expected short-range search when helper is not visible, but model said no.")
-        elif searches == "unknown":
-            notes.append("Search behavior is unclear.")
+            notes.append("Expected nearby search when no helper is visible, but plan does not indicate search.")
+        elif searches_helper == "unknown":
+            notes.append("Search behavior is unclear from plan text.")
 
     if expected.get("expected_trip_pattern") == "single_or_few_trips":
-        if trips == "multiple" or _looks_like_one_by_one(plan_text):
+        if trips == "multiple" or one_by_one:
             failures.extend(_task_failures(task, ["F1_aggregation_failure", "F3_efficiency_blind_planning"]))
-            notes.append("Expected single/few trips, but model indicates multiple or one-by-one handling.")
+            notes.append("Expected single/few trips, but plan indicates multiple or one-by-one handling.")
         elif trips == "unknown":
             notes.append("Trip count is unclear.")
 
-    if expected.get("should_avoid_over_tool_use") is True and uses_tool == "yes":
+    if expected.get("should_avoid_over_tool_use") is True and uses_helper == "yes":
         failures.append("F7_over_tool_use")
-        notes.append("Expected direct action, but model used a tool/container.")
+        notes.append("Expected direct action, but plan indicates unnecessary helper use.")
 
     failures = sorted(set(failures))
     if failures:
         base["pass_fail"] = "fail"
-        base["counterexample_strength_hint"] = "weak_candidate"
-    elif notes:
+        base["counterexample_strength_hint"] = "weak_candidate" if primary else "invalid_or_unclear"
+    elif notes and any("unclear" in note.lower() or "不清楚" in note for note in notes):
         base["pass_fail"] = "needs_review"
     else:
         base["pass_fail"] = "pass"
 
     base["failure_types_detected"] = failures
-    base["notes"] = " ".join(notes) if notes else "Heuristic check passed."
+    base["notes"] = " ".join(notes) if notes else "Automatic first-pass check passed."
     return base
+
+
+def infer_helper_use_from_plan(parsed: dict[str, Any], task: dict[str, Any]) -> dict[str, str]:
+    text = _combined_plan_text(parsed)
+    helper_keywords = _helper_keywords_for_task(task)
+    has_helper = any(keyword.lower() in text for keyword in helper_keywords)
+    has_search = any(keyword.lower() in text for keyword in SEARCH_KEYWORDS)
+    one_by_one = any(keyword.lower() in text for keyword in ONE_BY_ONE_KEYWORDS)
+    direct_only = any(keyword.lower() in text for keyword in DIRECT_ONLY_KEYWORDS)
+
+    if has_helper:
+        inferred_uses_helper = "yes"
+    elif one_by_one or direct_only:
+        inferred_uses_helper = "no"
+    else:
+        inferred_uses_helper = "unknown"
+
+    return {
+        "inferred_uses_helper": inferred_uses_helper,
+        "inferred_searches_helper": "yes" if has_search else "no",
+        "inferred_one_by_one": "yes" if one_by_one else "no",
+    }
 
 
 def assign_counterexample_strength(evaluations: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -105,29 +201,59 @@ def assign_counterexample_strength(evaluations: list[dict[str, Any]]) -> list[di
         grouped[key].append(row)
 
     for rows in grouped.values():
-        qwen_failed = any(row.get("provider") == "qwen" and row.get("pass_fail") == "fail" for row in rows)
-        closed_failed = any(row.get("provider") in {"openai", "gemini"} and row.get("pass_fail") == "fail" for row in rows)
-        closed_passed = any(row.get("provider") in {"openai", "gemini"} and row.get("pass_fail") == "pass" for row in rows)
-        any_failed = any(row.get("pass_fail") == "fail" for row in rows)
+        primary_rows = [row for row in rows if row.get("primary_for_counterexample") is True]
+        non_mock_rows = [row for row in primary_rows if row.get("strength_role") != "mock"]
+        qwen_failed = any(row.get("strength_role") == "qwen_main" and row.get("pass_fail") == "fail" for row in non_mock_rows)
+        other_non_mock_failed = any(
+            row.get("strength_role") not in {"qwen_main", "mock"} and row.get("pass_fail") == "fail" for row in non_mock_rows
+        )
+        other_non_qwen_passed = any(
+            row.get("strength_role") not in {"qwen_main", "mock"} and row.get("pass_fail") == "pass" for row in non_mock_rows
+        )
+        failed_non_mock_count = sum(1 for row in non_mock_rows if row.get("pass_fail") == "fail")
+
         for row in rows:
-            if row.get("pass_fail") != "fail":
+            if row.get("pass_fail") != "fail" or row.get("primary_for_counterexample") is not True or row.get("strength_role") == "mock":
                 row["counterexample_strength_hint"] = "invalid_or_unclear"
-            elif qwen_failed and closed_failed:
+            elif qwen_failed and other_non_mock_failed:
                 row["counterexample_strength_hint"] = "strong_candidate"
-            elif qwen_failed and closed_passed:
+            elif qwen_failed and other_non_qwen_passed:
                 row["counterexample_strength_hint"] = "medium_candidate"
-            elif any_failed:
+            elif failed_non_mock_count == 1:
                 row["counterexample_strength_hint"] = "weak_candidate"
             else:
                 row["counterexample_strength_hint"] = "invalid_or_unclear"
     return evaluations
 
 
+def _combined_plan_text(parsed: dict[str, Any]) -> str:
+    pieces: list[str] = []
+    pieces.extend(parsed.get("plan", []))
+    for key in [
+        "task_understanding",
+        "tool_or_container",
+        "efficiency_consideration",
+        "safety_or_stability_consideration",
+        "uncertainty_or_missing_information",
+        "reason",
+        "failure_risk",
+    ]:
+        value = parsed.get(key)
+        if value:
+            pieces.append(str(value))
+    return " ".join(pieces).lower()
+
+
+def _helper_keywords_for_task(task: dict[str, Any]) -> list[str]:
+    expected_types = task.get("expected_behavior", {}).get("expected_tool_or_container_types", []) or []
+    keywords = list(GENERAL_HELPER_KEYWORDS)
+    for helper_type in expected_types:
+        helper_text = str(helper_type)
+        keywords.append(helper_text)
+        keywords.extend(HELPER_TYPE_SYNONYMS.get(helper_text, []))
+    return sorted({keyword for keyword in keywords if keyword})
+
+
 def _task_failures(task: dict[str, Any], candidates: list[str]) -> list[str]:
     configured = set(task.get("failure_types", []))
     return [failure for failure in candidates if failure in configured] or candidates[:1]
-
-
-def _looks_like_one_by_one(plan_text: str) -> bool:
-    markers = ["逐个", "一个个", "一瓶一瓶", "一件一件", "one by one", "one-by-one", "each item"]
-    return any(marker in plan_text for marker in markers)
