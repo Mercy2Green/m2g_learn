@@ -63,6 +63,81 @@ models:
     image_transport: data_url
     extra_body: {}
 
+  - model_id: ollama_qwen3_vl_8b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: true
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:8b
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 180
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_4b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:4b
+    strength_role: local_small_vlm
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 180
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_gemma3_12b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: gemma3:12b
+    strength_role: local_open_vlm
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 180
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_gemma3_27b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: gemma3:27b
+    strength_role: local_open_vlm
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 240
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_30b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:30b
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 240
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
   - model_id: openai_default
     provider: openai
     provider_label: openai
@@ -88,7 +163,7 @@ models:
   - model_id: mock
     provider: mock
     provider_label: mock
-    enabled: true
+    enabled: false
     model_name: mock
     strength_role: mock
     temperature: 0.0

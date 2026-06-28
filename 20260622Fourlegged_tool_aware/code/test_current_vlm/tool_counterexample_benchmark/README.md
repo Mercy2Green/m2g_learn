@@ -34,12 +34,17 @@ Diagnostic prompt:
 
 ```bash
 cd 20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark
-python -m venv .venv
-source .venv/bin/activate
+conda activate codex_ollama
 pip install -r requirements.txt
 ```
 
 For a dry run, the repo includes a limited YAML fallback. Real API runs should install `requirements.txt`.
+
+The shared local environment for Ollama-linked runs is:
+
+```bash
+conda activate codex_ollama
+```
 
 ## How to add images
 
@@ -98,6 +103,65 @@ python scripts/smoke_bailian_config_check.py
 ```
 
 Warnings about empty image folders are expected before you add images.
+
+## Local Ollama pre-screening
+
+Ollama is used as a cheap local pre-screening route. It is not a replacement for stronger paid/cloud verification models.
+
+Recommended workflow:
+
+1. Use Ollama local VLMs to scan many candidate images/tasks.
+2. Keep only stable failure cases.
+3. Verify the strongest 5-10 cases with Bailian or another stronger cloud VLM.
+
+Recommended local models:
+
+- `qwen3-vl:8b`: main local Qwen VLM pre-screening baseline.
+- `qwen3-vl:4b`: small weak baseline.
+- `gemma3:12b`: cross-model-family local sanity check.
+- `gemma3:27b` or `qwen3-vl:30b`: optional stronger local checks if GPU memory allows.
+
+Start Ollama:
+
+```bash
+ollama serve
+```
+
+Pull candidate models:
+
+```bash
+ollama pull qwen3-vl:8b
+ollama pull qwen3-vl:4b
+ollama pull gemma3:12b
+```
+
+Check local Ollama config without inference:
+
+```bash
+python scripts/smoke_ollama_config_check.py
+```
+
+Run a local smoke test after adding at least one image:
+
+```bash
+python -m src.run_batch \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --output_dir outputs/ollama_smoke \
+  --task_ids task_001 \
+  --model_ids ollama_qwen3_vl_8b \
+  --prompt_ids natural_free_plan \
+  --limit 1 \
+  --overwrite
+```
+
+Important:
+
+- Ollama failure alone is not final paper evidence.
+- Stronger cloud verification is still needed.
+- Use `--model_ids` to avoid unintentionally running both local and cloud models.
+- Ollama uses native `/api/chat` with `images: [base64]`, while Bailian/OpenAI-compatible providers use `image_url` data URLs. These are intentionally separate providers.
 
 ## How to run
 
@@ -215,4 +279,7 @@ When a helper is unavailable or unsuitable, the model gives no fallback.
 
 - Bailian model names and vision input support must be confirmed in the Bailian console.
 - `image_transport: data_url` is implemented; some OpenAI-compatible providers may require a different image transport.
+- Ollama must be installed and running separately; the Python environment only contains benchmark dependencies.
+- Some Ollama models may not support image input even if text inference works. Confirm with a small local smoke test.
+- 27B/30B local models may exceed available GPU memory.
 - The heuristic evaluator can miss implicit helper use or over-detect keyword mentions. Review `failed_cases.md` and raw outputs manually.

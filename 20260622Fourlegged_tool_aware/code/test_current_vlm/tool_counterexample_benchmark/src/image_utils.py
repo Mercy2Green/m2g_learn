@@ -32,3 +32,11 @@ def image_to_data_url(image_path: str | Path) -> str:
     mime_type = mimetypes.guess_type(path.name)[0] or "image/jpeg"
     encoded = base64.b64encode(path.read_bytes()).decode("ascii")
     return f"data:{mime_type};base64,{encoded}"
+
+
+def image_to_base64(image_path: str | Path) -> str:
+    """Return raw base64 image string without a data URL prefix."""
+    path = Path(image_path)
+    if not path.exists():
+        raise FileNotFoundError(f"Image file not found: {path}")
+    return base64.b64encode(path.read_bytes()).decode("ascii")
