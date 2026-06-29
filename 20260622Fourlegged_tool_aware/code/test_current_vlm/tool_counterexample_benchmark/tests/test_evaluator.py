@@ -103,6 +103,45 @@ def test_valid_container_action_chain() -> None:
     assert row["inferred_valid_helper_action_chain"] == "yes"
 
 
+def test_selected_helper_without_action_chain_is_not_valid() -> None:
+    row = evaluate_response(
+        water_task(),
+        parsed(
+            {
+                "plan": ["carry the water bottles to the bedroom"],
+                "selected_helper": "tray",
+                "tool_use_action_chain": [],
+                "estimated_number_of_trips": "single",
+            }
+        ),
+        MODEL,
+        STRUCTURED_PROMPT,
+        "image.jpg",
+    )
+    assert row["inferred_valid_helper_action_chain"] == "no"
+    assert row["pass_fail"] in {"fail", "needs_review"}
+    assert row["pass_fail"] != "pass"
+
+
+def test_structured_selected_helper_with_real_action_chain_is_valid() -> None:
+    row = evaluate_response(
+        water_task(),
+        parsed(
+            {
+                "plan": ["find a tray", "place bottles on the tray", "carry the tray to the bedroom"],
+                "selected_helper": "tray",
+                "tool_use_action_chain": ["find a tray", "place bottles on the tray", "carry the tray to the bedroom"],
+                "estimated_number_of_trips": "single",
+            }
+        ),
+        MODEL,
+        STRUCTURED_PROMPT,
+        "image.jpg",
+    )
+    assert row["pass_fail"] == "pass"
+    assert row["inferred_valid_helper_action_chain"] == "yes"
+
+
 def test_direct_capacity_hallucination() -> None:
     row = evaluate_response(
         water_task(),
@@ -131,6 +170,8 @@ if __name__ == "__main__":
     test_target_as_helper()
     test_mention_as_use()
     test_valid_container_action_chain()
+    test_selected_helper_without_action_chain_is_not_valid()
+    test_structured_selected_helper_with_real_action_chain_is_valid()
     test_direct_capacity_hallucination()
     test_over_tool_use()
     print("evaluator synthetic tests passed")

@@ -42,7 +42,17 @@ HELPER_TYPE_SYNONYMS = {
 SEARCH_KEYWORDS = ["寻找", "查找", "检查附近", "查看附近", "搜索附近", "附近是否", "look for", "search nearby", "check nearby"]
 ONE_BY_ONE_KEYWORDS = ["逐个", "一个个", "一瓶一瓶", "一件一件", "每次一个", "one by one", "one-by-one", "each item"]
 DIRECT_ONLY_KEYWORDS = [
-    "直接抓取", "直接拿", "直接夹取", "directly grasp", "pick up directly", "grasp directly", "grasp the", "directly pick",
+    "直接抓取",
+    "直接拿",
+    "直接夹取",
+    "直接用夹爪",
+    "直接拾取",
+    "directly grasp",
+    "grasp directly",
+    "grasp the remote directly",
+    "pick up directly",
+    "directly pick",
+    "use the gripper to pick",
 ]
 DIRECT_CARRY_ALL_KEYWORDS = [
     "拿起所有", "抓起所有", "直接拿所有", "一次拿完", "一次性直接拿", "直接搬运所有", "全部直接拿",
@@ -50,9 +60,9 @@ DIRECT_CARRY_ALL_KEYWORDS = [
 ]
 VALID_HELPER_ACTION_KEYWORDS = [
     "放入", "放进", "装入", "装进", "装载", "承载", "托着", "端起", "搬运", "运送", "收集", "盛放",
-    "拨出", "拨出来", "拉出", "推出来", "勾出", "扫出", "擦拭", "清理", "清扫", "用", "place", "put",
-    "load", "carry", "transport", "deliver", "collect", "gather", "push", "pull", "hook", "sweep",
-    "wipe", "clean",
+    "拨出", "拨出来", "拉出", "推出来", "勾出", "扫出", "擦拭", "清理", "清扫", "使用", "用",
+    "place", "put", "load", "carry", "transport", "deliver", "collect", "gather", "push", "pull",
+    "hook", "sweep", "wipe", "clean", "use",
 ]
 NEGATED_MENTION_PATTERNS = ["avoid", "避开", "不要碰", "not use", "不用", "不使用", "ignore", "忽略"]
 
@@ -175,8 +185,6 @@ def evaluate_response(
 
 def infer_helper_use_from_plan(parsed: dict[str, Any], task: dict[str, Any]) -> dict[str, str]:
     text = _combined_plan_text(parsed)
-    plan_text = " ".join(parsed.get("plan", [])).lower()
-    action_chain_text = " ".join(parsed.get("tool_use_action_chain", [])).lower()
     helper_keywords = _helper_keywords_for_task(task)
     selected_helper = _selected_helper(parsed)
     target_terms = _target_terms_for_task(task)
@@ -187,7 +195,7 @@ def infer_helper_use_from_plan(parsed: dict[str, Any], task: dict[str, Any]) -> 
     one_by_one = any(keyword.lower() in text for keyword in ONE_BY_ONE_KEYWORDS)
     direct_operation = any(keyword.lower() in text for keyword in DIRECT_ONLY_KEYWORDS)
     direct_capacity_risk = _has_direct_capacity_risk(text)
-    valid_chain = _has_valid_helper_action_chain(text, action_chain_text, helper_keywords, selected_helper, target_as_helper)
+    valid_chain = _has_valid_helper_action_chain(parsed, helper_keywords, selected_helper, target_as_helper)
 
     if target_as_helper:
         uses_helper = "no"
@@ -296,26 +304,87 @@ def _has_direct_capacity_risk(text: str) -> bool:
 
 
 def _has_valid_helper_action_chain(
-    text: str,
-    action_chain_text: str,
+    parsed: dict[str, Any],
     helper_keywords: list[str],
     selected_helper: str,
     target_as_helper: bool,
 ) -> bool:
     if target_as_helper:
         return False
-    helper_terms = list(helper_keywords)
+    helper_terms = [term for term in helper_keywords if term]
     if selected_helper:
         helper_terms.append(selected_helper)
-    has_helper = any(term.lower() in text for term in helper_terms if term)
-    if not has_helper:
+    helper_terms = sorted({term.lower() for term in helper_terms if term}, key=len, reverse=True)
+    if not helper_terms:
         return False
-    has_action = any(keyword.lower() in text for keyword in VALID_HELPER_ACTION_KEYWORDS)
-    has_chain_action = any(keyword.lower() in action_chain_text for keyword in VALID_HELPER_ACTION_KEYWORDS)
-    negated = any(pattern in text for pattern in NEGATED_MENTION_PATTERNS)
-    if negated and not has_chain_action:
+
+    chain_steps = _normalized_steps(parsed.get("tool_use_action_chain", []))
+    plan_steps = _normalized_steps(parsed.get("plan", []))
+
+    for step in chain_steps:
+        if _step_has_helper_and_action(step, helper_terms) and not _has_negated_helper_mention(step):
+            return True
+
+    for step in plan_steps:
+        if _step_has_helper_and_action(step, helper_terms) and not _has_negated_helper_mention(step):
+            return True
+
+    return _has_conservative_helper_sequence(chain_steps + plan_steps, helper_terms)
+
+
+def _normalized_steps(value: Any) -> list[str]:
+    if isinstance(value, list):
+        return [str(item).lower() for item in value if str(item).strip()]
+    if value:
+        return [str(value).lower()]
+    return []
+
+
+def _step_has_helper_and_action(step: str, helper_terms: list[str]) -> bool:
+    if not step or _has_negated_helper_mention(step):
         return False
-    return has_action or has_chain_action
+    has_helper = any(term and term in step for term in helper_terms)
+    has_action = any(keyword.lower() in step for keyword in VALID_HELPER_ACTION_KEYWORDS)
+    return has_helper and has_action
+
+
+def _has_negated_helper_mention(step: str) -> bool:
+    lowered = step.lower()
+    return any(pattern.lower() in lowered for pattern in NEGATED_MENTION_PATTERNS)
+
+
+def _has_conservative_helper_sequence(steps: list[str], helper_terms: list[str]) -> bool:
+    helper_seen = False
+    for step in steps:
+        if _has_negated_helper_mention(step):
+            continue
+        step_has_helper = any(term and term in step for term in helper_terms)
+        step_has_action = any(keyword.lower() in step for keyword in VALID_HELPER_ACTION_KEYWORDS)
+        if step_has_helper:
+            helper_seen = True
+        if helper_seen and step_has_helper and step_has_action:
+            return True
+        if helper_seen and step_has_action and _refers_to_seen_helper(step):
+            return True
+    return False
+
+
+def _refers_to_seen_helper(step: str) -> bool:
+    reference_terms = [
+        "it",
+        "that helper",
+        "the helper",
+        "the selected item",
+        "它",
+        "其",
+        "将其",
+        "把它",
+        "其中",
+        "该辅助物",
+        "该物品",
+        "这个辅助物",
+    ]
+    return any(term in step for term in reference_terms)
 
 
 def _task_failures(task: dict[str, Any], candidates: list[str]) -> list[str]:

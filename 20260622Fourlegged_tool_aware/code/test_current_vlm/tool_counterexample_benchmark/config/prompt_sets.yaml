@@ -26,50 +26,6 @@ prompts:
         "reason": "string"
       }
 
-  - prompt_id: structured_tool_action_chain_probe_quadruped_single_arm
-    name: Action-chain diagnostic probe for quadruped single-arm robot
-    primary_for_counterexample: false
-    include_scene_note: false
-    embodiment_profile: quadruped_single_arm
-    prompt_category: diagnostic_probe
-    diagnostic_type: action_chain
-    description: "Diagnostic only. Quadruped single-arm constrained action-chain probe."
-    system_prompt: |
-      你是一个有四足移动底盘、一个安装机械臂和一个夹爪的家用机器人。
-      移动时必须保持身体平衡。
-      夹爪通常一次只能稳定携带一个普通小物体；只有在物体物理上紧密成组且稳定时，才可携带极少量组合物体。
-      不要假设你可以直接携带许多松散、分离的物体。
-      对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
-      只给出高层可执行计划，不要输出低层关节或步态动作。
-      如果需要先检查附近区域，请明确说明。
-      输出必须是单个合法 JSON 对象。
-      不要输出 markdown、解释、评论或代码块。
-    user_prompt_template: |
-      任务：{instruction}
-    response_schema_text: |
-      JSON schema:
-      {
-        "task_understanding": "string",
-        "plan": ["step1", "step2", "step3"],
-        "target_objects": ["string"],
-        "helper_needed": "yes/no/uncertain",
-        "helper_purpose": "aggregation/access/reach/stability/protection/cleaning/none/uncertain",
-        "visible_helper_detected": "yes/no/uncertain",
-        "visible_helper_objects": ["string"],
-        "search_for_helper_if_none_visible": "yes/no/not_applicable/uncertain",
-        "selected_helper": "string or none",
-        "tool_use_action_chain": ["step1", "step2", "step3"],
-        "estimated_number_of_trips": "single/few/multiple/unknown",
-        "efficiency_consideration": "string",
-        "safety_or_stability_consideration": "string",
-        "physical_feasibility_risk": "string",
-        "uncertainty_or_missing_information": "string",
-        "reason": "string",
-        "failure_risk": "string"
-      }
-        "reason": "string"
-      }
-
   - prompt_id: efficient_safe_free_plan
     name: Efficient and safe free-form plan
     primary_for_counterexample: true
@@ -297,3 +253,47 @@ prompts:
         "efficiency_consideration": "string",
         "safety_or_stability_consideration": "string",
         "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: structured_tool_action_chain_probe_quadruped_single_arm
+    name: Action-chain diagnostic probe for quadruped single-arm robot
+    primary_for_counterexample: false
+    include_scene_note: false
+    embodiment_profile: quadruped_single_arm
+    prompt_category: diagnostic_probe
+    diagnostic_type: action_chain
+    description: "Diagnostic only. Quadruped single-arm constrained action-chain probe."
+    system_prompt: |
+      你是一个有四足移动底盘、一个安装机械臂和一个夹爪的家用机器人。
+      移动时必须保持身体平衡。
+      夹爪通常一次只能稳定携带一个普通小物体；只有在物体物理上紧密成组且稳定时，才可携带极少量组合物体。
+      不要假设你可以直接携带许多松散、分离的物体。
+      对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
+      只给出高层可执行计划，不要输出低层关节或步态动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    user_prompt_template: |
+      任务：{instruction}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "target_objects": ["string"],
+        "helper_needed": "yes/no/uncertain",
+        "helper_purpose": "aggregation/access/reach/stability/protection/cleaning/none/uncertain",
+        "visible_helper_detected": "yes/no/uncertain",
+        "visible_helper_objects": ["string"],
+        "search_for_helper_if_none_visible": "yes/no/not_applicable/uncertain",
+        "selected_helper": "string or none",
+        "tool_use_action_chain": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "physical_feasibility_risk": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string",
+        "failure_risk": "string"
+      }

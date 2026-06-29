@@ -146,16 +146,28 @@ def write_summary(
     for embodiment, rows in _group_by(evaluations, "embodiment_profile").items():
         lines.append(_status_row(embodiment, Counter(row.get("pass_fail", "") for row in rows)))
 
-    lines.extend(["", "## Format reliability by model", "| Model | OK parse | Parse error |", "| --- | ---: | ---: |"])
+    lines.extend(["", "## Format reliability by model", "| Model | Attempted | OK parse | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: |"])
     for model_id, rows in _group_by(evaluations, "model_id").items():
-        counter = Counter(row.get("pass_fail", "") for row in rows)
-        ok_parse = len(rows) - counter.get("parse_error", 0)
-        lines.append(f"| {model_id} | {ok_parse} | {counter.get('parse_error', 0)} |")
+        attempted_rows = [row for row in rows if row.get("pass_fail") != "skipped"]
+        parse_error = sum(1 for row in attempted_rows if row.get("pass_fail") == "parse_error")
+        ok_parse = sum(1 for row in attempted_rows if row.get("pass_fail") in {"pass", "fail", "needs_review"})
+        skipped = sum(1 for row in rows if row.get("pass_fail") == "skipped")
+        lines.append(f"| {model_id} | {len(attempted_rows)} | {ok_parse} | {parse_error} | {skipped} |")
 
     lines.extend(["", "## Planning quality excluding parse_error/skipped", "| Scope | Pass | Fail | Review |", "| --- | ---: | ---: | ---: |"])
     quality_rows = [row for row in evaluations if row.get("pass_fail") not in {"parse_error", "skipped"}]
     quality_counter = Counter(row.get("pass_fail", "") for row in quality_rows)
     lines.append(f"| all_planning_rows | {quality_counter.get('pass', 0)} | {quality_counter.get('fail', 0)} | {quality_counter.get('needs_review', 0)} |")
+
+    lines.extend(["", "## Planning quality by prompt excluding parse_error/skipped", "| Prompt | Pass | Fail | Review |", "| --- | ---: | ---: | ---: |"])
+    for prompt_id, rows in _group_by(quality_rows, "prompt_id").items():
+        counter = Counter(row.get("pass_fail", "") for row in rows)
+        lines.append(f"| {prompt_id} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | {counter.get('needs_review', 0)} |")
+
+    lines.extend(["", "## Planning quality by embodiment excluding parse_error/skipped", "| Embodiment | Pass | Fail | Review |", "| --- | ---: | ---: | ---: |"])
+    for embodiment, rows in _group_by(quality_rows, "embodiment_profile").items():
+        counter = Counter(row.get("pass_fail", "") for row in rows)
+        lines.append(f"| {embodiment} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | {counter.get('needs_review', 0)} |")
 
     for title, hint in [
         ("Strong clean candidate counterexamples", "strong_candidate"),

@@ -102,7 +102,7 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: gemma3:12b
     strength_role: local_open_vlm
-    supports_vision: unknown
+    supports_vision: true
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 180
@@ -118,7 +118,7 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: gemma3:27b
     strength_role: local_open_vlm
-    supports_vision: unknown
+    supports_vision: true
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 240

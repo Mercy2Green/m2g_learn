@@ -36,6 +36,8 @@ Diagnostic prompts:
 
 Diagnostic probes ask for helper/action-chain fields and are useful for debugging, but they are not clean main counterexample evidence.
 
+Summary reports separate parse reliability from planning quality. Skipped rows are excluded from OK parse counts, and structured/action-chain probes remain diagnostic-only rows.
+
 ## Install
 
 ```bash
@@ -362,7 +364,8 @@ When a helper is unavailable or unsuitable, the model gives no fallback.
 - Bailian model names and vision input support must be confirmed in the Bailian console.
 - `image_transport: data_url` is implemented; some OpenAI-compatible providers may require a different image transport.
 - Ollama must be installed and running separately; the Python environment only contains benchmark dependencies.
-- Some Ollama models may not support image input even if text inference works. Confirm with a small local smoke test.
+- `scripts/smoke_ollama_config_check.py` only verifies local Ollama tags and does not prove image input works.
+- Some Ollama models may not support image input even if text inference works. Confirm with a small local image smoke test.
 - 27B/30B local models may exceed available GPU memory.
 - `supports_vision: false/unknown` models should not be used as VLM evidence until image input is confirmed.
 - The heuristic evaluator can miss implicit helper use or over-detect keyword mentions. Review `failed_cases.md` and raw outputs manually.
