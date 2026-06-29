@@ -184,7 +184,7 @@ python -m src.run_batch \
   --tasks config/tasks.yaml \
   --output_dir outputs/ollama_smoke \
   --task_ids task_001 \
-  --model_ids ollama_qwen3_vl_8b \
+  --model_ids ollama_qwen3_vl_8b ollama_qwen3_vl_4b \
   --prompt_ids natural_free_plan \
   --limit 1 \
   --overwrite

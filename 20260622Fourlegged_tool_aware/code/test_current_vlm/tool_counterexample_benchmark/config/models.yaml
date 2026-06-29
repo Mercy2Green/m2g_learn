@@ -81,7 +81,7 @@ models:
   - model_id: ollama_qwen3_vl_4b
     provider: ollama
     provider_label: ollama_local
-    enabled: false
+    enabled: true
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: qwen3-vl:4b
     strength_role: local_small_vlm
@@ -96,7 +96,7 @@ models:
   - model_id: ollama_gemma3_12b
     provider: ollama
     provider_label: ollama_local
-    enabled: false
+    enabled: true
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: gemma3:12b
     strength_role: local_open_vlm
