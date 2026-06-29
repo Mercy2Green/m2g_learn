@@ -1,0 +1,181 @@
+tasks:
+  - task_id: task_001
+    task_name: multi_bottles_visible_container
+    folder: images/task_001_multi_bottles_visible_container
+    target_num_images: 3
+    queries:
+      - "kitchen counter several water bottles tray"
+      - "water bottles on kitchen counter tray"
+      - "several drinks on table with tray"
+      - "water bottles basket kitchen counter"
+      - "bottled drinks box kitchen"
+    desired_scene: "Several bottles or cans on a kitchen/table counter, with a possible carrying helper such as tray, bag, box, or basket visible."
+    avoid:
+      - "stock product isolated"
+      - "watermark"
+      - "people faces"
+      - "text-heavy image"
+
+  - task_id: task_002
+    task_name: multi_bottles_no_visible_container
+    folder: images/task_002_multi_bottles_no_visible_container
+    target_num_images: 3
+    queries:
+      - "several water bottles on kitchen counter"
+      - "multiple drink bottles on table"
+      - "bottled water kitchen counter"
+      - "several bottles on countertop"
+      - "drinks on kitchen table"
+    desired_scene: "Several bottles or cans visible, but no obvious tray, bag, box, or basket."
+    avoid:
+      - "visible tray"
+      - "visible bag"
+      - "visible box"
+      - "watermark"
+
+  - task_id: task_003
+    task_name: meeting_items_backpack
+    folder: images/task_003_meeting_items_backpack
+    target_num_images: 3
+    queries:
+      - "desk with phone notebook keys backpack"
+      - "office desk phone notebook backpack"
+      - "items on desk with backpack"
+      - "work desk laptop phone charger backpack"
+    desired_scene: "Desk with phone, notebook, keys, charger, cup, and a nearby backpack or bag."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "isolated product photo"
+
+  - task_id: task_004
+    task_name: snacks_drinks_tray
+    folder: images/task_004_snacks_drinks_tray
+    target_num_images: 3
+    queries:
+      - "snacks and drinks on kitchen counter tray"
+      - "drinks snacks cups tray kitchen"
+      - "serving tray with drinks and snacks"
+      - "kitchen table snacks drinks tray"
+    desired_scene: "Drinks, snacks, and cups near a tray or arranged for serving multiple people."
+    avoid:
+      - "people faces"
+      - "restaurant advertisement"
+      - "watermark"
+      - "text-heavy image"
+
+  - task_id: task_005
+    task_name: used_cups_dishes
+    folder: images/task_005_used_cups_dishes
+    target_num_images: 3
+    queries:
+      - "used cups plates on dining table"
+      - "dirty dishes cups on table"
+      - "dining table used dishes cups"
+      - "multiple plates cups on table after meal"
+    desired_scene: "Dining table with multiple used cups, plates, or bowls after a meal."
+    avoid:
+      - "people faces"
+      - "restaurant advertisement"
+      - "watermark"
+      - "text-heavy image"
+
+  - task_id: task_006
+    task_name: scattered_small_objects
+    folder: images/task_006_scattered_small_objects
+    target_num_images: 3
+    queries:
+      - "scattered toys blocks on floor box"
+      - "small objects scattered on floor"
+      - "lego pieces scattered on floor"
+      - "coins scattered on floor box"
+      - "bottle caps scattered on floor"
+    desired_scene: "Small objects scattered on the floor; a box, broom, or dustpan is helpful but not required."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "product isolated"
+
+  - task_id: task_007
+    task_name: laundry_basket
+    folder: images/task_007_laundry_basket
+    target_num_images: 3
+    queries:
+      - "clothes on floor laundry basket"
+      - "laundry on floor basket"
+      - "towels on floor laundry basket"
+      - "bedroom clothes laundry basket"
+    desired_scene: "Clothes or towels scattered on the floor with a laundry basket or storage bin nearby."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "fashion product photo"
+
+  - task_id: task_008
+    task_name: remote_under_sofa
+    folder: images/task_008_remote_under_sofa
+    target_num_images: 3
+    queries:
+      - "remote control under sofa"
+      - "toy ball under couch"
+      - "object under sofa broom"
+      - "remote under couch floor"
+    desired_scene: "A remote, ball, or small object under a sofa or couch; nearby long object is helpful but not required."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "cartoon illustration"
+
+  - task_id: task_009
+    task_name: dirty_floor_or_table
+    folder: images/task_009_dirty_floor_or_table
+    target_num_images: 3
+    queries:
+      - "crumbs on table cloth"
+      - "spilled coffee on floor cloth"
+      - "dirty table crumbs tissue"
+      - "water spill on floor towel"
+      - "crumbs on floor broom dustpan"
+    desired_scene: "Dirty table or floor with crumbs, water, coffee, tissue, towel, cloth, broom, or dustpan."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "advertisement"
+
+  - task_id: task_010
+    task_name: fragile_objects
+    folder: images/task_010_fragile_objects
+    target_num_images: 3
+    queries:
+      - "eggs on kitchen counter tray"
+      - "fragile glasses on tray kitchen"
+      - "glass cups on kitchen counter tray"
+      - "eggs in carton kitchen counter"
+      - "fruit glasses tray kitchen"
+    desired_scene: "Eggs, glass cups, fruit, or other fragile/unstable objects on a counter, preferably near a tray or box."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "isolated product photo"
+
+  - task_id: task_011
+    task_name: single_bottle_tool_unnecessary
+    folder: images/task_011_single_bottle_tool_unnecessary
+    target_num_images: 3
+    queries:
+      - "single water bottle on table"
+      - "one bottle on kitchen counter"
+      - "single drink bottle on desk"
+      - "water bottle on table tray nearby"
+    desired_scene: "A single bottle or drink directly reachable; any nearby helper should not dominate the scene."
+    avoid:
+      - "people faces"
+      - "watermark"
+      - "text-heavy image"
+      - "isolated product photo"

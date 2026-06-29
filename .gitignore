@@ -16,3 +16,9 @@
 20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/*
 !20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/.gitkeep
 20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/.env
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/**/*.jpg
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/**/*.jpeg
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/**/*.png
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/**/*.webp
+20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/image_metadata/*
+!20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/image_metadata/.gitkeep

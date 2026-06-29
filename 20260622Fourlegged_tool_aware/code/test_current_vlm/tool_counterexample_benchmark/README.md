@@ -66,6 +66,40 @@ Images should be real or realistic robot-view scenes. Do not write the answer on
 
 `scene_note` in `config/tasks.yaml` is for human bookkeeping and optional diagnostic prompts. It is not used by the primary clean prompts.
 
+## Collect temporary web images for smoke tests
+
+This script collects temporary web images for internal smoke tests only. These images are not a final dataset and should not be used in a paper or released publicly unless their licenses are manually verified.
+
+The default route searches Wikimedia Commons first, then Openverse as a fallback. It downloads traceable image files, resizes them to a modest size, and writes metadata for manual review. Downloaded images and generated metadata are gitignored by default.
+
+Run:
+
+```bash
+python scripts/collect_web_images.py --max_per_task 3
+```
+
+For a subset:
+
+```bash
+python scripts/collect_web_images.py --task_ids task_001 task_002 --max_per_task 3
+```
+
+Dry run:
+
+```bash
+python scripts/collect_web_images.py --dry_run
+```
+
+After collection, manually inspect:
+
+```text
+image_metadata/manual_review_checklist.md
+```
+
+Do not treat downloaded images as clean benchmark data without manual review. Final counterexamples should preferably use your own robot-view photos or explicitly licensed images that have been checked one by one.
+
+If web search is blocked or returns poor matches, add traceable direct image URLs to `config/manual_image_urls.yaml` and rerun the script. Manual URLs still get metadata entries and resize processing.
+
 ## Configure Alibaba Cloud Bailian
 
 The recommended main provider is Alibaba Cloud Bailian / DashScope OpenAI-compatible API through `openai_compatible`.
