@@ -70,6 +70,7 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: qwen3-vl:8b
     strength_role: qwen_main
+    supports_vision: true
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 180
@@ -85,6 +86,7 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: qwen3-vl:4b
     strength_role: local_small_vlm
+    supports_vision: true
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 180
@@ -100,6 +102,7 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: gemma3:12b
     strength_role: local_open_vlm
+    supports_vision: unknown
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 180
@@ -115,6 +118,7 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: gemma3:27b
     strength_role: local_open_vlm
+    supports_vision: unknown
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 240
@@ -130,9 +134,106 @@ models:
     base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
     model_name: qwen3-vl:30b
     strength_role: qwen_main
+    supports_vision: true
     temperature: 0.01
     max_tokens: 1024
     timeout_seconds: 240
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_32b_instruct_q4_K_M
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:32b-instruct-q4_K_M
+    strength_role: qwen_main
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:30b-a3b-instruct-q4_K_M
+    strength_role: local_strong_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_5_35b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3.5:35b
+    strength_role: local_strong_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_minicpm_v4_5_q8_0
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: minicpm-v4.5:q8_0
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 300
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_gemma3_27b_it_q8_0
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: gemma3:27b-it-q8_0
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_llama3_2_vision_11b_instruct_q8_0
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: llama3.2-vision:11b-instruct-q8_0
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 300
     retries: 1
     format_json: true
     num_ctx: 4096

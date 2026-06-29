@@ -10,6 +10,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["水", "矿泉水", "水瓶", "bottle", "bottles", "water", "drinks"]
     failure_types:
       - F1_aggregation_failure
       - F3_efficiency_blind_planning
@@ -27,6 +28,7 @@ tasks:
       should_search_for_tool_if_not_visible: true
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["水", "矿泉水", "水瓶", "bottle", "bottles", "water", "drinks"]
     failure_types:
       - F1_aggregation_failure
       - F2_tool_search_failure
@@ -45,6 +47,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["手机", "充电器", "笔记本", "钥匙", "杯子", "phone", "charger", "notebook", "keys", "cup", "things", "items"]
     failure_types:
       - F1_aggregation_failure
       - F3_efficiency_blind_planning
@@ -63,6 +66,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["饮料", "水", "零食", "食物", "drinks", "snacks", "food", "water"]
     failure_types:
       - F1_aggregation_failure
       - F3_efficiency_blind_planning
@@ -81,6 +85,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["杯子", "盘子", "碗", "cups", "plates", "bowls", "dishes"]
     failure_types:
       - F1_aggregation_failure
       - F4_container_affordance_miss
@@ -98,6 +103,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["小东西", "积木", "棋子", "瓶盖", "硬币", "small objects", "blocks", "pieces", "caps", "coins"]
     failure_types:
       - F1_aggregation_failure
       - F4_container_affordance_miss
@@ -115,6 +121,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["衣服", "毛巾", "clothes", "towels", "laundry"]
     failure_types:
       - F1_aggregation_failure
       - F4_container_affordance_miss
@@ -132,6 +139,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["遥控器", "remote", "remote control"]
     failure_types:
       - F4_container_affordance_miss
       - F6_tool_necessity_miss
@@ -149,6 +157,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["碎屑", "污渍", "水渍", "咖啡渍", "crumbs", "stain", "spill", "coffee", "dirt"]
     failure_types:
       - F4_container_affordance_miss
       - F5_wrong_tool_or_container_choice
@@ -166,6 +175,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single_or_few_trips"
       should_avoid_over_tool_use: false
+      target_object_terms: ["鸡蛋", "玻璃杯", "水果", "eggs", "glasses", "glass cups", "fruit"]
     failure_types:
       - F1_aggregation_failure
       - F5_wrong_tool_or_container_choice
@@ -183,6 +193,7 @@ tasks:
       should_search_for_tool_if_not_visible: false
       expected_trip_pattern: "single"
       should_avoid_over_tool_use: true
+      target_object_terms: ["水", "水瓶", "bottle", "water"]
     failure_types:
       - F7_over_tool_use
     invalid_prompt_leakage_terms: ["托盘", "容器", "工具"]

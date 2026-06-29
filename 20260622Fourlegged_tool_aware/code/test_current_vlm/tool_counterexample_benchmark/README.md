@@ -21,14 +21,20 @@ Primary clean prompts:
 
 - `natural_free_plan`
 - `efficient_safe_free_plan`
+- `natural_free_plan_humanoid_dual_arm`
+- `efficient_safe_free_plan_humanoid_dual_arm`
+- `natural_free_plan_quadruped_single_arm`
+- `efficient_safe_free_plan_quadruped_single_arm`
 
-These prompts do not include `tool`, `container`, `uses_tool_or_container`, or similar output fields. They are the only prompt settings used for clean counterexample strength.
+The generic prompts remain generic baselines. The humanoid/quadruped prompts add only robot capability constraints such as hand count, gripper capacity, balance, and reach limits. They do not name task-specific helper answers. These primary prompts do not include `tool`, `container`, `uses_tool_or_container`, or similar output fields.
 
-Diagnostic prompt:
+Diagnostic prompts:
 
 - `structured_tool_probe`
+- `structured_tool_action_chain_probe_humanoid_dual_arm`
+- `structured_tool_action_chain_probe_quadruped_single_arm`
 
-`structured_tool_probe` is useful for debugging because its schema asks for tool/container fields, but it is not clean main counterexample evidence.
+Diagnostic probes ask for helper/action-chain fields and are useful for debugging, but they are not clean main counterexample evidence.
 
 ## Install
 
@@ -153,7 +159,10 @@ Recommended local models:
 - `qwen3-vl:8b`: main local Qwen VLM pre-screening baseline.
 - `qwen3-vl:4b`: small weak baseline.
 - `gemma3:12b`: cross-model-family local sanity check.
-- `gemma3:27b` or `qwen3-vl:30b`: optional stronger local checks if GPU memory allows.
+- `qwen3-vl:32b-instruct-q4_K_M` and `qwen3-vl:30b-a3b-instruct-q4_K_M`: optional stronger Qwen local checks if GPU memory allows.
+- `gemma3:27b-it-q8_0` and `llama3.2-vision:11b-instruct-q8_0`: optional cross-family local checks.
+- `minicpm-v4.5:q8_0`: optional local open VLM candidate; verify image support first.
+- `qwen3.5:35b`: disabled by default and should not be treated as VLM evidence unless an image smoke test confirms vision support.
 
 Start Ollama:
 
@@ -196,6 +205,45 @@ Important:
 - Stronger cloud verification is still needed.
 - Use `--model_ids` to avoid unintentionally running both local and cloud models.
 - Ollama uses native `/api/chat` with `images: [base64]`, while Bailian/OpenAI-compatible providers use `image_url` data URLs. These are intentionally separate providers.
+
+Run generic clean prompts on selected strong local models:
+
+```bash
+python -m src.run_batch \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --output_dir outputs/ollama_generic_clean_strong \
+  --model_ids ollama_qwen3_vl_32b_instruct_q4_K_M ollama_qwen3_vl_30b_a3b_instruct_q4_K_M ollama_gemma3_27b_it_q8_0 ollama_llama3_2_vision_11b_instruct_q8_0 \
+  --prompt_ids natural_free_plan efficient_safe_free_plan \
+  --overwrite
+```
+
+Run quadruped single-arm constrained prompts:
+
+```bash
+python -m src.run_batch \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --output_dir outputs/ollama_quadruped_single_arm \
+  --model_ids ollama_qwen3_vl_32b_instruct_q4_K_M ollama_llama3_2_vision_11b_instruct_q8_0 \
+  --prompt_ids natural_free_plan_quadruped_single_arm efficient_safe_free_plan_quadruped_single_arm structured_tool_action_chain_probe_quadruped_single_arm \
+  --overwrite
+```
+
+Run humanoid dual-arm constrained prompts:
+
+```bash
+python -m src.run_batch \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --output_dir outputs/ollama_humanoid_dual_arm \
+  --model_ids ollama_qwen3_vl_32b_instruct_q4_K_M ollama_llama3_2_vision_11b_instruct_q8_0 \
+  --prompt_ids natural_free_plan_humanoid_dual_arm efficient_safe_free_plan_humanoid_dual_arm structured_tool_action_chain_probe_humanoid_dual_arm \
+  --overwrite
+```
 
 ## How to run
 
@@ -316,4 +364,5 @@ When a helper is unavailable or unsuitable, the model gives no fallback.
 - Ollama must be installed and running separately; the Python environment only contains benchmark dependencies.
 - Some Ollama models may not support image input even if text inference works. Confirm with a small local smoke test.
 - 27B/30B local models may exceed available GPU memory.
+- `supports_vision: false/unknown` models should not be used as VLM evidence until image input is confirmed.
 - The heuristic evaluator can miss implicit helper use or over-detect keyword mentions. Review `failed_cases.md` and raw outputs manually.

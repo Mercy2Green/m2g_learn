@@ -57,6 +57,8 @@ def find_prompt_leakage(task: dict[str, Any], user_prompt: str) -> list[str]:
 
     The system prompt may contain response schema fields for diagnostic probes, so
     leakage checks intentionally focus on the user-facing task prompt.
+    Embodiment-constrained prompt families intentionally contain robot capability
+    constraints in the system prompt; analyze them separately from generic prompts.
     """
     terms = list(task.get("invalid_prompt_leakage_terms") or []) + GENERAL_LEAKAGE_TERMS
     lowered = user_prompt.lower()

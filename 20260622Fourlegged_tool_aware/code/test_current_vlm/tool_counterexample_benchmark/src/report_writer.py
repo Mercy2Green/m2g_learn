@@ -25,7 +25,10 @@ def write_evaluation_csv(path: str | Path, evaluations: list[dict[str, Any]]) ->
         "provider_label",
         "model_name",
         "strength_role",
+        "supports_vision",
         "prompt_id",
+        "embodiment_profile",
+        "prompt_category",
         "prompt_type",
         "primary_for_counterexample",
         "pass_fail",
@@ -34,6 +37,12 @@ def write_evaluation_csv(path: str | Path, evaluations: list[dict[str, Any]]) ->
         "inferred_uses_helper",
         "inferred_searches_helper",
         "inferred_one_by_one",
+        "inferred_helper_mentioned",
+        "inferred_valid_helper_action_chain",
+        "inferred_target_as_helper",
+        "inferred_selected_helper",
+        "inferred_direct_carry_capacity_risk",
+        "inferred_physical_feasibility_risk",
         "plan_summary",
         "notes",
     ]
@@ -92,20 +101,26 @@ def write_summary(
         "- Structured probe is diagnostic only and is not clean main counterexample evidence.",
         "",
         "## Provider and model information",
-        "| Model | Provider | Provider label | Model name | Strength role |",
-        "| --- | --- | --- | --- | --- |",
+        "| Model | Provider | Provider label | Model name | Strength role | Supports vision |",
+        "| --- | --- | --- | --- | --- | --- |",
     ]
     for model in models:
+        supports_vision = str(model.get("supports_vision", ""))
         lines.append(
             f"| {model.get('model_id', '')} | {model.get('provider', '')} | {model.get('provider_label', '')} | "
-            f"{model.get('model_name', '')} | {model.get('strength_role', '')} |"
+            f"{model.get('model_name', '')} | {model.get('strength_role', '')} | {supports_vision} |"
         )
+        if supports_vision in {"false", "unknown"}:
+            lines.append(f"| WARNING | - | - | {model.get('model_name', '')} | - | Do not treat as VLM evidence until image smoke test passes. |")
 
-    lines.extend(["", "## Prompt type", "| Prompt | Type | Primary | Description |", "| --- | --- | --- | --- |"])
+    lines.extend(["", "## Prompt type", "| Prompt | Type | Embodiment | Category | Primary | Description |", "| --- | --- | --- | --- | --- | --- |"])
     for prompt in prompts:
         prompt_type = "primary clean prompt" if prompt.get("primary_for_counterexample") else "structured probe"
         description = str(prompt.get("description", "")).replace("|", "\\|")
-        lines.append(f"| {prompt.get('prompt_id', '')} | {prompt_type} | {prompt.get('primary_for_counterexample', False)} | {description} |")
+        lines.append(
+            f"| {prompt.get('prompt_id', '')} | {prompt_type} | {prompt.get('embodiment_profile', 'generic')} | "
+            f"{prompt.get('prompt_category', '')} | {prompt.get('primary_for_counterexample', False)} | {description} |"
+        )
 
     lines.extend(["", "## Overall pass/fail summary", "| Scope | Pass | Fail | Review | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: | ---: |"])
     lines.append(_status_row("all", counts))
@@ -122,6 +137,25 @@ def write_summary(
             lines.append(f"| {failure} | {count} | {FAILURE_TAXONOMY.get(failure, '')} |")
     else:
         lines.append("| - | 0 | - |")
+
+    lines.extend(["", "## Per-prompt table", "| Prompt | Pass | Fail | Review | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: | ---: |"])
+    for prompt_id, rows in _group_by(evaluations, "prompt_id").items():
+        lines.append(_status_row(prompt_id, Counter(row.get("pass_fail", "") for row in rows)))
+
+    lines.extend(["", "## Per-embodiment-profile table", "| Embodiment | Pass | Fail | Review | Parse error | Skipped |", "| --- | ---: | ---: | ---: | ---: | ---: |"])
+    for embodiment, rows in _group_by(evaluations, "embodiment_profile").items():
+        lines.append(_status_row(embodiment, Counter(row.get("pass_fail", "") for row in rows)))
+
+    lines.extend(["", "## Format reliability by model", "| Model | OK parse | Parse error |", "| --- | ---: | ---: |"])
+    for model_id, rows in _group_by(evaluations, "model_id").items():
+        counter = Counter(row.get("pass_fail", "") for row in rows)
+        ok_parse = len(rows) - counter.get("parse_error", 0)
+        lines.append(f"| {model_id} | {ok_parse} | {counter.get('parse_error', 0)} |")
+
+    lines.extend(["", "## Planning quality excluding parse_error/skipped", "| Scope | Pass | Fail | Review |", "| --- | ---: | ---: | ---: |"])
+    quality_rows = [row for row in evaluations if row.get("pass_fail") not in {"parse_error", "skipped"}]
+    quality_counter = Counter(row.get("pass_fail", "") for row in quality_rows)
+    lines.append(f"| all_planning_rows | {quality_counter.get('pass', 0)} | {quality_counter.get('fail', 0)} | {quality_counter.get('needs_review', 0)} |")
 
     for title, hint in [
         ("Strong clean candidate counterexamples", "strong_candidate"),
@@ -156,13 +190,14 @@ def write_summary(
     for task_id, rows in _group_by(evaluations, "task_id").items():
         lines.append(_status_row(task_id, Counter(row.get("pass_fail", "") for row in rows)))
 
-    lines.extend(["", "## Per-model table", "| Model | Provider label | Strength role | Pass | Fail | Review | Parse error | Skipped |", "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |"])
+    lines.extend(["", "## Per-model table", "| Model | Provider label | Strength role | Supports vision | Pass | Fail | Review | Parse error | Skipped |", "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: |"])
     for model_id, rows in _group_by(evaluations, "model_id").items():
         counter = Counter(row.get("pass_fail", "") for row in rows)
         provider_label = rows[0].get("provider_label", "") if rows else ""
         strength_role = rows[0].get("strength_role", "") if rows else ""
+        supports_vision = rows[0].get("supports_vision", "") if rows else ""
         lines.append(
-            f"| {model_id} | {provider_label} | {strength_role} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | "
+            f"| {model_id} | {provider_label} | {strength_role} | {supports_vision} | {counter.get('pass', 0)} | {counter.get('fail', 0)} | "
             f"{counter.get('needs_review', 0)} | {counter.get('parse_error', 0)} | {counter.get('skipped', 0)} |"
         )
 
@@ -204,6 +239,9 @@ def write_failed_cases(
                 "### Expected",
                 _expected_summary(task),
                 "",
+                "### Expected target/helper terms",
+                _expected_terms_summary(task),
+                "",
                 "### Model outputs",
             ]
         )
@@ -211,12 +249,17 @@ def write_failed_cases(
             key = (row.get("task_id"), row.get("image_path"), row.get("model_id"), row.get("prompt_id"))
             parsed = parsed_by_key.get(key, {}).get("parsed", {})
             plan = "; ".join(parsed.get("plan", [])) if parsed else row.get("notes", "")
+            action_chain = "; ".join(parsed.get("tool_use_action_chain", [])) if parsed else ""
+            selected_helper = parsed.get("selected_helper", "") if parsed else ""
             failures = ", ".join(row.get("failure_types_detected", [])) or "-"
             lines.append(
                 f"- {row.get('model_id')} / {row.get('prompt_id')} / {row.get('prompt_type')}: "
                 f"{row.get('pass_fail').upper()} - {failures}. {row.get('notes', '')} "
-                f"Inference: helper={row.get('inferred_uses_helper')}, search={row.get('inferred_searches_helper')}, "
-                f"one_by_one={row.get('inferred_one_by_one')}. Plan: {plan}"
+                f"Inference: helper={row.get('inferred_uses_helper')}, valid_chain={row.get('inferred_valid_helper_action_chain')}, "
+                f"target_as_helper={row.get('inferred_target_as_helper')}, selected_helper={row.get('inferred_selected_helper') or selected_helper}, "
+                f"search={row.get('inferred_searches_helper')}, one_by_one={row.get('inferred_one_by_one')}, "
+                f"capacity_risk={row.get('inferred_direct_carry_capacity_risk')}. "
+                f"Action chain: {action_chain or '-'} Plan: {plan}"
             )
         lines.extend(["", "### Failure types", ", ".join(sorted({f for row in rows for f in row.get("failure_types_detected", [])})) or "-", ""])
     Path(path).write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -253,4 +296,12 @@ def _expected_summary(task: dict[str, Any]) -> str:
         f"- expected_tool_or_container_types: {expected.get('expected_tool_or_container_types')}\n"
         f"- should_search_for_tool_if_not_visible: {expected.get('should_search_for_tool_if_not_visible')}\n"
         f"- expected_trip_pattern: {expected.get('expected_trip_pattern')}"
+    )
+
+
+def _expected_terms_summary(task: dict[str, Any]) -> str:
+    expected = task.get("expected_behavior", {})
+    return (
+        f"- target_object_terms: {expected.get('target_object_terms', [])}\n"
+        f"- expected_tool_or_container_types: {expected.get('expected_tool_or_container_types', [])}"
     )

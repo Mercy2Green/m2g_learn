@@ -33,13 +33,23 @@ def main() -> int:
         for model in ollama_models:
             if str(model.get("base_url") or "http://localhost:11434").rstrip("/") != base_url:
                 continue
+            model_id = str(model.get("model_id", ""))
             model_name = str(model.get("model_name", ""))
             enabled = bool(model.get("enabled", False))
-            label = "enabled" if enabled else "configured"
-            if model_name in available:
-                print(f"OK: {model_name} is available locally ({label}).")
+            supports_vision = str(model.get("supports_vision", "unknown")).lower()
+            is_available = model_name in available
+            print(
+                f"model_id={model_id} | model_name={model_name} | enabled={enabled} | "
+                f"supports_vision={supports_vision} | available_locally={is_available}"
+            )
+            if supports_vision in {"false", "unknown"}:
+                print(
+                    f"  WARNING: {model_id} should not be used as VLM evidence until an image smoke test passes."
+                )
+            if is_available:
+                print(f"  OK: local model is available.")
             else:
-                print(f"MISSING: Model {model_name} is not available locally ({label}). Run: ollama pull {model_name}")
+                print(f"  MISSING: Run: ollama pull {model_name}")
                 if enabled:
                     had_error = True
     return 1 if had_error else 0
