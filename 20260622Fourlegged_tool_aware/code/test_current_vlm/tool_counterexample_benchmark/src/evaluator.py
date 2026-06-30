@@ -88,7 +88,7 @@ def evaluate_response(
         "prompt_id": prompt.get("prompt_id", ""),
         "embodiment_profile": prompt.get("embodiment_profile", "generic"),
         "prompt_category": prompt.get("prompt_category", ""),
-        "prompt_type": "primary_clean" if primary else "structured_probe",
+        "prompt_type": _prompt_type_for(prompt),
         "primary_for_counterexample": primary,
         "pass_fail": "needs_review",
         "failure_types_detected": [],
@@ -228,6 +228,17 @@ def infer_helper_use_from_plan(parsed: dict[str, Any], task: dict[str, Any]) -> 
         "inferred_physical_feasibility_risk": "direct_carry_capacity_risk" if direct_capacity_risk else str(parsed.get("physical_feasibility_risk", "")),
         "inferred_direct_operation": "yes" if direct_operation else "no",
     }
+
+
+def _prompt_type_for(prompt: dict[str, Any]) -> str:
+    if prompt.get("primary_for_counterexample", False):
+        return "primary_clean"
+    category = str(prompt.get("prompt_category", ""))
+    if category == "diagnostic_probe":
+        return "structured_probe"
+    if category == "tool_prior_intervention":
+        return "tool_prior_intervention"
+    return category or "non_primary"
 
 
 def assign_counterexample_strength(evaluations: list[dict[str, Any]]) -> list[dict[str, Any]]:

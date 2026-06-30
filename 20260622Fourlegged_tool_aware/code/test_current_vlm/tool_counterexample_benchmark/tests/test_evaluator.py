@@ -12,6 +12,12 @@ from src.evaluator import evaluate_response  # noqa: E402
 MODEL = {"model_id": "unit_model", "provider": "mock", "strength_role": "local_open_vlm"}
 PRIMARY_PROMPT = {"prompt_id": "natural_free_plan", "primary_for_counterexample": True, "embodiment_profile": "generic"}
 STRUCTURED_PROMPT = {"prompt_id": "structured_tool_probe", "primary_for_counterexample": False, "embodiment_profile": "generic"}
+TOOL_PRIOR_PROMPT = {
+    "prompt_id": "tool_prior_free_plan",
+    "primary_for_counterexample": False,
+    "prompt_category": "tool_prior_intervention",
+    "embodiment_profile": "generic",
+}
 
 
 def water_task() -> dict:
@@ -166,6 +172,18 @@ def test_over_tool_use() -> None:
     assert "F7_over_tool_use" in row["failure_types_detected"]
 
 
+def test_evaluator_prompt_type_for_tool_prior() -> None:
+    row = evaluate_response(
+        water_task(),
+        parsed({"plan": ["find a tray", "place bottles on the tray", "carry tray to bedroom"], "estimated_number_of_trips": "single"}),
+        MODEL,
+        TOOL_PRIOR_PROMPT,
+        "image.jpg",
+    )
+    assert row["prompt_type"] == "tool_prior_intervention"
+    assert row["counterexample_strength_hint"] == "invalid_or_unclear"
+
+
 if __name__ == "__main__":
     test_target_as_helper()
     test_mention_as_use()
@@ -174,4 +192,5 @@ if __name__ == "__main__":
     test_structured_selected_helper_with_real_action_chain_is_valid()
     test_direct_capacity_hallucination()
     test_over_tool_use()
+    test_evaluator_prompt_type_for_tool_prior()
     print("evaluator synthetic tests passed")
