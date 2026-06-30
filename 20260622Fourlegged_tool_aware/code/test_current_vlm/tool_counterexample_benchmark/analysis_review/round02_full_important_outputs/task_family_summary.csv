@@ -1,12 +1,12 @@
 name,total_rows,true_pass,true_fail,uncertain,parse_error,skipped,reviewed_valid_rows,true_fail_rate,valid_helper_action_chain_rate,needs_visual_check_count,top_failure_modes
-task_001,72,3,53,0,16,0,56,0.9464,0.0714,12,aggregation_failure:28; container_affordance_miss:28; helper_mention_without_use:24; parse_failure:16; visual_uncertainty:12
-task_002,72,2,54,1,15,0,57,0.9474,0.0702,7,helper_search_failure:50; aggregation_failure:33; container_affordance_miss:33; helper_mention_without_use:19; parse_failure:16
+task_001,72,5,51,0,16,0,56,0.9107,0.1071,11,aggregation_failure:28; container_affordance_miss:28; helper_mention_without_use:22; parse_failure:16; visual_uncertainty:11
+task_002,72,3,53,1,15,0,57,0.9298,0.0702,7,helper_search_failure:50; aggregation_failure:33; container_affordance_miss:33; helper_mention_without_use:19; parse_failure:16
 task_003,72,50,3,1,18,0,54,0.0556,0.9259,3,parse_failure:19; helper_mention_without_use:3; visual_uncertainty:3
-task_004,72,1,52,0,19,0,53,0.9811,0.0189,9,aggregation_failure:29; container_affordance_miss:29; helper_mention_without_use:23; parse_failure:19; visual_uncertainty:9
-task_005,72,4,48,0,20,0,52,0.9231,0.0769,10,aggregation_failure:24; container_affordance_miss:24; helper_mention_without_use:24; parse_failure:20; visual_uncertainty:10
-task_006,72,5,50,0,17,0,55,0.9091,0.6364,12,wrong_helper_type:30; parse_failure:17; helper_mention_without_use:16; visual_uncertainty:12; aggregation_failure:4
-task_007,72,10,40,0,22,0,50,0.8,0.2,16,helper_mention_without_use:22; parse_failure:22; aggregation_failure:18; container_affordance_miss:18; visual_uncertainty:16
-task_008,72,10,48,0,14,0,58,0.8276,0.2759,12,helper_mention_without_use:22; aggregation_failure:20; container_affordance_miss:20; parse_failure:14; visual_uncertainty:12
-task_009,72,31,23,0,18,0,54,0.4259,0.6667,6,parse_failure:18; helper_mention_without_use:10; aggregation_failure:8; container_affordance_miss:8; visual_uncertainty:6
-task_010,72,31,21,0,20,0,52,0.4038,0.6346,11,parse_failure:20; helper_mention_without_use:16; visual_uncertainty:11; aggregation_failure:3; container_affordance_miss:3
+task_004,72,5,48,0,19,0,53,0.9057,0.0943,12,helper_mention_without_use:25; aggregation_failure:23; container_affordance_miss:23; parse_failure:19; visual_uncertainty:12
+task_005,72,12,40,0,20,0,52,0.7692,0.2308,10,helper_mention_without_use:23; parse_failure:20; aggregation_failure:17; container_affordance_miss:17; visual_uncertainty:10
+task_006,72,43,12,0,17,0,55,0.2182,0.8364,4,parse_failure:17; helper_mention_without_use:6; visual_uncertainty:4; aggregation_failure:3; container_affordance_miss:3
+task_007,72,10,40,0,22,0,50,0.8,0.22,20,helper_mention_without_use:26; parse_failure:22; visual_uncertainty:20; aggregation_failure:13; container_affordance_miss:13
+task_008,72,11,47,0,14,0,58,0.8103,0.3103,12,helper_mention_without_use:22; aggregation_failure:18; container_affordance_miss:18; parse_failure:14; visual_uncertainty:12
+task_009,72,29,25,0,18,0,54,0.463,0.6852,6,parse_failure:18; helper_mention_without_use:10; aggregation_failure:7; container_affordance_miss:7; visual_uncertainty:6
+task_010,72,33,19,0,20,0,52,0.3654,0.6538,12,parse_failure:20; helper_mention_without_use:17; visual_uncertainty:12; aggregation_failure:1; container_affordance_miss:1
 task_011,72,60,0,0,12,0,60,0.0,0.0,0,parse_failure:12

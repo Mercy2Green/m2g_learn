@@ -18,15 +18,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 3. task_002 / Weixin Image_20260629231739_396_27.jpg / efficient_safe_free_plan
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure, physical_capacity_hallucination
-- Evidence quote: Navigate to the table with water bottles; Grasp and lift all water bottles simultaneously or sequentially, ensuring stable carrying.; Navigate to the bedroom where the students are playing cards.; Release the water bottles in a safe loca...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
-- Caveat: text-only evidence; still verify image before claims
-
-## 4. task_004 / Weixin Image_20260629231742_398_27.jpg / efficient_safe_free_plan
+## 3. task_004 / Weixin Image_20260629231742_398_27.jpg / efficient_safe_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -34,15 +26,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: needs image verification
 
-## 5. task_006 / Weixin Image_20260629231745_400_27.jpg / natural_free_plan
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, wrong_helper_type, helper_mention_without_use, physical_capacity_hallucination, visual_uncertainty
-- Evidence quote: Scan the area to identify all individual objects.; Pick up each object one by one.; Place each object into the trash can.; Verify that no objects remain on the floor. The image shows several small objects scattered on the floor. The task...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
-- Caveat: needs image verification
-
-## 6. task_001 / Weixin Image_20260629231738_395_27.jpg / natural_free_plan_humanoid_dual_arm
+## 4. task_001 / Weixin Image_20260629231738_395_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -50,7 +34,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 7. task_002 / Weixin Image_20260629231739_396_27.jpg / natural_free_plan_humanoid_dual_arm
+## 5. task_002 / Weixin Image_20260629231739_396_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure
@@ -58,7 +42,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 8. task_002 / Weixin Image_20260629231739_396_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 6. task_002 / Weixin Image_20260629231739_396_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure
@@ -66,7 +50,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 9. task_004 / Weixin Image_20260629231742_398_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 7. task_004 / Weixin Image_20260629231742_398_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -74,15 +58,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: needs image verification
 
-## 10. task_005 / Weixin Image_20260629231743_399_27.jpg / natural_free_plan_humanoid_dual_arm
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, physical_capacity_hallucination
-- Evidence quote: Scan the table to identify all cups and plates.; Pick up one cup/plate with each hand, prioritizing stable grasps.; Transport the items to the kitchen.; Place the items in the designated dirty dish area in the kitchen.; Repeat steps 2-4...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
-- Caveat: text-only evidence; still verify image before claims
-
-## 11. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 8. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, tool_necessity_miss
@@ -90,7 +66,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 12. task_001 / Weixin Image_20260629231738_395_27.jpg / efficient_safe_free_plan_quadruped_single_arm
+## 9. task_001 / Weixin Image_20260629231738_395_27.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -98,7 +74,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: needs image verification
 
-## 13. task_002 / Weixin Image_20260629231739_396_27.jpg / natural_free_plan_quadruped_single_arm
+## 10. task_002 / Weixin Image_20260629231739_396_27.jpg / natural_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure, physical_capacity_hallucination
@@ -106,15 +82,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 14. task_006 / Weixin Image_20260629231745_400_27.jpg / natural_free_plan_quadruped_single_arm
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss, wrong_helper_type
-- Evidence quote: 1. Approach the first object (e.g., the red pen).; 2. Pick up the object with the gripper.; 3. Navigate to the trash can while maintaining balance.; 4. Deposit the object into the trash can.; 5. Repeat steps 1-4 for each remaining object...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
-- Caveat: needs image verification
-
-## 15. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / natural_free_plan_quadruped_single_arm
+## 11. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / natural_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -122,15 +90,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
 - Caveat: needs image verification
 
-## 16. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / efficient_safe_free_plan_quadruped_single_arm
+## 12. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, tool_necessity_miss
+- Failure modes: aggregation_failure, container_affordance_miss, wrong_helper_type, helper_mention_without_use, visual_uncertainty, tool_necessity_miss
 - Evidence quote: 1. Approach the sofa and visually inspect the space underneath to assess accessibility and confirm the remote's position.; 2. Carefully extend the robotic arm towards the remote control, prioritizing stability of the mobile base during r...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 5 model(s).
-- Caveat: text-only evidence; still verify image before claims
+- Caveat: needs image verification
 
-## 17. task_002 / Weixin Image_20260629231739_396_27.jpg / natural_free_plan
+## 13. task_002 / Weixin Image_20260629231739_396_27.jpg / natural_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure, physical_capacity_hallucination
@@ -138,7 +106,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 18. task_004 / Weixin Image_20260629231742_398_27.jpg / natural_free_plan
+## 14. task_002 / Weixin Image_20260629231739_396_27.jpg / efficient_safe_free_plan
+
+- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
+- Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure, physical_capacity_hallucination
+- Evidence quote: Navigate to the table with water bottles; Grasp and lift all water bottles simultaneously or sequentially, ensuring stable carrying.; Navigate to the bedroom where the students are playing cards.; Release the water bottles in a safe loca...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
+- Caveat: text-only evidence; still verify image before claims
+
+## 15. task_004 / Weixin Image_20260629231742_398_27.jpg / natural_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -146,7 +122,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 19. task_005 / Weixin Image_20260629231743_399_27.jpg / natural_free_plan
+## 16. task_005 / Weixin Image_20260629231743_399_27.jpg / natural_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -154,23 +130,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 20. task_005 / Weixin Image_20260629231743_399_27.jpg / efficient_safe_free_plan
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty, physical_capacity_hallucination
-- Evidence quote: 1. Scan the table to confirm the locations of all dirty dishes (cups, bowls).; 2. Grasp and lift each dish individually.; 3. Transport all grasped dishes to the kitchen.; 4. Release the dishes in the designated area within the kitchen. M...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
-- Caveat: needs image verification
-
-## 21. task_006 / Weixin Image_20260629231745_400_27.jpg / efficient_safe_free_plan
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: wrong_helper_type, aggregation_failure, container_affordance_miss
-- Evidence quote: Scan the area for obstacles and identify all target objects (small items).; Prioritize collection based on fragility/size - start with non-fragile, larger items first. Collect items in a clockwise or counterclockwise manner to minimize t...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
-- Caveat: text-only evidence; still verify image before claims
-
-## 22. task_007 / Weixin Image_20260629231746_401_27.jpg / natural_free_plan
+## 17. task_007 / Weixin Image_20260629231746_401_27.jpg / natural_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss, physical_capacity_hallucination
@@ -178,15 +138,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 23. task_007 / Weixin Image_20260629231746_401_27.jpg / efficient_safe_free_plan
+## 18. task_007 / Weixin Image_20260629231746_401_27.jpg / efficient_safe_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
+- Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss
 - Evidence quote: 1. Navigate to the pile of clothes.; 2. Grasp and lift the green striped shirt.; 3. Transport the green striped shirt to the laundry area and deposit it.; 4. Return to the remaining clothes.; 5. Grasp and lift the blue hoodie.; 6. Transp...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 24. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / natural_free_plan
+## 19. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / natural_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -194,7 +154,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 25. task_001 / Weixin Image_20260629231738_395_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 20. task_001 / Weixin Image_20260629231738_395_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -202,23 +162,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 26. task_004 / Weixin Image_20260629231742_398_27.jpg / natural_free_plan_humanoid_dual_arm
+## 21. task_005 / Weixin Image_20260629231743_399_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss
-- Evidence quote: Scan the table to identify suitable drink and snack items.; Pick up the water bottle with one hand and the apple with the other.; Transport the water bottle and apple to the location where people are chatting.; Return to the table.; Pick...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
-- Caveat: text-only evidence; still verify image before claims
-
-## 27. task_006 / Weixin Image_20260629231745_400_27.jpg / natural_free_plan_humanoid_dual_arm
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: helper_mention_without_use, visual_uncertainty, wrong_helper_type
-- Evidence quote: Scan the area to identify all individual objects needing collection.; Pick up one object at a time with either hand, prioritizing smaller/lighter items first.; Transport the object to the trash can and deposit it inside.; Repeat steps 2-...
+- Failure modes: aggregation_failure, container_affordance_miss, physical_capacity_hallucination, helper_mention_without_use, visual_uncertainty
+- Evidence quote: Scan the table to identify all cups and plates.; Pick up one cup/plate with each hand, prioritizing stable grasps.; Transport the items to the kitchen.; Place the items in the designated dirty dish area in the kitchen.; Repeat steps 2-4...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 28. task_007 / Weixin Image_20260629231746_401_27.jpg / natural_free_plan_humanoid_dual_arm
+## 22. task_007 / Weixin Image_20260629231746_401_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss
@@ -226,15 +178,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 29. task_007 / Weixin Image_20260629231746_401_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 23. task_007 / Weixin Image_20260629231746_401_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
+- Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss
 - Evidence quote: 1. Approach the striped shorts and pick them up with one hand.; 2. Approach the blue hoodie and pick it up with the other hand.; 3. Transport both the striped shorts and blue hoodie to the laundry area.; 4. Return to the original locatio...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 30. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / natural_free_plan_humanoid_dual_arm
+## 24. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -242,7 +194,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 31. task_001 / Weixin Image_20260629231738_395_27.jpg / natural_free_plan_quadruped_single_arm
+## 25. task_001 / Weixin Image_20260629231738_395_27.jpg / natural_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -250,7 +202,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 32. task_002 / Weixin Image_20260629231739_396_27.jpg / efficient_safe_free_plan_quadruped_single_arm
+## 26. task_002 / Weixin Image_20260629231739_396_27.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_search_failure
@@ -258,7 +210,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 33. task_004 / Weixin Image_20260629231742_398_27.jpg / natural_free_plan_quadruped_single_arm
+## 27. task_004 / Weixin Image_20260629231742_398_27.jpg / natural_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -266,23 +218,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 34. task_004 / Weixin Image_20260629231742_398_27.jpg / efficient_safe_free_plan_quadruped_single_arm
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss
-- Evidence quote: 1. Approach the table.; 2. Scan the table for suitable items (drinks and individually packaged snacks).; 3. Pick up the water bottle.; 4. Deliver the water bottle to the living room.; 5. Return to the table.; 6. Pick up a stack of snack...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
-- Caveat: text-only evidence; still verify image before claims
-
-## 35. task_005 / Weixin Image_20260629231743_399_27.jpg / natural_free_plan_quadruped_single_arm
+## 28. task_004 / Weixin Image_20260629231742_398_27.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
-- Evidence quote: 1. Visually scan the table to identify all used cups and plates.; 2. Approach the first cup/plate, grasp it with the gripper, and ensure a stable hold during lifting.; 3. Navigate to the kitchen while maintaining balance.; 4. Place the c...
+- Evidence quote: 1. Approach the table.; 2. Scan the table for suitable items (drinks and individually packaged snacks).; 3. Pick up the water bottle.; 4. Deliver the water bottle to the living room.; 5. Return to the table.; 6. Pick up a stack of snack...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 36. task_007 / Weixin Image_20260629231746_401_27.jpg / efficient_safe_free_plan_quadruped_single_arm
+## 29. task_007 / Weixin Image_20260629231746_401_27.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -290,7 +234,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 4 model(s).
 - Caveat: needs image verification
 
-## 37. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / efficient_safe_free_plan
+## 30. task_005 / Weixin Image_20260629231743_399_27.jpg / efficient_safe_free_plan
+
+- Models failed: ollama_gemma3_27b_it_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
+- Failure modes: aggregation_failure, container_affordance_miss, physical_capacity_hallucination, helper_mention_without_use, visual_uncertainty
+- Evidence quote: 1. Scan the table to confirm the locations of all dirty dishes (cups, bowls).; 2. Grasp and lift each dish individually.; 3. Transport all grasped dishes to the kitchen.; 4. Release the dishes in the designated area within the kitchen. M...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
+- Caveat: needs image verification
+
+## 31. task_008 / af09e19db8fd93d51875f3e63c5fea96.jpg / efficient_safe_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, tool_necessity_miss, visual_uncertainty
@@ -298,23 +250,31 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
 - Caveat: needs image verification
 
-## 38. task_010 / Weixin Image_20260629231750_403_27.jpg / natural_free_plan
+## 32. task_004 / Weixin Image_20260629231742_398_27.jpg / natural_free_plan_humanoid_dual_arm
 
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M
-- Failure modes: helper_mention_without_use, visual_uncertainty, physical_capacity_hallucination
-- Evidence quote: 1. Scan the area around the objects to identify potential obstacles and clear a path to the dining table.; 2. Carefully pick up the box and transport it to the dining table.; 3. Carefully pick up the metal bowl and transport it to the di...
+- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
+- Failure modes: aggregation_failure, container_affordance_miss
+- Evidence quote: Scan the table to identify suitable drink and snack items.; Pick up the water bottle with one hand and the apple with the other.; Transport the water bottle and apple to the location where people are chatting.; Return to the table.; Pick...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
-- Caveat: needs image verification
+- Caveat: text-only evidence; still verify image before claims
 
-## 39. task_009 / Weixin Image_20260629231751_404_27.jpg / natural_free_plan_humanoid_dual_arm
+## 33. task_009 / Weixin Image_20260629231751_404_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b
-- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
+- Failure modes: aggregation_failure, container_affordance_miss, wrong_helper_type, helper_mention_without_use, visual_uncertainty
 - Evidence quote: Scan the area to confirm the location of all paper balls and identify any obstacles.; Pick up one paper ball with each hand, if possible. Otherwise, pick them up one at a time.; Transport the collected paper balls to the trash can.; Repe...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
 - Caveat: needs image verification
 
-## 40. task_005 / Weixin Image_20260629231743_399_27.jpg / efficient_safe_free_plan_quadruped_single_arm
+## 34. task_005 / Weixin Image_20260629231743_399_27.jpg / natural_free_plan_quadruped_single_arm
+
+- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
+- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
+- Evidence quote: 1. Visually scan the table to identify all used cups and plates.; 2. Approach the first cup/plate, grasp it with the gripper, and ensure a stable hold during lifting.; 3. Navigate to the kitchen while maintaining balance.; 4. Place the c...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
+- Caveat: needs image verification
+
+## 35. task_005 / Weixin Image_20260629231743_399_27.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -322,15 +282,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 41. task_006 / Weixin Image_20260629231745_400_27.jpg / efficient_safe_free_plan_quadruped_single_arm
-
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M
-- Failure modes: wrong_helper_type
-- Evidence quote: 1. Navigate to the area with the red pen, medicine boxes, and JBL speaker. Pick up the red pen and place it in the trash can.; 2. Navigate to the area with the remote control, white package, and snack bags. Pick up the remote control and...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
-- Caveat: text-only evidence; still verify image before claims
-
-## 42. task_009 / Weixin Image_20260629231751_404_27.jpg / natural_free_plan_quadruped_single_arm
+## 36. task_009 / Weixin Image_20260629231751_404_27.jpg / natural_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b
 - Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
@@ -338,15 +290,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
 - Caveat: needs image verification
 
-## 43. task_009 / Weixin Image_20260629231751_404_27.jpg / efficient_safe_free_plan_quadruped_single_arm
+## 37. task_009 / Weixin Image_20260629231751_404_27.jpg / efficient_safe_free_plan_quadruped_single_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
+- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty, wrong_helper_type
 - Evidence quote: 1. Navigate to the first visible crumpled paper object.; 2. Use the mechanical arm and gripper to pick up the crumpled paper.; 3. Navigate to the trash can (visible in the image).; 4. Open the lid of the trash can (if necessary, assess i...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 3 model(s).
 - Caveat: needs image verification
 
-## 44. task_010 / Weixin Image_20260629231750_403_27.jpg / efficient_safe_free_plan
+## 38. task_010 / Weixin Image_20260629231750_403_27.jpg / efficient_safe_free_plan
 
 - Models failed: ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M
 - Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss
@@ -354,23 +306,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 2 model(s).
 - Caveat: needs image verification
 
-## 45. task_006 / Weixin Image_20260629231745_400_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 39. task_009 / Weixin Image_20260629231751_404_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
-- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0
-- Failure modes: wrong_helper_type
-- Evidence quote: 1. Approach the cluster of items near the center of the image (remote, white package, JBL speaker, medicine boxes).; 2. Pick up the remote control with one hand and the white package with the other hand. Transport to and deposit both int...
+- Models failed: ollama_gemma3_27b_it_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
+- Failure modes: aggregation_failure, container_affordance_miss, wrong_helper_type
+- Evidence quote: 1. Visually scan the entire area to identify all pieces of crumpled paper and their approximate locations.; 2. Navigate to the first piece of crumpled paper.; 3. Pick up the crumpled paper with one hand.; 4. Navigate to the trash can (vi...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 2 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 46. task_005 / Weixin Image_20260629231743_399_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
-
-- Models failed: ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
-- Failure modes: helper_mention_without_use, visual_uncertainty, aggregation_failure, container_affordance_miss
-- Evidence quote: 检查桌面所有区域以确认需要收集的所有物品，包括靠近桌子边缘和角落处可能被遮挡的物品。; 使用双手分别抓取一个稳定组合：例如，一只手拿白色带勺子的小杯，另一只手拿旁边的金属杯子；或者一手拿白色碗碟，一手拿不锈钢盆等。; 将抓取到的物品带回厨房放置在指定区域（如洗碗池或餐具架）。 通过先全面检查并抓取稳定组合，可以减少多次往返，并确保所有物品都被收集。 尽量减少往返次数和移动路径长度，通过同时抓取多个稳定组合来提高效率。 确保每只手的抓取物都足够稳定，避免物品掉落或倾倒。注...
-- Why it is a counterexample: primary clean prompt failed under text rereview with 2 model(s).
-- Caveat: needs image verification
-
-## 47. task_010 / Weixin Image_20260629231750_403_27.jpg / natural_free_plan_humanoid_dual_arm
+## 40. task_010 / Weixin Image_20260629231750_403_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b
 - Failure modes: helper_mention_without_use, visual_uncertainty
@@ -378,7 +322,15 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 2 model(s).
 - Caveat: needs image verification
 
-## 48. task_007 / Weixin Image_20260629231746_401_27.jpg / natural_free_plan_quadruped_single_arm
+## 41. task_006 / Weixin Image_20260629231745_400_27.jpg / natural_free_plan_quadruped_single_arm
+
+- Models failed: ollama_gemma3_27b_it_q8_0, ollama_minicpm_v4_5_q8_0
+- Failure modes: aggregation_failure, container_affordance_miss, helper_mention_without_use, visual_uncertainty
+- Evidence quote: 1. Approach the first object (e.g., the red pen).; 2. Pick up the object with the gripper.; 3. Navigate to the trash can while maintaining balance.; 4. Deposit the object into the trash can.; 5. Repeat steps 1-4 for each remaining object...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 2 model(s).
+- Caveat: needs image verification
+
+## 42. task_007 / Weixin Image_20260629231746_401_27.jpg / natural_free_plan_quadruped_single_arm
 
 - Models failed: ollama_minicpm_v4_5_q8_0, ollama_qwen3_vl_32b_instruct_q4_K_M
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -386,7 +338,23 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 2 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 49. task_009 / Weixin Image_20260629231751_404_27.jpg / natural_free_plan
+## 43. task_006 / Weixin Image_20260629231745_400_27.jpg / natural_free_plan
+
+- Models failed: ollama_gemma3_27b_it_q8_0
+- Failure modes: aggregation_failure, container_affordance_miss
+- Evidence quote: Scan the area to identify all individual objects.; Pick up each object one by one.; Place each object into the trash can.; Verify that no objects remain on the floor. The image shows several small objects scattered on the floor. The task...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
+- Caveat: text-only evidence; still verify image before claims
+
+## 44. task_006 / Weixin Image_20260629231745_400_27.jpg / efficient_safe_free_plan
+
+- Models failed: ollama_gemma3_27b_it_q8_0
+- Failure modes: aggregation_failure, container_affordance_miss
+- Evidence quote: Scan the area for obstacles and identify all target objects (small items).; Prioritize collection based on fragility/size - start with non-fragile, larger items first. Collect items in a clockwise or counterclockwise manner to minimize t...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
+- Caveat: text-only evidence; still verify image before claims
+
+## 45. task_009 / Weixin Image_20260629231751_404_27.jpg / natural_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -394,7 +362,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 50. task_009 / Weixin Image_20260629231751_404_27.jpg / efficient_safe_free_plan
+## 46. task_009 / Weixin Image_20260629231751_404_27.jpg / efficient_safe_free_plan
 
 - Models failed: ollama_gemma3_27b_it_q8_0
 - Failure modes: aggregation_failure, container_affordance_miss
@@ -402,7 +370,7 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
 - Caveat: text-only evidence; still verify image before claims
 
-## 51. task_003 / 372f92c1ce9c87231d199c1102dcf7b4.jpg / efficient_safe_free_plan
+## 47. task_003 / 372f92c1ce9c87231d199c1102dcf7b4.jpg / efficient_safe_free_plan
 
 - Models failed: ollama_minicpm_v4_5_q8_0
 - Failure modes: helper_mention_without_use, visual_uncertainty
@@ -410,15 +378,23 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
 - Caveat: needs image verification
 
-## 52. task_009 / Weixin Image_20260629231751_404_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 48. task_010 / Weixin Image_20260629231750_403_27.jpg / natural_free_plan
+
+- Models failed: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M
+- Failure modes: helper_mention_without_use, visual_uncertainty
+- Evidence quote: 检查周围环境，确认餐桌位置和路径无障碍物。; 逐一拾取鸡蛋，并小心放置在餐桌上。; 将塑料蛋托拿起并放在餐桌上。; 拿起金属碗并移动到餐桌上。; 将遥控器、JBL音箱和纸巾盒依次搬到餐桌上。; 整理桌面上的物品，确保摆放整齐且安全。 为了确保所有物品安全、有序地转移到餐桌上，同时减少不必要的移动次数以提高效率。 优先搬运易碎品（如鸡蛋），减少移动次数以提高效率。 搬运过程中避免碰撞或掉落，特别是鸡蛋和金属碗等易碎物品。 未明确餐桌的具体位置和大小，需根据实际情况调整搬运...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
+- Caveat: needs image verification
+
+## 49. task_006 / Weixin Image_20260629231745_400_27.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0
-- Failure modes: aggregation_failure, container_affordance_miss
-- Evidence quote: 1. Visually scan the entire area to identify all pieces of crumpled paper and their approximate locations.; 2. Navigate to the first piece of crumpled paper.; 3. Pick up the crumpled paper with one hand.; 4. Navigate to the trash can (vi...
+- Failure modes: helper_mention_without_use, visual_uncertainty
+- Evidence quote: Scan the area to identify all individual objects needing collection.; Pick up one object at a time with either hand, prioritizing smaller/lighter items first.; Transport the object to the trash can and deposit it inside.; Repeat steps 2-...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
-- Caveat: text-only evidence; still verify image before claims
+- Caveat: needs image verification
 
-## 53. task_010 / Weixin Image_20260629231750_403_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+## 50. task_010 / Weixin Image_20260629231750_403_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_gemma3_27b_it_q8_0
 - Failure modes: helper_mention_without_use, visual_uncertainty
@@ -426,11 +402,27 @@ Only primary clean prompts are ranked here. Tool-prior and diagnostic rows are e
 - Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
 - Caveat: needs image verification
 
-## 54. task_003 / 372f92c1ce9c87231d199c1102dcf7b4.jpg / natural_free_plan_humanoid_dual_arm
+## 51. task_006 / Weixin Image_20260629231745_400_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+
+- Models failed: ollama_minicpm_v4_5_q8_0
+- Failure modes: -
+- Evidence quote: 检查所有可见区域，确认没有遗漏任何物品。; 使用一只手拿起一个物品，并将其放入篮子。如果需要，另一只手可以辅助稳定或拿取其他物品。; 重复上述动作，直到所有物品都被收集到篮子里。 通过先检查区域确保不遗漏，再分批收集并利用双手提高效率。 尽量减少往返次数和移动路径长度，通过同时使用两只手提高效率。 确保每件物品在放入篮子前都稳定抓取，避免掉落。注意笔等细长物体的稳定性。 未明确指定目标位置是否为白色塑料篮子内部还是外部；需要确认所有物品都能被直接拿取（无遮挡、无障碍）。...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
+- Caveat: text-only evidence; still verify image before claims
+
+## 52. task_003 / 372f92c1ce9c87231d199c1102dcf7b4.jpg / natural_free_plan_humanoid_dual_arm
 
 - Models failed: ollama_qwen3_5_35b
 - Failure modes: helper_mention_without_use, visual_uncertainty
 - Evidence quote: 1. 检查桌面状态：确认笔记本电脑、黑色电脑包以及左侧散乱纸张的具体位置。; 2. 腾挪空间与清理杂物：左手将左侧的报纸/文件推至桌边或收纳盒中，右手拿起玻璃水杯移至安全区域（若需带走则放入包内）。; 3. 打包核心物品：合上笔记本电脑屏幕并将其平稳放入黑色电脑包内，确认拉链拉好。 利用双臂协同操作，左手处理非关键杂物（纸张），右手处理易碎品和水杯，最后集中打包电脑，减少重复移动手臂的次数。 笔记本电脑较重且屏幕脆弱，拿取时需保持水平；玻璃水杯需稳固抓取以防破碎；避免在...
 - Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
 - Caveat: needs image verification
+
+## 53. task_005 / Weixin Image_20260629231743_399_27.jpg / efficient_safe_free_plan_humanoid_dual_arm
+
+- Models failed: ollama_qwen3_vl_32b_instruct_q4_K_M
+- Failure modes: aggregation_failure, container_affordance_miss
+- Evidence quote: 检查桌面所有餐具，确认需要收回的物品：两个白色瓷碗、一个不锈钢碗、一个小白杯（含勺子）、一个金属保温杯。; 使用左手拿起小白杯和勺子组合，右手同时拿起其中一个白色瓷碗。; 将左手的小白杯放置于右手瓷碗上方形成稳定叠放结构，保持在右手中；左手再拿起不锈钢碗。; 移动至厨房区域，将右手的叠放餐具（小白杯+瓷碗）放入水槽或指定收纳处，然后放下左手的不锈钢碗。; 返回桌面，用左手拿起另一个白色瓷碗，右手拿起金属保温杯。; 再次前往厨房，将剩余两个物品放置于水槽或指定位置。 通过...
+- Why it is a counterexample: primary clean prompt failed under text rereview with 1 model(s).
+- Caveat: text-only evidence; still verify image before claims
 

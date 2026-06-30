@@ -338,7 +338,11 @@ def candidate_sort_key(row: dict[str, Any]) -> tuple[int, int, int, int, int, in
 def enforce_group_limits(candidates: list[dict[str, Any]], max_cases: int, per_group_limit: int) -> list[dict[str, Any]]:
     selected: list[dict[str, Any]] = []
     group_counts: Counter[tuple[str, str, str]] = Counter()
+    task_counts: Counter[str] = Counter()
+    family_counts: Counter[str] = Counter()
     selected_ids: set[tuple[str, str, str, str, str, str]] = set()
+    family_caps = failure_family_caps(max_cases)
+    task_cap = 6
 
     tier_candidates: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in candidates:
@@ -350,13 +354,51 @@ def enforce_group_limits(candidates: list[dict[str, Any]], max_cases: int, per_g
         for row in tier_candidates.get(tier, []):
             if quota <= 0 or len(selected) >= max_cases:
                 break
-            if add_candidate(row, selected, selected_ids, group_counts, per_group_limit):
+            if add_candidate(
+                row,
+                selected,
+                selected_ids,
+                group_counts,
+                task_counts,
+                family_counts,
+                per_group_limit,
+                task_cap,
+                family_caps,
+                enforce_balance=True,
+            ):
                 quota -= 1
 
     for row in candidates:
         if len(selected) >= max_cases:
             break
-        add_candidate(row, selected, selected_ids, group_counts, per_group_limit)
+        add_candidate(
+            row,
+            selected,
+            selected_ids,
+            group_counts,
+            task_counts,
+            family_counts,
+            per_group_limit,
+            task_cap,
+            family_caps,
+            enforce_balance=True,
+        )
+    if len(selected) < max_cases:
+        for row in candidates:
+            if len(selected) >= max_cases:
+                break
+            add_candidate(
+                row,
+                selected,
+                selected_ids,
+                group_counts,
+                task_counts,
+                family_counts,
+                per_group_limit,
+                task_cap,
+                family_caps,
+                enforce_balance=False,
+            )
     return selected
 
 
@@ -378,12 +420,41 @@ def tier_quotas(tier_candidates: dict[str, list[dict[str, Any]]], max_cases: int
     }
 
 
+def failure_family_caps(max_cases: int) -> dict[str, int]:
+    if max_cases >= 40:
+        return {
+            "aggregation_container": 14,
+            "helper_search": 6,
+            "reach_extension": 8,
+            "wrong_helper_type": 6,
+            "physical_capacity": 6,
+            "helper_mention_without_use": 6,
+            "over_tool_use_control": 4,
+            "other": 5,
+        }
+    return {
+        "aggregation_container": max(3, max_cases // 3),
+        "helper_search": max(2, max_cases // 7),
+        "reach_extension": max(2, max_cases // 5),
+        "wrong_helper_type": max(2, max_cases // 7),
+        "physical_capacity": max(2, max_cases // 7),
+        "helper_mention_without_use": max(2, max_cases // 7),
+        "over_tool_use_control": max(1, max_cases // 10),
+        "other": max(1, max_cases // 8),
+    }
+
+
 def add_candidate(
     row: dict[str, Any],
     selected: list[dict[str, Any]],
     selected_ids: set[tuple[str, str, str, str, str, str]],
     group_counts: Counter[tuple[str, str, str]],
+    task_counts: Counter[str],
+    family_counts: Counter[str],
     per_group_limit: int,
+    task_cap: int,
+    family_caps: dict[str, int],
+    enforce_balance: bool,
 ) -> bool:
     row_id = (
         str(row.get("case_tier", "")),
@@ -398,9 +469,17 @@ def add_candidate(
     group_key = (str(row.get("task_id", "")), image_name(row), str(row.get("failure_family", "")))
     if group_counts[group_key] >= per_group_limit:
         return False
+    task_id = str(row.get("task_id", ""))
+    family = str(row.get("failure_family", ""))
+    if enforce_balance and task_counts[task_id] >= task_cap:
+        return False
+    if enforce_balance and family_counts[family] >= family_caps.get(family, max(2, task_cap)):
+        return False
     selected.append(row)
     selected_ids.add(row_id)
     group_counts[group_key] += 1
+    task_counts[task_id] += 1
+    family_counts[family] += 1
     return True
 
 

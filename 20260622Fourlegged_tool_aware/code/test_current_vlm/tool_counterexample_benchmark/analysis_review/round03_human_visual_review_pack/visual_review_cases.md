@@ -4,7 +4,7 @@ These cases are selected for human image-level verification. Text rereview is no
 
 ## task_001 / aggregation_container
 
-### VR011 - clean_counterexample
+### VR006 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
@@ -22,7 +22,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR012 - clean_counterexample
+### VR007 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
@@ -40,7 +40,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR013 - clean_counterexample
+### VR008 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
@@ -58,29 +58,9 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-## task_001 / helper_mention_without_use
-
-### VR038 - uncertain_visual
-
-- Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
-- Expected helper/tool behavior: use=True; types=['tray', 'bag', 'box', 'basket']; search=False
-- Model/prompt: ollama_qwen3_5_35b / natural_free_plan / generic
-- Model output excerpt: 导航到木桌并定位那组绿色瓶盖的水瓶，确认抓取点。; 使用夹爪稳固地抓取适量水瓶（或寻找托盘辅助），确保提升时的稳定性。; 将水运送到卧室并放置在适合同学使用的表面上，重复此过程直到所有水送达。 任务涉及搬运桌上约6-7瓶矿泉水，这超出了单次行程的容量（无辅助工具），因此需要分批次进行安全抓取和运输的多步骤计划。 尝试每次抓取尽可能多的水瓶以减少往返次数，或者寻找托盘/篮子辅助搬运以提高效率。 确保对圆柱形的水瓶有牢固的抓握力，防止在移动过程中掉落或泼洒液体。 卧室的具体...
-- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
 ## task_001 / physical_capacity
 
-### VR022 - clean_counterexample
+### VR016 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
@@ -98,7 +78,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR023 - clean_counterexample
+### VR017 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
@@ -116,7 +96,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR024 - clean_counterexample
+### VR018 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_001_multi_bottles_visible_container/Weixin Image_20260629231738_395_27.jpg
@@ -172,7 +152,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR007 - clean_counterexample
+### VR005 - clean_counterexample
 
 - Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_002_multi_bottles_no_visible_container/Weixin Image_20260629231739_396_27.jpg
@@ -190,9 +170,29 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
+## task_002 / reach_extension
+
+### VR039 - uncertain_visual
+
+- Task instruction: 卧室里几个同学在打牌，他们有点渴。请尽快把这些水送到卧室。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_002_multi_bottles_no_visible_container/Weixin Image_20260629231739_396_27.jpg
+- Expected helper/tool behavior: use=True; types=['tray', 'bag', 'box', 'basket']; search=True
+- Model/prompt: ollama_minicpm_v4_5_q8_0 / tool_prior_free_plan / generic
+- Model output excerpt: 拿起桌子右侧的几瓶矿泉水; 前往卧室 直接从桌上拿取矿泉水是最高效、最安全的方式，因为物品摆放稳定且无需额外工具辅助。一次拿多瓶可以减少往返次数，提高效率。 直接拿取桌面上的水，避免额外移动或寻找工具的时间。桌上有多瓶水，一次可以拿多瓶以减少往返次数。 桌子上的物品摆放稳定，可以直接拿起矿泉水而无需借助其他工具。 未明确卧室的具体位置和距离，但假设在可步行范围内。未说明需要运送的水的确切数量，但从图片上看至少有六瓶。 { "task_understanding": "需...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;tool_necessity_miss;visual_uncertainty
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
 ## task_004 / aggregation_container
 
-### VR016 - clean_counterexample
+### VR010 - clean_counterexample
 
 - Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
@@ -210,25 +210,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR017 - clean_counterexample
-
-- Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
-- Expected helper/tool behavior: use=True; types=['tray', 'basket', 'box']; search=False
-- Model/prompt: ollama_gemma3_27b_it_q8_0 / efficient_safe_free_plan / generic
-- Model output excerpt: Scan nearby area for obstacles before moving.; Locate and grasp a water bottle and an apple.; Navigate to the living room while carrying both items.; Place the water bottle and apple near the people chatting. Prioritizing a single trip w...
-- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-### VR018 - clean_counterexample
+### VR013 - clean_counterexample
 
 - Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
@@ -246,9 +228,83 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
+### VR014 - clean_counterexample
+
+- Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
+- Expected helper/tool behavior: use=True; types=['tray', 'basket', 'box']; search=False
+- Model/prompt: ollama_minicpm_v4_5_q8_0 / efficient_safe_free_plan / generic
+- Model output excerpt: 检查桌子周围是否有其他可拿的食物或饮品，确保收集齐全。; 拿起桌面上的零食、苹果和矿泉水瓶。 桌面上有多种零食、一个苹果和一瓶矿泉水，这些是任务中提到的‘喝的’和‘吃的’。 一次性拿齐所有物品以减少往返次数。 确保物品稳固，避免在搬运过程中掉落。 未明确客厅的具体位置和聊天的人们的位置，需要先确认。 { "task_understanding": "需要将桌上的食物（零食、苹果）和饮料（矿泉水瓶）带到客厅给聊天的人们。", "plan": [ "检查桌子周围是否有其他可...
+- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
+## task_004 / helper_mention_without_use
+
+### VR022 - clean_counterexample
+
+- Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
+- Expected helper/tool behavior: use=True; types=['tray', 'basket', 'box']; search=False
+- Model/prompt: ollama_gemma3_27b_it_q8_0 / efficient_safe_free_plan / generic
+- Model output excerpt: Scan nearby area for obstacles before moving.; Locate and grasp a water bottle and an apple.; Navigate to the living room while carrying both items.; Place the water bottle and apple near the people chatting. Prioritizing a single trip w...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
+### VR023 - clean_counterexample
+
+- Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
+- Expected helper/tool behavior: use=True; types=['tray', 'basket', 'box']; search=False
+- Model/prompt: ollama_qwen3_5_35b / efficient_safe_free_plan / generic
+- Model output excerpt: 检查桌面物品摆放情况并确认抓取点; 拿起桌上的矿泉水瓶和红苹果; 抓起绿色包装盒及几包散落的零食; 携带所有物品前往客厅人群处 一次性拿走桌上所有的食物和水，避免多次往返。 抓取零食时注意不要碰倒旁边的水瓶或书本；手持物品需保持平衡以防掉落。 不确定绿色盒子里的具体内容（可能是饮料也可能是固体），也不确定人群具体位置，但默认在客厅方向。 { "task_understanding": "识别出桌面上有矿泉水、苹果和多种零食，任务是将这些食物和水带给客厅聊天的人群。",...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
+### VR024 - clean_counterexample
+
+- Task instruction: 客厅里有几个人在聊天，请拿些喝的和吃的过去。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_004_snacks_drinks_tray/Weixin Image_20260629231742_398_27.jpg
+- Expected helper/tool behavior: use=True; types=['tray', 'basket', 'box']; search=False
+- Model/prompt: ollama_qwen3_5_35b / efficient_safe_free_plan_humanoid_dual_arm / humanoid_dual_arm
+- Model output excerpt: Step 1: Scan table to identify stable items suitable for transport, specifically the water bottle and apple.; Step 2: Grasp the water bottle with one hand (e.g., right) while simultaneously grasping the red apple or green box with the ot...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
 ## task_005 / aggregation_container
 
-### VR003 - clean_counterexample
+### VR011 - clean_counterexample
 
 - Task instruction: 请把这些用过的杯子和盘子收回厨房。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
@@ -266,7 +322,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR004 - clean_counterexample
+### VR012 - clean_counterexample
 
 - Task instruction: 请把这些用过的杯子和盘子收回厨房。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
@@ -284,13 +340,13 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR008 - clean_counterexample
+### VR015 - clean_counterexample
 
 - Task instruction: 请把这些用过的杯子和盘子收回厨房。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
 - Expected helper/tool behavior: use=True; types=['tray', 'basin', 'basket']; search=False
-- Model/prompt: ollama_minicpm_v4_5_q8_0 / natural_free_plan / generic
-- Model output excerpt: 识别并定位桌子上的所有可回收餐具（白色小杯带勺子、灰色金属杯、白色碗、不锈钢盆）。; 逐一拾取这些餐具，并确保不遗漏任何物品。 一次性收集多个物品以减少往返次数，提高效率。 注意桌面边缘和物品摆放位置，避免碰撞或掉落。 未明确厨房具体位置及餐具存放地点，需根据环境判断路线。 { "task_understanding": "收集桌面上的用过杯子、碗碟，带回厨房。", "plan": [ "识别并定位桌子上的所有可回收餐具（白色小杯带勺子、灰色金属杯、白色碗、不锈钢盆）。...
+- Model/prompt: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / natural_free_plan / generic
+- Model output excerpt: 检查桌子上的所有物品，确认哪些是用过的杯子和盘子。; 从桌子上拿起用过的白色碗、不锈钢碗和杯子。; 将这些餐具移出当前区域，前往厨房。; 在厨房内找到合适的存放位置（如水槽或橱柜）并放置好餐具。 为了高效完成任务并保证安全，需要先确认所有待收拾的餐具，并在搬运过程中保持稳定。 一次性尽可能多地收集所有用过的餐具，减少往返次数。 搬运时确保物品稳定，避免掉落或打翻。 不清楚厨房的具体位置和存放区域是否已明确。 { "task_understanding": "将桌上的用过...
 - Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
 
 Human checks:
@@ -304,25 +360,7 @@ Human checks:
 
 ## task_005 / helper_mention_without_use
 
-### VR037 - uncertain_visual
-
-- Task instruction: 请把这些用过的杯子和盘子收回厨房。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
-- Expected helper/tool behavior: use=True; types=['tray', 'basin', 'basket']; search=False
-- Model/prompt: ollama_minicpm_v4_5_q8_0 / efficient_safe_free_plan / generic
-- Model output excerpt: 识别并定位桌子上的所有需要收回的物品：白色带勺子的小杯、灰色金属杯、右侧两个白色碗和不锈钢盆。确认这些是待处理的餐具。; 将左侧的大塑料盖板移开以腾出空间进行收集，确保不会遗漏任何物品。; 逐一拾取桌面上的所有杯子（小白杯、灰杯）、碗碟，并集中放置在机器人托盘上或直接携带。; 移动到厨房位置并放下所有收回的餐具。 通过一次性收集并直接带回厨房的方式完成任务，减少移动次数和时间成本。 一次性收集所有物品以减少往返次数，提高效率。 确保在拾取和搬运过程中保持平衡，避免掉落或...
-- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-### VR039 - uncertain_visual
+### VR028 - robust_failure
 
 - Task instruction: 请把这些用过的杯子和盘子收回厨房。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
@@ -340,13 +378,13 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR040 - uncertain_visual
+### VR029 - robust_failure
 
 - Task instruction: 请把这些用过的杯子和盘子收回厨房。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
 - Expected helper/tool behavior: use=True; types=['tray', 'basin', 'basket']; search=False
-- Model/prompt: ollama_minicpm_v4_5_q8_0 / efficient_safe_free_plan_humanoid_dual_arm / humanoid_dual_arm
-- Model output excerpt: 检查桌面所有区域以确认需要收集的所有物品，包括靠近桌子边缘和角落处可能被遮挡的物品。; 使用双手分别抓取一个稳定组合：例如，一只手拿白色带勺子的小杯，另一只手拿旁边的金属杯子；或者一手拿白色碗碟，一手拿不锈钢盆等。; 将抓取到的物品带回厨房放置在指定区域（如洗碗池或餐具架）。 通过先全面检查并抓取稳定组合，可以减少多次往返，并确保所有物品都被收集。 尽量减少往返次数和移动路径长度，通过同时抓取多个稳定组合来提高效率。 确保每只手的抓取物都足够稳定，避免物品掉落或倾倒。注...
+- Model/prompt: ollama_qwen3_vl_32b_instruct_q4_K_M / natural_free_plan_humanoid_dual_arm / humanoid_dual_arm
+- Model output excerpt: 检查桌面所有餐具，确认需要回收的物品：白色带勺小杯、两个白色瓷碗、一个不锈钢碗、一个金属保温杯。; 使用双手分别抓取两组物品（例如左手拿小杯和一个白碗，右手拿另一个白碗和不锈钢碗），避免一次携带过多导致不稳定。; 将收集到的餐具移至厨房区域，放置在水槽或指定清洗区。; 若金属保温杯内有液体残留，需先倾倒再回收；如无法一次性完成，则分批处理。 桌面存在多个可回收餐具，部分为易滑或带液体的容器，需分批安全搬运。同时考虑效率与稳定性，避免一次携带过多导致掉落风险。 优先组合轻...
 - Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
 
 Human checks:
@@ -358,108 +396,16 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-## task_006 / aggregation_container
-
-### VR028 - robust_failure
-
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_gemma3_27b_it_q8_0 / natural_free_plan / generic
-- Model output excerpt: Scan the area to identify all individual objects.; Pick up each object one by one.; Place each object into the trash can.; Verify that no objects remain on the floor. The image shows several small objects scattered on the floor. The task...
-- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-### VR029 - robust_failure
-
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_qwen3_vl_32b_instruct_q4_K_M / natural_free_plan / generic
-- Model output excerpt: 检查所有散落的物品，确认其位置和类型。; 逐个拾取物品，并将其放置到白色收纳篮内。; 确保所有可见物品都被收集完毕后，完成任务。 图像中显示多个小物件散落在灰色瓷砖地面上，旁边有一个空的白色收纳篮，任务目标清晰为收集这些物品。由于物品数量不多且集中，可一次性高效完成拾取并放置到篮内。 由于物品集中且收纳篮在附近，可一次性完成收集，无需多次往返。 拾取过程中需注意避免碰撞或滑倒，尤其在瓷砖地面操作时保持稳定移动；确保不遗漏尖锐或易碎物品（如药片包装）。 未明确指定是否需要...
-- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
+## task_005 / physical_capacity
 
 ### VR030 - robust_failure
 
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_gemma3_27b_it_q8_0 / natural_free_plan_quadruped_single_arm / quadruped_single_arm
-- Model output excerpt: 1. Approach the first object (e.g., the red pen).; 2. Pick up the object with the gripper.; 3. Navigate to the trash can while maintaining balance.; 4. Deposit the object into the trash can.; 5. Repeat steps 1-4 for each remaining object...
-- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-## task_006 / helper_mention_without_use
-
-### VR019 - clean_counterexample
-
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_gemma3_27b_it_q8_0 / natural_free_plan_humanoid_dual_arm / humanoid_dual_arm
-- Model output excerpt: Scan the area to identify all individual objects needing collection.; Pick up one object at a time with either hand, prioritizing smaller/lighter items first.; Transport the object to the trash can and deposit it inside.; Repeat steps 2-...
-- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-### VR020 - clean_counterexample
-
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_qwen3_vl_32b_instruct_q4_K_M / natural_free_plan_humanoid_dual_arm / humanoid_dual_arm
-- Model output excerpt: 检查所有地面上的物品，确认其位置和可抓取性。; 使用双臂同时拾取两个物理上稳定且不相互干扰的小物件（如零食包装、药片板、笔等），每次尽量最大化利用双手负载能力。; 将拾取的物品放入白色收纳篮中，确保放置稳固避免掉落。; 重复上述步骤直至所有可见物品被收集完毕。 基于图像可见范围内的物品分布和机器人双臂操作能力，采用分批高效拾取策略可快速完成任务；同时考虑安全与稳定性以避免损坏物品或造成意外。 优先选择体积小、重量轻且易于抓握的物体进行双臂同时拾取，减少移动次数和操作时间...
-- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-### VR021 - clean_counterexample
-
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_minicpm_v4_5_q8_0 / natural_free_plan_quadruped_single_arm / quadruped_single_arm
-- Model output excerpt: 检查所有可见区域以确认目标物体位置，特别是靠近墙壁或家具下方可能被遮挡的地方。; 使用机械臂逐一拾取地面上的小物件，并确保夹爪稳定抓住每个物品（注意：一次只能携带一个普通小物体）。; 将拾取到的物品移动至指定篮子中放置。 任务需要多次往返于地面和篮子之间，且存在多个分散的小物体。机械臂需逐一拾取并确保稳定搬运以避免掉落或损坏物品。 尽量减少不必要的移动，优先处理容易到达且数量较多的区域。 保持身体平衡，在拾取和搬运过程中避免倾倒或掉落物品。注意不要碰撞到墙壁或其他家具。...
-- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
+- Task instruction: 请把这些用过的杯子和盘子收回厨房。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_005_used_cups_dishes/Weixin Image_20260629231743_399_27.jpg
+- Expected helper/tool behavior: use=True; types=['tray', 'basin', 'basket']; search=False
+- Model/prompt: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / natural_free_plan_humanoid_dual_arm / humanoid_dual_arm
+- Model output excerpt: 检查桌上所有可用的杯子和盘子，确认哪些是需要回收的。; 先拿起金属碗和白色瓷碗，确保它们稳定抓取。; 同时拿起带勺子的白色杯子和不锈钢保温杯。; 将这些物品集中放置在桌面一侧，准备一次性搬运。; 从桌面上拿起所有收集好的用过的杯子和盘子，离开当前区域前往厨房。; 进入厨房后，将物品放入水槽或指定收纳区。 桌面上的杯子和盘子数量有限且集中，可通过一次搬运完成任务；同时使用双臂可提高效率，并确保物品在移动过程中稳定。 尽量一次性搬运所有可用的杯子和盘子，减少往返次数以提高效...
+- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss;physical_capacity_hallucination
 
 Human checks:
 - [ ] Is the target object visible?
@@ -477,8 +423,8 @@ Human checks:
 - Task instruction: 请把地上的小东西收起来。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
 - Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_qwen3_vl_32b_instruct_q4_K_M / tool_prior_free_plan_humanoid_dual_arm / humanoid_dual_arm
-- Model output excerpt: 检查附近是否有合适的放置区域（如桌子、柜子或图中可见的白色收纳篮），确认目标存放点。; 使用双手同时拾取靠近中心区域的小物件（如遥控器、纸巾盒、药品包装等），优先选择体积较大或易滑动的物品，避免遗漏。; 将拾取的物品暂时放置在收纳篮内或安全临时位置，确保稳定不掉落。; 继续分批收集剩余散落物品（如零食袋、笔、蓝牙音箱等），每次尽量用双手同时抓取两个物体以提高效率。; 最后检查地面是否已清理干净，并将所有物品整理至指定存放点。 任务要求收集散落在地的小物件。环境中存在一个...
+- Model/prompt: ollama_gemma3_27b_it_q8_0 / tool_prior_free_plan_humanoid_dual_arm / humanoid_dual_arm
+- Model output excerpt: 1. Scan the area to identify all small objects needing collection.; 2. Pick up the blister packs of pills (two sets) with one hand each, and place them into the trash can.; 3. Pick up the snack packages (three items) with one hand each,...
 - Rereview judgment: true_pass (high); modes=
 
 Human checks:
@@ -490,16 +436,14 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-## task_006 / wrong_helper_type
-
-### VR009 - clean_counterexample
+### VR034 - prompted_improvement
 
 - Task instruction: 请把地上的小东西收起来。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
 - Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_minicpm_v4_5_q8_0 / natural_free_plan / generic
-- Model output excerpt: 检查所有可见的小物品是否都在可触及范围内，确认没有遗漏。; 逐一拾取地面上的每个小物品，并将其放入篮子中。 尽量一次性完成收集动作以提高效率。 确保在移动过程中不碰到电源线，避免绊倒或触电风险。 未明确指定篮子是否足够容纳所有物品，若容量不足可能需要多次搬运。 { "task_understanding": "将散落在地板上的各种小物品（包括零食包装、遥控器、笔等）收集到旁边的篮子里。", "plan": [ "检查所有可见的小物品是否都在可触及范围内，确认没有遗漏。"...
-- Rereview judgment: true_fail (high); modes=wrong_helper_type
+- Model/prompt: ollama_minicpm_v4_5_q8_0 / tool_prior_free_plan_quadruped_single_arm / quadruped_single_arm
+- Model output excerpt: 检查地面所有小物件的位置，确认哪些是需要收集的目标物体。; 使用机械臂和夹爪逐一拾取每个目标物体，并将其放入篮子中。 任务目标是将所有散落的小物件收集起来。由于物品分散且数量较多，需要逐一拾取并放入篮子中。考虑到机械臂和夹爪的操作限制以及环境中的可达性问题，计划优先检查每个物体的位置，并根据实际情况选择直接操作或使用辅助工具（如篮子本身作为容器）以提高效率和安全性。 由于物品分散且数量较多，可能需要多次往返以完成任务；优先考虑直接操作简单、安全的物件。 保持身体平衡，在...
+- Rereview judgment: true_pass (high); modes=
 
 Human checks:
 - [ ] Is the target object visible?
@@ -510,32 +454,16 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR010 - clean_counterexample
+## task_006 / reach_extension
+
+### VR038 - uncertain_visual
 
 - Task instruction: 请把地上的小东西收起来。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
 - Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_minicpm_v4_5_q8_0 / efficient_safe_free_plan / generic
-- Model output excerpt: 检查地面所有小物品的位置，确认哪些需要收集。; 逐一拾取每个小物品，并将其放入白色篮子中。 一次性完成所有物品的收集以减少往返次数。 确保在移动和拾取过程中不使任何物品掉落或损坏，保持地面清洁。 未明确哪些是需要被收起来的小东西，但根据任务描述应为所有散落的物品。 { "task_understanding": "将散落在地面上的小物品（包括零食包装、遥控器、笔等）收集到旁边的白色篮子里。", "plan": [ "检查地面所有小物品的位置，确认哪些需要收集。", "逐...
-- Rereview judgment: true_fail (high); modes=wrong_helper_type
-
-Human checks:
-- [ ] Is the target object visible?
-- [ ] Is the expected helper visible?
-- [ ] If helper is not visible, is searching for one reasonable?
-- [ ] Is the expected helper/tool type reasonable for this task?
-- [ ] Is the model plan physically feasible for the stated embodiment?
-- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
-- [ ] Can this case be safely used as paper evidence?
-
-### VR014 - clean_counterexample
-
-- Task instruction: 请把地上的小东西收起来。
-- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_006_scattered_small_objects/Weixin Image_20260629231745_400_27.jpg
-- Expected helper/tool behavior: use=True; types=['box', 'dustpan', 'broom', 'basket']; search=False
-- Model/prompt: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / natural_free_plan / generic
-- Model output excerpt: Move towards the white basket to position it for collecting items.; Pick up the green packet from the left side of the floor.; Move to the center area and pick up the remote control.; Collect the gold tissue box from the middle-right are...
-- Rereview judgment: true_fail (high); modes=wrong_helper_type
+- Model/prompt: ollama_gemma3_27b_it_q8_0 / tool_prior_free_plan_quadruped_single_arm / quadruped_single_arm
+- Model output excerpt: 1. Approach the area with scattered items and perform a visual scan to confirm object locations and identify potential obstacles.; 2. Pick up each individual item one by one using the gripper and transport it to the trash can.; 3. Deposi...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;tool_necessity_miss;visual_uncertainty
 
 Human checks:
 - [ ] Is the target object visible?
@@ -548,7 +476,7 @@ Human checks:
 
 ## task_007 / aggregation_container
 
-### VR025 - clean_counterexample
+### VR019 - clean_counterexample
 
 - Task instruction: 请把这些衣服收起来，拿到洗衣区。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_007_laundry_basket/Weixin Image_20260629231746_401_27.jpg
@@ -566,7 +494,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR026 - clean_counterexample
+### VR020 - clean_counterexample
 
 - Task instruction: 请把这些衣服收起来，拿到洗衣区。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_007_laundry_basket/Weixin Image_20260629231746_401_27.jpg
@@ -584,7 +512,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR027 - clean_counterexample
+### VR021 - clean_counterexample
 
 - Task instruction: 请把这些衣服收起来，拿到洗衣区。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_007_laundry_basket/Weixin Image_20260629231746_401_27.jpg
@@ -604,7 +532,7 @@ Human checks:
 
 ## task_007 / other
 
-### VR034 - prompted_improvement
+### VR035 - prompted_improvement
 
 - Task instruction: 请把这些衣服收起来，拿到洗衣区。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_007_laundry_basket/Weixin Image_20260629231746_401_27.jpg
@@ -622,9 +550,47 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
+## task_007 / physical_capacity
+
+### VR031 - robust_failure
+
+- Task instruction: 请把这些衣服收起来，拿到洗衣区。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_007_laundry_basket/Weixin Image_20260629231746_401_27.jpg
+- Expected helper/tool behavior: use=True; types=['laundry basket', 'storage box', 'basket']; search=False
+- Model/prompt: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / natural_free_plan / generic
+- Model output excerpt: 检查周围环境以确保路径畅通无阻。; 从椅子上拿起所有衣物（包括条纹衫和深蓝色T恤）。; 确认所有衣物都已拾取后，前往洗衣区。; 将衣物放入洗衣区的指定位置。 图像显示所有衣物都集中在椅子上，且距离洗衣篮较近，因此可以一次性完成收集和运送任务。 一次性完成任务以减少移动次数。 确保在搬运过程中衣物不会掉落，保持平稳移动。 洗衣区的具体位置未知，需根据环境判断方向。 { "task_understanding": "将椅子上的衣物收集并运送到洗衣区。", "plan": [...
+- Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss;physical_capacity_hallucination
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
+### VR037 - uncertain_visual
+
+- Task instruction: 请把这些衣服收起来，拿到洗衣区。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_007_laundry_basket/Weixin Image_20260629231746_401_27.jpg
+- Expected helper/tool behavior: use=True; types=['laundry basket', 'storage box', 'basket']; search=False
+- Model/prompt: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / tool_prior_free_plan / generic
+- Model output excerpt: 检查周围环境以确认路径无障碍物。; 从椅子上拿起所有衣物，包括条纹短袖、深蓝色T恤和裤子。; 将收集的衣物放入旁边的白色塑料篮中。; 提起装有衣物的塑料篮，前往洗衣区。 直接操作是最佳选择，因为椅子上的衣物可以一次性收集并装入现成的塑料篮中。该篮子作为工具可提升效率和安全性，无需额外辅助物或多次往返。 使用旁边的塑料篮作为容器可以一次性携带所有衣物，减少往返次数，提高效率。 将衣物放入篮中可防止掉落，并确保搬运过程中的稳定性。 洗衣区的具体位置未知，但假设其在机器人可达...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;physical_capacity_hallucination;visual_uncertainty
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
 ## task_008 / reach_extension
 
-### VR005 - clean_counterexample
+### VR003 - clean_counterexample
 
 - Task instruction: 请把沙发下面的遥控器拿出来。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_008_remote_under_sofa/af09e19db8fd93d51875f3e63c5fea96.jpg
@@ -642,7 +608,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR006 - clean_counterexample
+### VR004 - clean_counterexample
 
 - Task instruction: 请把沙发下面的遥控器拿出来。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_008_remote_under_sofa/af09e19db8fd93d51875f3e63c5fea96.jpg
@@ -660,7 +626,7 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR015 - clean_counterexample
+### VR009 - clean_counterexample
 
 - Task instruction: 请把沙发下面的遥控器拿出来。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_008_remote_under_sofa/af09e19db8fd93d51875f3e63c5fea96.jpg
@@ -680,7 +646,7 @@ Human checks:
 
 ## task_009 / aggregation_container
 
-### VR031 - robust_failure
+### VR025 - clean_counterexample
 
 - Task instruction: 这里有点脏，请清理一下。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_009_dirty_floor_or_table/Weixin Image_20260629231751_404_27.jpg
@@ -698,13 +664,13 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-### VR032 - robust_failure
+### VR026 - clean_counterexample
 
 - Task instruction: 这里有点脏，请清理一下。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_009_dirty_floor_or_table/Weixin Image_20260629231751_404_27.jpg
 - Expected helper/tool behavior: use=True; types=['tissue', 'cloth', 'broom', 'dustpan']; search=False
-- Model/prompt: ollama_gemma3_27b_it_q8_0 / natural_free_plan_humanoid_dual_arm / humanoid_dual_arm
-- Model output excerpt: Scan the area to confirm the location of all paper balls and identify any obstacles.; Pick up one paper ball with each hand, if possible. Otherwise, pick them up one at a time.; Transport the collected paper balls to the trash can.; Repe...
+- Model/prompt: ollama_gemma3_27b_it_q8_0 / efficient_safe_free_plan / generic
+- Model output excerpt: 1. Scan the area for any obstacles or hazards before starting cleaning.; 2. Navigate to the location of the crumpled papers.; 3. Collect all visible crumpled papers and store them in the trash can (located near the toilet).; 4. Re-scan t...
 - Rereview judgment: true_fail (high); modes=aggregation_failure;container_affordance_miss
 
 Human checks:
@@ -736,16 +702,56 @@ Human checks:
 - [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
 - [ ] Can this case be safely used as paper evidence?
 
-## task_010 / other
+## task_009 / reach_extension
 
-### VR035 - prompted_improvement
+### VR040 - uncertain_visual
+
+- Task instruction: 这里有点脏，请清理一下。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_009_dirty_floor_or_table/Weixin Image_20260629231751_404_27.jpg
+- Expected helper/tool behavior: use=True; types=['tissue', 'cloth', 'broom', 'dustpan']; search=False
+- Model/prompt: ollama_gemma3_27b_it_q8_0 / tool_prior_free_plan / generic
+- Model output excerpt: Locate and approach the nearest piece of crumpled paper.; Pick up the crumpled paper and move it towards the trash can.; Repeat steps 1 and 2 for all visible pieces of crumpled paper.; Confirm that all visible debris has been removed. Di...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;tool_necessity_miss;visual_uncertainty
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
+## task_009 / wrong_helper_type
+
+### VR027 - clean_counterexample
+
+- Task instruction: 这里有点脏，请清理一下。
+- Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_009_dirty_floor_or_table/Weixin Image_20260629231751_404_27.jpg
+- Expected helper/tool behavior: use=True; types=['tissue', 'cloth', 'broom', 'dustpan']; search=False
+- Model/prompt: ollama_minicpm_v4_5_q8_0 / natural_free_plan_humanoid_dual_arm / humanoid_dual_arm
+- Model output excerpt: 检查附近是否有合适的容器或垃圾袋来收集纸屑; 使用夹爪逐一拾取地上的纸屑并放入容器中; 重复上述步骤直到所有可见纸屑都被清理完毕 通过逐一拾取并集中处理，可以有效避免遗漏和混乱。 尽量减少移动次数，提高清洁效率。 确保在拾取过程中不会因地面湿滑或不稳定而摔倒。 需要确认附近是否有足够的容器来容纳所有纸屑；如果容器不足，则可能需要多次往返。 { "task_understanding": "需要清理地面上的纸屑，使地面干净。", "plan": [ "检查附近是否有合适的...
+- Rereview judgment: true_fail (high); modes=wrong_helper_type
+
+Human checks:
+- [ ] Is the target object visible?
+- [ ] Is the expected helper visible?
+- [ ] If helper is not visible, is searching for one reasonable?
+- [ ] Is the expected helper/tool type reasonable for this task?
+- [ ] Is the model plan physically feasible for the stated embodiment?
+- [ ] Is the failure truly about helper/tool awareness, rather than image ambiguity?
+- [ ] Can this case be safely used as paper evidence?
+
+## task_010 / helper_mention_without_use
+
+### VR032 - robust_failure
 
 - Task instruction: 请把这些东西安全拿到餐桌上。
 - Image path: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/images/task_010_fragile_objects/Weixin Image_20260629231750_403_27.jpg
 - Expected helper/tool behavior: use=True; types=['tray', 'box', 'padded box']; search=False
-- Model/prompt: ollama_gemma3_27b_it_q8_0 / tool_prior_free_plan / generic
-- Model output excerpt: 1. Locate and assess the stability of each object.; 2. Prioritize transporting fragile items (eggs) first using the cardboard box for protection.; 3. Carefully pick up the eggs one by one and place them inside the cardboard box.; 4. Tran...
-- Rereview judgment: true_pass (high); modes=
+- Model/prompt: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / natural_free_plan / generic
+- Model output excerpt: 检查周围环境，确认餐桌位置和路径无障碍物。; 逐一拾取鸡蛋，并小心放置在餐桌上。; 将塑料蛋托拿起并放在餐桌上。; 拿起金属碗并移动到餐桌上。; 将遥控器、JBL音箱和纸巾盒依次搬到餐桌上。; 整理桌面上的物品，确保摆放整齐且安全。 为了确保所有物品安全、有序地转移到餐桌上，同时减少不必要的移动次数以提高效率。 优先搬运易碎品（如鸡蛋），减少移动次数以提高效率。 搬运过程中避免碰撞或掉落，特别是鸡蛋和金属碗等易碎物品。 未明确餐桌的具体位置和大小，需根据实际情况调整搬运...
+- Rereview judgment: true_fail (medium); modes=helper_mention_without_use;visual_uncertainty
 
 Human checks:
 - [ ] Is the target object visible?

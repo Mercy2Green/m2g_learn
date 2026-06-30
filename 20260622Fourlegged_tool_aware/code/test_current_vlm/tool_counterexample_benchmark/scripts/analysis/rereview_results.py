@@ -36,8 +36,17 @@ GENERAL_HELPER_KEYWORDS = [
     "箱子",
     "basket",
     "篮子",
+    "basin",
+    "container",
+    "storage bin",
+    "bin",
     "backpack",
     "背包",
+    "容器",
+    "收纳篮",
+    "盆",
+    "框",
+    "筐",
     "broom",
     "扫把",
     "dustpan",
@@ -53,8 +62,13 @@ GENERAL_HELPER_KEYWORDS = [
 ]
 HELPER_ACTION_KEYWORDS = [
     "place",
+    "place in",
+    "place into",
     "put",
+    "put in",
+    "put into",
     "load",
+    "load into",
     "carry",
     "transport",
     "deliver",
@@ -69,8 +83,13 @@ HELPER_ACTION_KEYWORDS = [
     "use",
     "放入",
     "放进",
+    "放到",
+    "放置到",
     "装入",
     "装进",
+    "收集到",
+    "集中放置",
+    "暂存到",
     "搬运",
     "运送",
     "收集",
@@ -174,10 +193,56 @@ DIRECT_CAPACITY_KEYWORDS = [
     "全部直接拿",
 ]
 HELPER_GROUPS = {
-    "aggregation": ["tray", "bag", "box", "basket", "backpack", "托盘", "袋子", "箱子", "盒子", "篮子", "背包"],
+    "aggregation": [
+        "tray",
+        "bag",
+        "box",
+        "basket",
+        "basin",
+        "container",
+        "storage bin",
+        "bin",
+        "backpack",
+        "托盘",
+        "袋子",
+        "箱子",
+        "盒子",
+        "篮子",
+        "收纳篮",
+        "容器",
+        "盆",
+        "框",
+        "筐",
+        "背包",
+    ],
     "reach": ["rod", "stick", "broom", "杆", "长杆", "扫把"],
     "cleaning": ["dustpan", "broom", "cloth", "tissue", "簸箕", "扫把", "抹布", "纸巾"],
 }
+CONTAINER_TERMS = HELPER_GROUPS["aggregation"]
+CONTAINER_COLLECTION_ACTIONS = [
+    "put into",
+    "place into",
+    "place in",
+    "put in",
+    "load into",
+    "collect into",
+    "gather into",
+    "deposit into",
+    "place objects in",
+    "put items into",
+    "load bottles onto",
+    "放入",
+    "放进",
+    "放到",
+    "放置到",
+    "装入",
+    "装进",
+    "收集到",
+    "集中放置",
+    "暂存到",
+]
+TRANSPORT_ACTIONS = ["carry", "transport", "deliver", "bring", "move", "端起", "搬", "搬运", "运送", "送到", "带到", "提起", "拿到"]
+REACH_USE_ACTIONS = ["use", "push", "pull", "hook", "retrieve", "reach", "拨", "拉", "推", "勾", "取出", "够到", "用"]
 
 CSV_FIELDNAMES = [
     "run_id",
@@ -279,17 +344,27 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
     target_terms = normalize_list_field(row.get("target_object_terms"))
     selected_helper = str(parsed.get("selected_helper") or parsed.get("tool_or_container") or row.get("parsed_selected_helper") or "")
     helper_terms = _helper_terms(expected_helpers, selected_helper)
+    task_family = task_family_for(row)
 
     helper_mentioned = contains_any(text, helper_terms)
     target_as_helper = bool(selected_helper) and _matches_any(selected_helper, target_terms)
-    valid_chain = _has_valid_helper_action_chain(plan_steps, chain_steps, helper_terms, target_as_helper)
+    valid_chain = _has_valid_helper_action_chain(
+        plan_steps,
+        chain_steps,
+        helper_terms,
+        target_as_helper,
+        expected_helpers,
+        str(row.get("task_id", "")),
+        task_family,
+        text,
+    )
     conditional_helper_only = _conditional_helper_only(plan_steps, chain_steps, text, helper_terms, valid_chain)
     committed_helper_use = valid_chain and not conditional_helper_only
     if conditional_helper_only:
         valid_chain = False
         committed_helper_use = False
     helper_only_mentioned = helper_mentioned and not valid_chain
-    direct_capacity = contains_any(text, DIRECT_CAPACITY_KEYWORDS)
+    direct_capacity = contains_any(text, DIRECT_CAPACITY_KEYWORDS) and not valid_chain
     direct_operation = contains_any(text, DIRECT_OPERATION_KEYWORDS)
     search_failure = expected_search and not contains_any(text, SEARCH_KEYWORDS) and not valid_chain
     wrong_helper_type = _wrong_helper_type(text, expected_helpers, valid_chain)
@@ -464,10 +539,18 @@ def _has_valid_helper_action_chain(
     chain_steps: list[str],
     helper_terms: list[str],
     target_as_helper: bool,
+    expected_helpers: list[str],
+    task_id: str,
+    task_family: str,
+    text: str,
 ) -> bool:
     if target_as_helper:
         return False
     steps = [str(item).lower() for item in chain_steps + plan_steps]
+    if _has_container_collection_chain(plan_steps, chain_steps, text, expected_helpers, task_id, task_family):
+        return True
+    if task_family == "reach_extension":
+        return _has_reach_extension_chain(steps, helper_terms)
     helper_acquired = False
     for step in steps:
         if contains_any(step, NEGATION_KEYWORDS) or _is_conditional_helper_step(step):
@@ -478,6 +561,70 @@ def _has_valid_helper_action_chain(
             helper_acquired = True
             continue
         if helper_acquired and contains_any(step, HELPER_ACTION_KEYWORDS) and contains_any(step, HELPER_REFERENCE_TERMS):
+            return True
+    return False
+
+
+def task_family_for(row: dict[str, Any]) -> str:
+    task_id = str(row.get("task_id", ""))
+    if task_id in {"task_001", "task_002", "task_004", "task_005", "task_007", "task_010"}:
+        return "aggregation_transport"
+    if task_id in {"task_006", "task_009"}:
+        return "cleanup_collection"
+    if task_id == "task_008":
+        return "reach_extension"
+    if task_id == "task_011":
+        return "control_no_tool"
+    return "generic"
+
+
+def _has_container_collection_chain(
+    plan_steps: list[str],
+    chain_steps: list[str],
+    text: str,
+    expected_helpers: list[str],
+    task_id: str,
+    task_family: str,
+) -> bool:
+    if task_family not in {"aggregation_transport", "cleanup_collection"}:
+        return False
+    expected_text = " ".join(expected_helpers).lower()
+    if expected_helpers and not contains_any(expected_text, CONTAINER_TERMS) and task_id not in {"task_006", "task_009"}:
+        return False
+
+    steps = [str(item).lower() for item in chain_steps + plan_steps]
+    active_steps = [step for step in steps if not contains_any(step, NEGATION_KEYWORDS) and not _is_conditional_helper_step(step)]
+    if not active_steps:
+        return False
+
+    load_step_found = any(_step_has_container_collection_action(step) for step in active_steps)
+    if not load_step_found:
+        return False
+
+    if task_family == "cleanup_collection":
+        return True
+
+    return any(contains_any(step, CONTAINER_TERMS) and contains_any(step, TRANSPORT_ACTIONS) for step in active_steps)
+
+
+def _step_has_container_collection_action(step: str) -> bool:
+    if not contains_any(step, CONTAINER_TERMS):
+        return False
+    return contains_any(step, CONTAINER_COLLECTION_ACTIONS)
+
+
+def _has_reach_extension_chain(steps: list[str], helper_terms: list[str]) -> bool:
+    reach_terms = sorted({term.lower() for term in helper_terms + HELPER_GROUPS["reach"] if term}, key=len, reverse=True)
+    helper_acquired = False
+    for step in steps:
+        if contains_any(step, NEGATION_KEYWORDS) or _is_conditional_helper_step(step):
+            continue
+        if contains_any(step, reach_terms) and contains_any(step, REACH_USE_ACTIONS):
+            return True
+        if contains_any(step, reach_terms) and contains_any(step, HELPER_ACQUISITION_KEYWORDS):
+            helper_acquired = True
+            continue
+        if helper_acquired and contains_any(step, REACH_USE_ACTIONS) and contains_any(step, HELPER_REFERENCE_TERMS):
             return True
     return False
 
@@ -512,6 +659,8 @@ def _wrong_helper_type(text: str, expected_helpers: list[str], valid_chain: bool
     if not valid_chain or not expected_helpers:
         return False
     lowered_expected = {helper.lower() for helper in expected_helpers}
+    if lowered_expected.intersection({term.lower() for term in HELPER_GROUPS["aggregation"]}):
+        return False
     if lowered_expected.intersection({"broom", "stick", "rod"}):
         return contains_any(text, HELPER_GROUPS["aggregation"]) and not contains_any(text, HELPER_GROUPS["reach"])
     if lowered_expected.intersection({"tissue", "cloth", "dustpan"}):
@@ -625,6 +774,12 @@ def run_self_test() -> None:
         ("conditional direct tray", synthetic_row("carry bottles directly, or find a tray if available"), "true_fail"),
         ("valid pronoun tray", synthetic_row("find a tray; place the bottles on it; carry it to bedroom"), "true_pass"),
         ("try tray only", synthetic_row("try to use a tray if available"), "true_fail"),
+        ("chinese cleanup basket", synthetic_cleanup_row("逐个拾取地上的小物品，并将其放置到白色收纳篮内。"), "true_pass"),
+        ("chinese tray transport", synthetic_row("找到托盘；把水瓶放到托盘上；端起托盘送到卧室。"), "true_pass"),
+        ("chinese conditional tray", synthetic_row("逐个搬运水瓶，必要时可以考虑寻找托盘。"), "true_fail"),
+        ("valid reach rod", synthetic_remote_row("找到长杆；用长杆把沙发下的遥控器拨出来；再用夹爪抓取遥控器。"), "true_pass"),
+        ("direct reach fail", synthetic_remote_row("直接把机械臂伸进沙发下抓取遥控器。"), "true_fail"),
+        ("single bottle direct pass", synthetic_single_bottle_row("直接拿起桌上的单个水瓶并递给用户。"), "true_pass"),
         ("over tool use", synthetic_single_bottle_row("find a tray; place the bottle on the tray; carry the tray to user"), "true_fail"),
         ("parse error", {**synthetic_row("", parse_status="parse_error"), "raw_response": ""}, "parse_error"),
         ("skipped", {**synthetic_row(""), "auto_pass_fail": "skipped"}, "skipped"),
@@ -673,6 +828,19 @@ def synthetic_remote_row(plan: str) -> dict[str, Any]:
             "task_id": "task_008",
             "expected_tool_or_container_types": ["broom", "stick", "rod"],
             "target_object_terms": ["remote", "remote control"],
+        }
+    )
+    return row
+
+
+def synthetic_cleanup_row(plan: str) -> dict[str, Any]:
+    row = synthetic_row(plan)
+    row.update(
+        {
+            "task_id": "task_006",
+            "task_name": "small objects",
+            "expected_tool_or_container_types": ["box", "basket", "dustpan", "container", "盒子", "收纳篮"],
+            "target_object_terms": ["small objects", "小物品", "objects"],
         }
     )
     return row

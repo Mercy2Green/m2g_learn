@@ -18,38 +18,38 @@ Reviewer fields in `visual_review_sheet.csv` are blank and must be filled manual
 
 | Task | Count |
 | --- | ---: |
-| task_006 | 10 |
-| task_001 | 7 |
+| task_001 | 6 |
+| task_004 | 6 |
 | task_005 | 6 |
-| task_007 | 4 |
-| task_002 | 3 |
+| task_007 | 6 |
+| task_009 | 5 |
+| task_002 | 4 |
 | task_008 | 3 |
-| task_004 | 3 |
-| task_009 | 3 |
+| task_006 | 3 |
 | task_010 | 1 |
 
 ## By Failure Family
 
 | Failure family | Count |
 | --- | ---: |
-| aggregation_container | 17 |
-| helper_mention_without_use | 7 |
+| aggregation_container | 14 |
+| reach_extension | 6 |
+| physical_capacity | 6 |
+| helper_mention_without_use | 6 |
 | other | 4 |
 | helper_search | 3 |
-| reach_extension | 3 |
-| wrong_helper_type | 3 |
-| physical_capacity | 3 |
+| wrong_helper_type | 1 |
 
 ## Top Tasks Selected
 
-- task_006: 10
-- task_001: 7
+- task_001: 6
+- task_004: 6
 - task_005: 6
-- task_007: 4
-- task_002: 3
+- task_007: 6
+- task_009: 5
+- task_002: 4
 - task_008: 3
-- task_004: 3
-- task_009: 3
+- task_006: 3
 - task_010: 1
 
 This pack prepares human review only; it does not validate final benchmark claims.
