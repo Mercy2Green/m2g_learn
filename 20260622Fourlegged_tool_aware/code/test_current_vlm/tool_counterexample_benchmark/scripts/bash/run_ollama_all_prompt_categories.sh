@@ -15,6 +15,10 @@ run_prompt_category "humanoid_dual_arm_clean" \
 run_prompt_category "quadruped_single_arm_clean" \
   natural_free_plan_quadruped_single_arm \
   efficient_safe_free_plan_quadruped_single_arm
+run_prompt_category "tool_prior_intervention" \
+  tool_prior_free_plan \
+  tool_prior_free_plan_humanoid_dual_arm \
+  tool_prior_free_plan_quadruped_single_arm
 run_prompt_category "diagnostic_probes" \
   structured_tool_probe \
   structured_tool_action_chain_probe_humanoid_dual_arm \

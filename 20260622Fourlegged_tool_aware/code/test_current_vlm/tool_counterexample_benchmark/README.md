@@ -17,10 +17,13 @@ The goal is to find clean counterexamples: for example, a model sees several bot
 
 ## Prompt settings
 
-Primary clean prompts:
+Primary clean prompts have no explicit tool/helper hint and are used for clean counterexample evidence:
 
 - `natural_free_plan`
 - `efficient_safe_free_plan`
+
+Embodiment clean prompts also have no explicit tool/helper hint, but include humanoid or quadruped capability constraints:
+
 - `natural_free_plan_humanoid_dual_arm`
 - `efficient_safe_free_plan_humanoid_dual_arm`
 - `natural_free_plan_quadruped_single_arm`
@@ -28,15 +31,19 @@ Primary clean prompts:
 
 The generic prompts remain generic baselines. The humanoid/quadruped prompts add only robot capability constraints such as hand count, gripper capacity, balance, and reach limits. They do not name task-specific helper answers. These primary prompts do not include `tool`, `container`, `uses_tool_or_container`, or similar output fields.
 
-Diagnostic prompts:
+Tool-prior intervention prompts explicitly ask the model to prioritize considering helper/tool objects, but keep the free-form output schema. They are not clean evidence; use them to test whether an explicit helper prior improves planning:
+
+- `tool_prior_free_plan`
+- `tool_prior_free_plan_humanoid_dual_arm`
+- `tool_prior_free_plan_quadruped_single_arm`
+
+Structured action-chain diagnostic probes ask for helper/action-chain fields. They are diagnostic only:
 
 - `structured_tool_probe`
 - `structured_tool_action_chain_probe_humanoid_dual_arm`
 - `structured_tool_action_chain_probe_quadruped_single_arm`
 
-Diagnostic probes ask for helper/action-chain fields and are useful for debugging, but they are not clean main counterexample evidence.
-
-Summary reports separate parse reliability from planning quality. Skipped rows are excluded from OK parse counts, and structured/action-chain probes remain diagnostic-only rows.
+Summary reports separate parse reliability from planning quality. Skipped rows are excluded from OK parse counts; structured probes and tool-prior interventions are reported separately from clean evidence.
 
 ## Install
 
@@ -244,6 +251,20 @@ python -m src.run_batch \
   --output_dir outputs/ollama_humanoid_dual_arm \
   --model_ids ollama_qwen3_vl_32b_instruct_q4_K_M ollama_llama3_2_vision_11b_instruct_q8_0 \
   --prompt_ids natural_free_plan_humanoid_dual_arm efficient_safe_free_plan_humanoid_dual_arm structured_tool_action_chain_probe_humanoid_dual_arm \
+  --overwrite
+```
+
+Run tool-prior intervention prompts alongside matched clean prompts:
+
+```bash
+python -m src.run_batch \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --output_dir outputs/ollama_tool_prior_intervention \
+  --task_ids task_002 task_008 \
+  --model_ids ollama_qwen3_vl_8b ollama_gemma3_12b \
+  --prompt_ids natural_free_plan tool_prior_free_plan natural_free_plan_quadruped_single_arm tool_prior_free_plan_quadruped_single_arm \
   --overwrite
 ```
 

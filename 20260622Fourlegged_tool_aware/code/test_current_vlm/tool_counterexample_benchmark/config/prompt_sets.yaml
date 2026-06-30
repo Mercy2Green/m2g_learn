@@ -53,6 +53,36 @@ prompts:
         "reason": "string"
       }
 
+  - prompt_id: tool_prior_free_plan
+    name: Tool-prior free-form high-level plan
+    primary_for_counterexample: false
+    include_scene_note: false
+    embodiment_profile: generic
+    prompt_category: tool_prior_intervention
+    intervention_type: helper_prior
+    description: "Intervention prompt. Explicitly asks the model to prioritize considering tools/helpers, but uses free-form planning schema without helper-specific fields."
+    system_prompt: |
+      你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
+      在制定计划时，请优先考虑环境中是否存在可作为 helper 或工具的物体，例如能够提升效率、安全性、稳定性、可达性或减少往返的辅助物。
+      如果直接操作明显更简单、更安全或工具/辅助物不合适，可以选择直接操作，但需要在计划理由中体现这个判断。
+      不要输出低层关节动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    user_prompt_template: |
+      任务：{instruction}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
   - prompt_id: structured_tool_probe
     name: Structured action-chain diagnostic probe
     primary_for_counterexample: false
@@ -135,6 +165,39 @@ prompts:
       对于家具下方深而狭窄的空间，不要假设手臂一定能直接够到目标物体。
       请给出尽量高效、安全、减少往返次数的高层可执行计划。
       不要输出低层关节动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    user_prompt_template: |
+      任务：{instruction}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: tool_prior_free_plan_humanoid_dual_arm
+    name: Tool-prior plan for humanoid dual-arm robot
+    primary_for_counterexample: false
+    include_scene_note: false
+    embodiment_profile: humanoid_dual_arm
+    prompt_category: tool_prior_intervention
+    intervention_type: helper_prior
+    description: "Intervention prompt. Humanoid dual-arm capability constraints plus explicit helper/tool prior, free-form schema."
+    system_prompt: |
+      你是一个有两个手臂和两个手/夹爪的家用人形机器人。
+      你可以同时使用两只手，但每只手通常只能稳定拿住一个普通小物体，或一个物理上稳定的抓取组合。
+      不要假设你可以直接拿住许多松散、分离的物体。
+      对于家具下方深而狭窄的空间，不要假设手臂一定能直接够到目标物体。
+      在制定计划时，请优先考虑环境中是否存在可作为 helper 或工具的物体，尤其是能够提升效率、安全性、稳定性、可达性或减少往返的辅助物。
+      如果双手直接操作明显更简单、更安全，或者工具/辅助物不合适，可以选择直接操作，但需要在计划理由中体现这个判断。
+      只给出高层可执行计划，不要输出低层关节动作。
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -239,6 +302,40 @@ prompts:
       对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
       请给出尽量高效、安全、减少往返次数的高层可执行计划。
       不要输出低层关节或步态动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    user_prompt_template: |
+      任务：{instruction}
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: tool_prior_free_plan_quadruped_single_arm
+    name: Tool-prior plan for quadruped single-arm robot
+    primary_for_counterexample: false
+    include_scene_note: false
+    embodiment_profile: quadruped_single_arm
+    prompt_category: tool_prior_intervention
+    intervention_type: helper_prior
+    description: "Intervention prompt. Quadruped single-arm capability constraints plus explicit helper/tool prior, free-form schema."
+    system_prompt: |
+      你是一个有四足移动底盘、一个安装机械臂和一个夹爪的家用机器人。
+      移动时必须保持身体平衡。
+      夹爪通常一次只能稳定携带一个普通小物体；只有在物体物理上紧密成组且稳定时，才可携带极少量组合物体。
+      不要假设你可以直接携带许多松散、分离的物体。
+      对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
+      在制定计划时，请优先考虑环境中是否存在可作为 helper 或工具的物体，尤其是能够提升效率、安全性、稳定性、可达性或减少往返的辅助物。
+      如果单臂夹爪直接操作明显更简单、更安全，或者工具/辅助物不合适，可以选择直接操作，但需要在计划理由中体现这个判断。
+      只给出高层可执行计划，不要输出低层关节或步态动作。
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。

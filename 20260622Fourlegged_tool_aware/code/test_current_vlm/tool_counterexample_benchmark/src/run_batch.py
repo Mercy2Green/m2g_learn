@@ -148,6 +148,17 @@ def filter_by_ids(items: list[dict[str, Any]], id_key: str, selected_ids: list[s
     return [item for item in items if item.get(id_key) in selected]
 
 
+def prompt_type_for(prompt: dict[str, Any]) -> str:
+    if prompt.get("primary_for_counterexample", False):
+        return "primary_clean"
+    category = str(prompt.get("prompt_category", ""))
+    if category == "diagnostic_probe":
+        return "structured_probe"
+    if category == "tool_prior_intervention":
+        return "tool_prior_intervention"
+    return category or "non_primary"
+
+
 def dry_run_models(models: list[dict[str, Any]]) -> list[dict[str, Any]]:
     selected_mock = [model for model in models if model.get("provider") == "mock"]
     if selected_mock:
@@ -206,7 +217,7 @@ def base_record(
         "prompt_category": prompt.get("prompt_category", ""),
         "diagnostic_type": prompt.get("diagnostic_type", ""),
         "primary_for_counterexample": bool(prompt.get("primary_for_counterexample", False)),
-        "prompt_type": "primary_clean" if prompt.get("primary_for_counterexample", False) else "structured_probe",
+        "prompt_type": prompt_type_for(prompt),
         "system_prompt": system_prompt,
         "user_prompt": user_prompt,
     }
@@ -253,7 +264,7 @@ def skipped_record(task: dict[str, Any], model: dict[str, Any], prompt: dict[str
         "embodiment_profile": prompt.get("embodiment_profile", "generic"),
         "prompt_category": prompt.get("prompt_category", ""),
         "diagnostic_type": prompt.get("diagnostic_type", ""),
-        "prompt_type": "primary_clean" if prompt.get("primary_for_counterexample", False) else "structured_probe",
+        "prompt_type": prompt_type_for(prompt),
         "primary_for_counterexample": bool(prompt.get("primary_for_counterexample", False)),
         "pass_fail": "skipped",
         "failure_types_detected": [],

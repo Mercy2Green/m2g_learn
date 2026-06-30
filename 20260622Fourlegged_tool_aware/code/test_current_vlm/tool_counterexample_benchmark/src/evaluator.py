@@ -128,7 +128,15 @@ def evaluate_response(
     trips = parsed.get("estimated_number_of_trips", "unknown")
 
     if not primary:
-        notes.append("Structured/action-chain probe: diagnostic only, not clean counterexample evidence.")
+        category = str(prompt.get("prompt_category", ""))
+        if category == "diagnostic_probe":
+            notes.append("Structured/action-chain probe: diagnostic only, not clean counterexample evidence.")
+        elif category == "tool_prior_intervention":
+            notes.append(
+                "Tool-prior intervention prompt: not clean counterexample evidence; use for prompted helper-awareness analysis."
+            )
+        else:
+            notes.append("Non-primary prompt: not clean counterexample evidence.")
 
     if expected.get("should_use_tool_or_container") is True:
         if target_as_helper:
