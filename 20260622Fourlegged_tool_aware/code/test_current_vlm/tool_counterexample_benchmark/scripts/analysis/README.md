@@ -69,6 +69,14 @@ Generated files:
 
 ## How To Expand Later
 
+Scan all completed runs under an outputs root:
+
+```bash
+python scripts/analysis/build_result_index.py \
+  --outputs_root outputs/20260630_important_all_test \
+  --output_dir analysis_review/round02_full_important_outputs
+```
+
 Pass explicit output directories:
 
 ```bash
@@ -78,6 +86,25 @@ python scripts/analysis/build_result_index.py \
 ```
 
 For full-output aggregation, first decide which output directories are valid and whether old runs used compatible prompt schemas. Do not mix exploratory/debug runs into paper-facing summaries without marking them.
+
+## summarize_rereview.py
+
+After rereview, generate aggregate analysis documents:
+
+```bash
+python scripts/analysis/summarize_rereview.py \
+  --input analysis_review/round02_full_important_outputs/case_rereview.jsonl \
+  --output_dir analysis_review/round02_full_important_outputs
+```
+
+Generated files:
+
+- `aggregate_findings.md`
+- `task_family_summary.csv`
+- `model_prompt_matrix.csv`
+- `prompt_intervention_delta.md`
+- `counterexample_candidates_ranked.md`
+- `README_FOR_CHATGPT.md`
 
 ## Limitations
 

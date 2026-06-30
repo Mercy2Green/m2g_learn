@@ -86,7 +86,7 @@ CSV_FIELDNAMES = [
 def main() -> None:
     args = parse_args()
     root_dir = Path(__file__).resolve().parents[2]
-    output_dirs = [Path(item) for item in (args.output_dirs or DEFAULT_OUTPUT_DIRS)]
+    output_dirs, skipped_non_runs = discover_output_dirs(args, root_dir)
     output_dir = Path(args.output_dir)
     if not output_dir.is_absolute():
         output_dir = root_dir / output_dir
@@ -95,6 +95,11 @@ def main() -> None:
     all_rows: list[dict[str, Any]] = []
     manifest: list[dict[str, Any]] = []
     integrity_lines = ["# Data Integrity Report", ""]
+    if skipped_non_runs:
+        integrity_lines.extend(["## Skipped non-run directories", ""])
+        for skipped in skipped_non_runs:
+            integrity_lines.append(f"- `{skipped}`")
+        integrity_lines.append("")
 
     for raw_output_dir in output_dirs:
         run_dir = raw_output_dir if raw_output_dir.is_absolute() else root_dir / raw_output_dir
@@ -120,9 +125,41 @@ def main() -> None:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build unified row-level index from benchmark output directories.")
     parser.add_argument("--output_dirs", nargs="*", default=None)
-    parser.add_argument("--output_dir", default="analysis_review/round01_small_subset")
+    parser.add_argument("--outputs_glob", default=None)
+    parser.add_argument("--outputs_root", default=None)
+    parser.add_argument("--output_dir", default="analysis_review/round02_full_important_outputs")
     parser.add_argument("--allow_missing", action="store_true")
     return parser.parse_args()
+
+
+def discover_output_dirs(args: argparse.Namespace, root_dir: Path) -> tuple[list[Path], list[Path]]:
+    skipped: list[Path] = []
+    if args.output_dirs:
+        return [Path(item) for item in args.output_dirs], skipped
+    if args.outputs_glob:
+        glob_root = Path(args.outputs_root) if args.outputs_root else root_dir
+        if not glob_root.is_absolute():
+            glob_root = root_dir / glob_root
+        candidates = sorted(glob_root.glob(args.outputs_glob))
+        return [path for path in candidates if path.is_dir()], skipped
+    if args.outputs_root:
+        scan_root = Path(args.outputs_root)
+        if not scan_root.is_absolute():
+            scan_root = root_dir / scan_root
+        candidates = sorted(path for path in scan_root.iterdir() if path.is_dir()) if scan_root.exists() else []
+        run_dirs: list[Path] = []
+        for path in candidates:
+            if is_valid_run_dir(path):
+                run_dirs.append(path)
+            else:
+                skipped.append(path)
+        return run_dirs, skipped
+    return [Path(item) for item in DEFAULT_OUTPUT_DIRS], skipped
+
+
+def is_valid_run_dir(path: Path) -> bool:
+    required = ["evaluation.csv", "parsed_results.jsonl", "raw_responses.jsonl"]
+    return path.is_dir() and all((path / filename).exists() for filename in required)
 
 
 def process_run_dir(run_dir: Path, root_dir: Path) -> dict[str, Any]:
@@ -154,6 +191,8 @@ def process_run_dir(run_dir: Path, root_dir: Path) -> dict[str, Any]:
     eval_rows = read_csv_dicts(run_dir / "evaluation.csv")
     parsed_rows = read_jsonl(run_dir / "parsed_results.jsonl")
     raw_rows = read_jsonl(run_dir / "raw_responses.jsonl")
+    parsed_duplicate_keys = duplicate_join_keys(parsed_rows)
+    raw_duplicate_keys = duplicate_join_keys(raw_rows)
     parsed_by_key = {join_key(row): row for row in parsed_rows}
     raw_by_key = {join_key(row): row for row in raw_rows}
     snapshot = load_config_snapshot(run_dir / "config_snapshot")
@@ -188,6 +227,10 @@ def process_run_dir(run_dir: Path, root_dir: Path) -> dict[str, Any]:
         status = "partial_join"
         issues.append(f"missing parsed join rows: {missing_parsed}")
         issues.append(f"missing raw join rows: {missing_raw}")
+    if parsed_duplicate_keys:
+        issues.append(f"duplicate parsed join keys: {len(parsed_duplicate_keys)}")
+    if raw_duplicate_keys:
+        issues.append(f"duplicate raw join keys: {len(raw_duplicate_keys)}")
 
     integrity_lines.extend(
         [
@@ -198,6 +241,8 @@ def process_run_dir(run_dir: Path, root_dir: Path) -> dict[str, Any]:
             f"- merged rows: {len(merged_rows)}",
             f"- missing parsed joins: {missing_parsed}",
             f"- missing raw joins: {missing_raw}",
+            f"- duplicate parsed join keys: {len(parsed_duplicate_keys)}",
+            f"- duplicate raw join keys: {len(raw_duplicate_keys)}",
             f"- snapshot tasks: {len(snapshot['tasks'])}",
             f"- snapshot prompts: {len(snapshot['prompts'])}",
             f"- snapshot models: {len(snapshot['models'])}",
@@ -211,6 +256,17 @@ def process_run_dir(run_dir: Path, root_dir: Path) -> dict[str, Any]:
         "integrity_lines": integrity_lines,
         "rows": merged_rows,
     }
+
+
+def duplicate_join_keys(rows: list[dict[str, Any]]) -> list[tuple[str, str, str, str]]:
+    seen: set[tuple[str, str, str, str]] = set()
+    duplicates: set[tuple[str, str, str, str]] = set()
+    for row in rows:
+        key = join_key(row)
+        if key in seen:
+            duplicates.add(key)
+        seen.add(key)
+    return sorted(duplicates)
 
 
 def load_config_snapshot(snapshot_dir: Path) -> dict[str, dict[str, dict[str, Any]]]:

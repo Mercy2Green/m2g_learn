@@ -84,6 +84,67 @@ HELPER_ACTION_KEYWORDS = [
     "擦",
     "清理",
 ]
+HELPER_ACQUISITION_KEYWORDS = [
+    "find",
+    "locate",
+    "get",
+    "pick up",
+    "take",
+    "select",
+    "obtain",
+    "寻找",
+    "找到",
+    "拿",
+    "取",
+    "选择",
+    "获取",
+]
+HELPER_REFERENCE_TERMS = [
+    "it",
+    "them",
+    "this helper",
+    "that helper",
+    "the helper",
+    "the tool",
+    "the container",
+    "the tray",
+    "the basket",
+    "the box",
+    "the bag",
+    "它",
+    "它们",
+    "其",
+    "将其",
+    "把它",
+    "这个辅助物",
+    "该辅助物",
+    "该工具",
+    "该容器",
+    "托盘",
+    "篮子",
+    "箱子",
+    "袋子",
+]
+CONDITIONAL_HELPER_PATTERNS = [
+    "or use",
+    "or find",
+    "if possible",
+    "if available",
+    "consider using",
+    "try to use",
+    "optionally",
+    "if needed",
+    "或使用",
+    "或寻找",
+    "如果有",
+    "如果可用",
+    "若有",
+    "可考虑",
+    "考虑使用",
+    "尝试使用",
+    "必要时",
+    "有的话",
+]
 SEARCH_KEYWORDS = ["寻找", "查找", "检查附近", "查看附近", "搜索附近", "look for", "search nearby", "check nearby"]
 NEGATION_KEYWORDS = ["avoid", "避开", "不要碰", "not use", "不用", "不使用", "ignore", "忽略"]
 DIRECT_OPERATION_KEYWORDS = [
@@ -143,8 +204,11 @@ CSV_FIELDNAMES = [
     "search_failure_when_helper_not_visible",
     "over_tool_use",
     "field_plan_inconsistency",
+    "conditional_helper_only",
+    "committed_helper_use",
     "needs_visual_check",
     "rereview_failure_modes",
+    "rereview_caveats",
     "evidence_quote",
     "rereview_reason",
     "auto_failure_types",
@@ -219,6 +283,11 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
     helper_mentioned = contains_any(text, helper_terms)
     target_as_helper = bool(selected_helper) and _matches_any(selected_helper, target_terms)
     valid_chain = _has_valid_helper_action_chain(plan_steps, chain_steps, helper_terms, target_as_helper)
+    conditional_helper_only = _conditional_helper_only(plan_steps, chain_steps, text, helper_terms, valid_chain)
+    committed_helper_use = valid_chain and not conditional_helper_only
+    if conditional_helper_only:
+        valid_chain = False
+        committed_helper_use = False
     helper_only_mentioned = helper_mentioned and not valid_chain
     direct_capacity = contains_any(text, DIRECT_CAPACITY_KEYWORDS)
     direct_operation = contains_any(text, DIRECT_OPERATION_KEYWORDS)
@@ -240,12 +309,15 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
             "search_failure_when_helper_not_visible": "yes" if search_failure else ("not_applicable" if not expected_search else "no"),
             "over_tool_use": tri(over_tool_use),
             "field_plan_inconsistency": tri(field_plan_inconsistency),
+            "conditional_helper_only": tri(conditional_helper_only),
+            "committed_helper_use": tri(committed_helper_use),
             "needs_visual_check": tri(needs_visual_check),
             "evidence_quote": extract_evidence_quote(text),
         }
     )
 
     failure_modes: list[str] = []
+    caveats: list[str] = []
     reasons: list[str] = []
     if target_as_helper:
         failure_modes.append("target_as_helper")
@@ -262,9 +334,14 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
     if search_failure:
         failure_modes.append("helper_search_failure")
         reasons.append("Task expects helper search/fallback, but plan does not search.")
-    if helper_only_mentioned:
+    if conditional_helper_only:
+        failure_modes.append("helper_mention_without_use")
+        reasons.append("Helper use is only conditional or optional, with no committed helper action chain.")
+    elif helper_only_mentioned and expected_helper:
         failure_modes.append("helper_mention_without_use")
         reasons.append("A helper is mentioned but no valid helper action chain is present.")
+    elif helper_only_mentioned:
+        caveats.append("Helper is mentioned but not used; direct handling may be acceptable for this task.")
     if expected_helper and direct_operation and not valid_chain:
         failure_modes.append("tool_necessity_miss")
         reasons.append("Plan directly operates on the target although helper use is expected.")
@@ -280,13 +357,13 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
 
     failure_modes = sorted(set(failure_modes))
     if over_tool_use or target_as_helper or direct_capacity or search_failure or wrong_helper_type or (expected_helper and (direct_operation or not valid_chain)):
-        base.update(label("true_fail", "high" if not needs_visual_check else "medium", failure_modes, " ".join(reasons)))
+        base.update(label("true_fail", "high" if not needs_visual_check else "medium", failure_modes, " ".join(reasons), caveats))
     elif expected_helper and helper_only_mentioned:
-        base.update(label("uncertain", "medium", failure_modes, " ".join(reasons)))
+        base.update(label("uncertain", "medium", failure_modes, " ".join(reasons), caveats))
     elif needs_visual_check:
-        base.update(label("uncertain", "medium", failure_modes, " ".join(reasons)))
+        base.update(label("uncertain", "medium", failure_modes, " ".join(reasons), caveats))
     else:
-        base.update(label("true_pass", "high", failure_modes, "Valid helper use or acceptable direct handling is supported by the text."))
+        base.update(label("true_pass", "high", [], "Valid helper use or acceptable direct handling is supported by the text.", caveats))
     return finalize_review(base, row)
 
 
@@ -316,8 +393,11 @@ def base_review_row(row: dict[str, Any]) -> dict[str, Any]:
         "search_failure_when_helper_not_visible": "unclear",
         "over_tool_use": "unclear",
         "field_plan_inconsistency": "unclear",
+        "conditional_helper_only": "unclear",
+        "committed_helper_use": "unclear",
         "needs_visual_check": "no",
         "rereview_failure_modes": "",
+        "rereview_caveats": "",
         "evidence_quote": extract_evidence_quote(extract_plan_text(row)),
         "rereview_reason": "",
         "auto_failure_types": row.get("auto_failure_types", ""),
@@ -331,11 +411,18 @@ def base_review_row(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def label(rereview_label: str, confidence: str, failure_modes: list[str], reason: str) -> dict[str, str]:
+def label(
+    rereview_label: str,
+    confidence: str,
+    failure_modes: list[str],
+    reason: str,
+    caveats: list[str] | None = None,
+) -> dict[str, str]:
     return {
         "rereview_label": rereview_label,
         "rereview_confidence": confidence,
         "rereview_failure_modes": ";".join(sorted(set(failure_modes))),
+        "rereview_caveats": ";".join(sorted(set(caveats or []))),
         "rereview_reason": compact_text(reason, 700),
     }
 
@@ -380,19 +467,45 @@ def _has_valid_helper_action_chain(
 ) -> bool:
     if target_as_helper:
         return False
-    for step in [str(item).lower() for item in chain_steps + plan_steps]:
-        if contains_any(step, NEGATION_KEYWORDS):
+    steps = [str(item).lower() for item in chain_steps + plan_steps]
+    helper_acquired = False
+    for step in steps:
+        if contains_any(step, NEGATION_KEYWORDS) or _is_conditional_helper_step(step):
             continue
         if contains_any(step, helper_terms) and contains_any(step, HELPER_ACTION_KEYWORDS):
+            return True
+        if contains_any(step, helper_terms) and contains_any(step, HELPER_ACQUISITION_KEYWORDS):
+            helper_acquired = True
+            continue
+        if helper_acquired and contains_any(step, HELPER_ACTION_KEYWORDS) and contains_any(step, HELPER_REFERENCE_TERMS):
             return True
     return False
 
 
 def _field_plan_inconsistency(parsed: dict[str, Any], valid_chain: bool, selected_helper: str) -> bool:
     helper_needed = str(parsed.get("helper_needed", "")).lower()
-    action_chain = normalize_list_field(parsed.get("tool_use_action_chain"))
     field_claims_helper = helper_needed == "yes" or bool(selected_helper and selected_helper.lower() not in {"none", "null", "无", "没有"})
-    return field_claims_helper and not valid_chain and not action_chain
+    return field_claims_helper and not valid_chain
+
+
+def _conditional_helper_only(
+    plan_steps: list[str],
+    chain_steps: list[str],
+    text: str,
+    helper_terms: list[str],
+    valid_chain: bool,
+) -> bool:
+    if valid_chain:
+        return False
+    steps = [str(item).lower() for item in chain_steps + plan_steps]
+    if any(_is_conditional_helper_step(step) and contains_any(step, helper_terms) for step in steps):
+        return True
+    lowered = text.lower()
+    return contains_any(lowered, CONDITIONAL_HELPER_PATTERNS) and contains_any(lowered, helper_terms)
+
+
+def _is_conditional_helper_step(step: str) -> bool:
+    return contains_any(step, CONDITIONAL_HELPER_PATTERNS)
 
 
 def _wrong_helper_type(text: str, expected_helpers: list[str], valid_chain: bool) -> bool:
@@ -509,6 +622,9 @@ def run_self_test() -> None:
         ("selected helper no use", synthetic_row("carry the water bottles to the bedroom", selected_helper="tray"), "true_fail"),
         ("avoid rod", synthetic_remote_row("avoid the white rod-like object; grasp the remote directly"), "true_fail"),
         ("valid tray", synthetic_row("find a tray; place bottles on the tray; carry the tray to bedroom"), "true_pass"),
+        ("conditional direct tray", synthetic_row("carry bottles directly, or find a tray if available"), "true_fail"),
+        ("valid pronoun tray", synthetic_row("find a tray; place the bottles on it; carry it to bedroom"), "true_pass"),
+        ("try tray only", synthetic_row("try to use a tray if available"), "true_fail"),
         ("over tool use", synthetic_single_bottle_row("find a tray; place the bottle on the tray; carry the tray to user"), "true_fail"),
         ("parse error", {**synthetic_row("", parse_status="parse_error"), "raw_response": ""}, "parse_error"),
         ("skipped", {**synthetic_row(""), "auto_pass_fail": "skipped"}, "skipped"),
