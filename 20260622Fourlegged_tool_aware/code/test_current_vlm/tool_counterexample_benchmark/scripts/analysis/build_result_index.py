@@ -75,8 +75,17 @@ CSV_FIELDNAMES = [
     "prompt_eval_count",
     "eval_count",
     "num_ctx",
+    "configured_max_tokens",
+    "context_budget_total",
+    "context_budget_for_input_estimated",
+    "context_usage_ratio",
+    "context_headroom_after_prompt",
+    "context_headroom_after_prompt_and_generation",
+    "context_overflow_risk",
     "system_prompt_chars",
     "user_prompt_chars",
+    "total_prompt_chars",
+    "total_prompt_approx_tokens",
     "raw_response_chars",
     "parsed_plan_chars",
     "raw_response_short",
@@ -346,11 +355,22 @@ def merge_row(
         "user_prompt": user_prompt,
         "prompt_eval_count": raw_metadata.get("prompt_eval_count", ""),
         "eval_count": raw_metadata.get("eval_count", ""),
-        "num_ctx": raw_metadata.get("num_ctx", ""),
+        "num_ctx": raw_metadata.get("num_ctx", raw_record.get("num_ctx", "")),
+        "configured_max_tokens": raw_metadata.get("configured_max_tokens", raw_record.get("configured_max_tokens", "")),
+        "context_budget_total": raw_metadata.get("context_budget_total", raw_record.get("num_ctx", "")),
+        "context_budget_for_input_estimated": raw_metadata.get("context_budget_for_input_estimated", ""),
+        "context_usage_ratio": raw_metadata.get("context_usage_ratio", ""),
+        "context_headroom_after_prompt": raw_metadata.get("context_headroom_after_prompt", ""),
+        "context_headroom_after_prompt_and_generation": raw_metadata.get("context_headroom_after_prompt_and_generation", ""),
+        "context_overflow_risk": raw_metadata.get("context_overflow_risk", ""),
         "ollama_done": raw_metadata.get("ollama_done", ""),
         "provider_metadata": raw_metadata,
-        "system_prompt_chars": len(system_prompt),
-        "user_prompt_chars": len(user_prompt),
+        "system_prompt_chars": raw_record.get("system_prompt_chars", len(system_prompt)),
+        "user_prompt_chars": raw_record.get("user_prompt_chars", len(user_prompt)),
+        "total_prompt_chars": raw_record.get("total_prompt_chars", len(system_prompt) + len(user_prompt)),
+        "system_prompt_approx_tokens": raw_record.get("system_prompt_approx_tokens", _approx_tokens(system_prompt)),
+        "user_prompt_approx_tokens": raw_record.get("user_prompt_approx_tokens", _approx_tokens(user_prompt)),
+        "total_prompt_approx_tokens": raw_record.get("total_prompt_approx_tokens", _approx_tokens(system_prompt + user_prompt)),
         "raw_response": raw_response,
         "raw_response_chars": len(raw_response),
         "raw_response_short": compact_text(raw_response, 500),
@@ -359,6 +379,10 @@ def merge_row(
     merged.update(parsed_flat)
     merged["parsed_plan_chars"] = len(str(merged.get("parsed_plan", "")))
     return merged
+
+
+def _approx_tokens(text: str) -> int:
+    return (len(text) + 1) // 2
 
 
 def manifest_row(

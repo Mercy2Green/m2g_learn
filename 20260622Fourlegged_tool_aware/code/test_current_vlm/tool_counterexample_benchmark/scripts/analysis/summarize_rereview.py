@@ -132,6 +132,7 @@ def write_aggregate_findings(path: Path, rows: list[dict[str, Any]]) -> None:
         "- Parse failures are separate from planning failures.",
         "",
     ]
+    lines.extend(context_warning_section(rows))
     for title, key in [
         ("By prompt category", "prompt_category"),
         ("By prompt ID", "prompt_id"),
@@ -141,6 +142,62 @@ def write_aggregate_findings(path: Path, rows: list[dict[str, Any]]) -> None:
     ]:
         lines.extend([f"## {title}", "", metric_table(summarize_by(rows, key)), ""])
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def context_warning_section(rows: list[dict[str, Any]]) -> list[str]:
+    risk_counts = Counter(str(row.get("context_overflow_risk", "") or "unknown") for row in rows)
+    negative_headroom = [row for row in rows if _to_float(row.get("context_headroom_after_prompt_and_generation")) < 0]
+    ratio_rows = [row for row in rows if _to_float(row.get("context_usage_ratio")) >= 0]
+    top_ratio = sorted(ratio_rows, key=lambda row: _to_float(row.get("context_usage_ratio")), reverse=True)[:10]
+    lines = [
+        "## Context usage warnings",
+        "",
+        f"- High risk rows: {risk_counts.get('high', 0)}",
+        f"- Medium risk rows: {risk_counts.get('medium', 0)}",
+        f"- Unknown risk rows: {risk_counts.get('unknown', 0) + risk_counts.get('', 0)}",
+        f"- Rows with negative prompt+generation headroom: {len(negative_headroom)}",
+        "",
+        "### Highest context usage ratio top 10",
+        "",
+        "| Task | Model | Prompt | Usage ratio | Prompt eval | Num ctx | Headroom after prompt+generation | Risk |",
+        "| --- | --- | --- | ---: | ---: | ---: | ---: | --- |",
+    ]
+    if not top_ratio:
+        lines.append("| - | - | - | - | - | - | - | - |")
+    for row in top_ratio:
+        lines.append(
+            f"| {row.get('task_id', '')} | {row.get('model_id', '')} | {row.get('prompt_id', '')} | "
+            f"{row.get('context_usage_ratio', '')} | {row.get('prompt_eval_count', '')} | {row.get('num_ctx', '')} | "
+            f"{row.get('context_headroom_after_prompt_and_generation', '')} | {row.get('context_overflow_risk', '')} |"
+        )
+    lines.extend(["", "### Prompt eval count by model", "", context_prompt_eval_table(rows, "model_id")])
+    lines.extend(["", "### Prompt eval count by prompt", "", context_prompt_eval_table(rows, "prompt_id"), ""])
+    return lines
+
+
+def context_prompt_eval_table(rows: list[dict[str, Any]], key: str) -> str:
+    lines = ["| Name | Rows with prompt eval | Avg prompt eval | Max prompt eval |", "| --- | ---: | ---: | ---: |"]
+    grouped: dict[str, list[float]] = defaultdict(list)
+    for row in rows:
+        value = _to_float(row.get("prompt_eval_count"))
+        if value >= 0:
+            grouped[str(row.get(key, ""))].append(value)
+    if not grouped:
+        lines.append("| - | 0 | - | - |")
+        return "\n".join(lines)
+    for name, values in sorted(grouped.items()):
+        avg = round(sum(values) / len(values), 2)
+        lines.append(f"| {name or '-'} | {len(values)} | {avg} | {int(max(values))} |")
+    return "\n".join(lines)
+
+
+def _to_float(value: Any) -> float:
+    if value in (None, ""):
+        return -1.0
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return -1.0
 
 
 def metric_table(metric_rows: list[dict[str, Any]]) -> str:
@@ -325,6 +382,7 @@ def write_handoff(path: Path, rows: list[dict[str, Any]]) -> None:
     deltas = compute_prompt_deltas(rows, PROMPT_PAIRS, "natural_vs_tool_prior")
     improvements = [delta for delta in deltas if delta["delta_type"] == "prompted_improvement"][:10]
     robust = [delta for delta in deltas if delta["delta_type"] == "robust_failure"][:10]
+    context_risks = Counter(str(row.get("context_overflow_risk", "") or "unknown") for row in rows)
     lines = [
         "# README For ChatGPT",
         "",
@@ -336,6 +394,7 @@ def write_handoff(path: Path, rows: list[dict[str, Any]]) -> None:
         f"- Tasks: {len(tasks)} ({', '.join(tasks)})",
         f"- Prompt categories: {dict(prompt_categories)}",
         f"- Rereview labels: {dict(labels)}",
+        f"- Context risk labels: {dict(context_risks)}",
         "",
         "## Rereview Rubric Summary",
         "- Valid helper use requires a committed action chain, not just helper mention.",
@@ -368,6 +427,7 @@ def write_handoff(path: Path, rows: list[dict[str, Any]]) -> None:
             "- Parse-recoverable outputs need manual interpretation.",
             "- Some helper mentions may be background or conditional rather than committed use.",
             "- Strong decomposition prompt rows may still need targeted label audit; see `label_inconsistency_audit.md` when available.",
+            "- Check `aggregate_findings.md` context usage warnings before interpreting long-prompt runs.",
             "",
             "## Generated Files",
             "- `aggregate_findings.md`: aggregate text-rereview metrics.",

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import shutil
 from pathlib import Path
 from typing import Any
@@ -159,6 +160,10 @@ def prompt_type_for(prompt: dict[str, Any]) -> str:
     return category or "non_primary"
 
 
+def approx_tokens_from_chars(text: str) -> int:
+    return int(math.ceil(len(text) / 2))
+
+
 def dry_run_models(models: list[dict[str, Any]]) -> list[dict[str, Any]]:
     selected_mock = [model for model in models if model.get("provider") == "mock"]
     if selected_mock:
@@ -201,6 +206,9 @@ def base_record(
     user_prompt: str,
 ) -> dict[str, Any]:
     image_value = str(image_path) if str(image_path) != PLACEHOLDER_IMAGE else PLACEHOLDER_IMAGE
+    system_prompt_chars = len(system_prompt)
+    user_prompt_chars = len(user_prompt)
+    total_prompt_chars = system_prompt_chars + user_prompt_chars
     return {
         "task_id": task.get("task_id", ""),
         "task_name": task.get("name", ""),
@@ -211,6 +219,8 @@ def base_record(
         "model_name": model.get("model_name", ""),
         "strength_role": model.get("strength_role", ""),
         "supports_vision": model.get("supports_vision", ""),
+        "configured_max_tokens": model.get("max_tokens", ""),
+        "num_ctx": model.get("num_ctx", ""),
         "base_url_host": urlparse(str(model.get("base_url", ""))).netloc,
         "prompt_id": prompt.get("prompt_id", ""),
         "embodiment_profile": prompt.get("embodiment_profile", "generic"),
@@ -220,6 +230,12 @@ def base_record(
         "prompt_type": prompt_type_for(prompt),
         "system_prompt": system_prompt,
         "user_prompt": user_prompt,
+        "system_prompt_chars": system_prompt_chars,
+        "user_prompt_chars": user_prompt_chars,
+        "total_prompt_chars": total_prompt_chars,
+        "system_prompt_approx_tokens": approx_tokens_from_chars(system_prompt),
+        "user_prompt_approx_tokens": approx_tokens_from_chars(user_prompt),
+        "total_prompt_approx_tokens": approx_tokens_from_chars(system_prompt + user_prompt),
     }
 
 

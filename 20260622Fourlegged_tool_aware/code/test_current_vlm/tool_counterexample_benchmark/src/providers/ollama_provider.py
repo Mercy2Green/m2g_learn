@@ -71,6 +71,7 @@ class OllamaProvider(VLMProvider):
             "prompt_eval_count": response_json.get("prompt_eval_count"),
             "prompt_eval_duration": response_json.get("prompt_eval_duration"),
         }
+        metadata.update(context_metadata(metadata.get("prompt_eval_count"), self.num_ctx, self.max_tokens))
         result = provider_result(raw_text, self.name, self.model_id, self.model_name, metadata)
         result["provider_label"] = self.provider_label
         return result
@@ -108,3 +109,42 @@ def _optional_int(value: Any) -> int | None:
     if value in (None, ""):
         return None
     return int(value)
+
+
+def context_metadata(prompt_eval_count: Any, num_ctx: int | None, max_tokens: int | None) -> dict[str, Any]:
+    prompt_tokens = _optional_int_or_none(prompt_eval_count)
+    configured_max_tokens = _optional_int_or_none(max_tokens)
+    context_total = _optional_int_or_none(num_ctx)
+    output: dict[str, Any] = {
+        "configured_max_tokens": configured_max_tokens,
+        "context_budget_total": context_total,
+        "context_budget_for_input_estimated": "",
+        "context_usage_ratio": "",
+        "context_headroom_after_prompt": "",
+        "context_headroom_after_prompt_and_generation": "",
+        "context_overflow_risk": "unknown",
+    }
+    if context_total is not None and configured_max_tokens is not None:
+        output["context_budget_for_input_estimated"] = context_total - configured_max_tokens
+    if prompt_tokens is not None and context_total is not None:
+        output["context_usage_ratio"] = round(prompt_tokens / context_total, 6) if context_total else ""
+        output["context_headroom_after_prompt"] = context_total - prompt_tokens
+    if prompt_tokens is not None and context_total is not None and configured_max_tokens is not None:
+        projected = prompt_tokens + configured_max_tokens
+        output["context_headroom_after_prompt_and_generation"] = context_total - projected
+        if projected > context_total:
+            output["context_overflow_risk"] = "high"
+        elif projected > 0.85 * context_total:
+            output["context_overflow_risk"] = "medium"
+        else:
+            output["context_overflow_risk"] = "low"
+    return output
+
+
+def _optional_int_or_none(value: Any) -> int | None:
+    if value in (None, ""):
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None

@@ -15,6 +15,23 @@ These scripts build a row-level index from existing benchmark outputs and run a 
 
 Prompt categories should be analyzed separately: primary clean prompts are the main counterexample evidence; tool-prior, strong decomposition, and search-explicit strong decomposition prompts are intervention or upper-bound baselines; diagnostic probes are debugging evidence only.
 
+## check_prompt_context_budget.py
+
+`check_prompt_context_budget.py` estimates text prompt context pressure before any model call. It does not include image tokens and does not call Ollama.
+
+```bash
+python scripts/analysis/check_prompt_context_budget.py \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --output_dir analysis_review/context_preflight_prompt_budget
+```
+
+Generated files:
+
+- `context_preflight_prompt_budget.csv`
+- `context_preflight_prompt_budget.md`
+
 ## build_result_index.py
 
 `build_result_index.py` merges each output directory into one unified row-level table.

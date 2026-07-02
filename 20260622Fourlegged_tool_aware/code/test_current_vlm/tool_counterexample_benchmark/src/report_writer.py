@@ -68,6 +68,101 @@ def write_reports(
     output = Path(output_dir)
     write_summary(output / "summary.md", tasks, models, prompts, evaluations, raw_path, parsed_path)
     write_failed_cases(output / "failed_cases.md", tasks, evaluations, parsed_records)
+    write_context_usage_audit(output / "context_usage_audit.csv", _resolve_output_file(output, raw_path), _resolve_output_file(output, parsed_path))
+
+
+def _resolve_output_file(output_dir: Path, path: str | Path) -> Path:
+    file_path = Path(path)
+    return file_path if file_path.is_absolute() else output_dir / file_path
+
+
+CONTEXT_AUDIT_FIELDNAMES = [
+    "task_id",
+    "image_name",
+    "model_id",
+    "model_name",
+    "prompt_id",
+    "prompt_category",
+    "system_prompt_chars",
+    "user_prompt_chars",
+    "total_prompt_chars",
+    "total_prompt_approx_tokens",
+    "num_ctx",
+    "configured_max_tokens",
+    "prompt_eval_count",
+    "eval_count",
+    "context_usage_ratio",
+    "context_headroom_after_prompt",
+    "context_headroom_after_prompt_and_generation",
+    "context_overflow_risk",
+    "error",
+    "parse_status",
+]
+
+
+def write_context_usage_audit(path: str | Path, raw_path: str | Path, parsed_path: str | Path) -> None:
+    raw_rows = _read_jsonl(raw_path)
+    parsed_by_key = {_context_join_key(row): row for row in _read_jsonl(parsed_path)}
+    rows: list[dict[str, Any]] = []
+    for raw in raw_rows:
+        metadata = raw.get("metadata", {}) if isinstance(raw.get("metadata", {}), dict) else {}
+        parsed = parsed_by_key.get(_context_join_key(raw), {})
+        image_path = str(raw.get("image_path", ""))
+        rows.append(
+            {
+                "task_id": raw.get("task_id", ""),
+                "image_name": Path(image_path).name if image_path else "",
+                "model_id": raw.get("model_id", ""),
+                "model_name": raw.get("model_name", ""),
+                "prompt_id": raw.get("prompt_id", ""),
+                "prompt_category": raw.get("prompt_category", ""),
+                "system_prompt_chars": raw.get("system_prompt_chars", ""),
+                "user_prompt_chars": raw.get("user_prompt_chars", ""),
+                "total_prompt_chars": raw.get("total_prompt_chars", ""),
+                "total_prompt_approx_tokens": raw.get("total_prompt_approx_tokens", ""),
+                "num_ctx": metadata.get("num_ctx", raw.get("num_ctx", "")),
+                "configured_max_tokens": metadata.get("configured_max_tokens", raw.get("configured_max_tokens", "")),
+                "prompt_eval_count": metadata.get("prompt_eval_count", ""),
+                "eval_count": metadata.get("eval_count", ""),
+                "context_usage_ratio": metadata.get("context_usage_ratio", ""),
+                "context_headroom_after_prompt": metadata.get("context_headroom_after_prompt", ""),
+                "context_headroom_after_prompt_and_generation": metadata.get("context_headroom_after_prompt_and_generation", ""),
+                "context_overflow_risk": metadata.get("context_overflow_risk", "unknown"),
+                "error": raw.get("error", ""),
+                "parse_status": parsed.get("parse_status", ""),
+            }
+        )
+    _write_csv(path, rows, CONTEXT_AUDIT_FIELDNAMES)
+
+
+def _read_jsonl(path: str | Path) -> list[dict[str, Any]]:
+    file_path = Path(path)
+    if not file_path.exists():
+        return []
+    rows: list[dict[str, Any]] = []
+    with file_path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            stripped = line.strip()
+            if stripped:
+                rows.append(json.loads(stripped))
+    return rows
+
+
+def _context_join_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    return (
+        str(row.get("task_id", "")),
+        str(row.get("image_path", "")),
+        str(row.get("model_id", "")),
+        str(row.get("prompt_id", "")),
+    )
+
+
+def _write_csv(path: str | Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
+    with Path(path).open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({field: row.get(field, "") for field in fieldnames})
 
 
 def write_summary(

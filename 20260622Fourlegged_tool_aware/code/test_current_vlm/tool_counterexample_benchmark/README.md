@@ -354,6 +354,7 @@ outputs/<run_name>/
   raw_responses.jsonl
   parsed_results.jsonl
   evaluation.csv
+  context_usage_audit.csv
   summary.md
   failed_cases.md
   config_snapshot/
@@ -363,6 +364,36 @@ outputs/<run_name>/
 ```
 
 Raw responses are always saved, including provider errors and parse failures. API keys are not saved.
+
+`context_usage_audit.csv` is written for each run. For Ollama rows it includes `prompt_eval_count`, `num_ctx`, configured max tokens, estimated headroom, and a `context_overflow_risk` label. Use it to check whether long prompts, especially search-explicit prompts, are approaching the model context window.
+
+## Context budget preflight
+
+Before running long-prompt batches, run the text-only context preflight. It does not call Ollama and does not include image tokens, so medium/high risk here means the real VLM call is even riskier.
+
+```bash
+python scripts/analysis/check_prompt_context_budget.py \
+  --models config/models.yaml \
+  --prompts config/prompt_sets.yaml \
+  --tasks config/tasks.yaml \
+  --model_ids ollama_gemma3_27b_it_q8_0 ollama_llama3_2_vision_11b_instruct_q8_0 ollama_minicpm_v4_5_q8_0 ollama_qwen3_5_35b ollama_qwen3_vl_30b_a3b_instruct_q4_K_M ollama_qwen3_vl_32b_instruct_q4_K_M \
+  --output_dir analysis_review/context_preflight_prompt_budget
+```
+
+Outputs:
+
+```text
+analysis_review/context_preflight_prompt_budget/
+  context_preflight_prompt_budget.csv
+  context_preflight_prompt_budget.md
+```
+
+Conservative context guidance:
+
+- For the six-model local round05 tests, prefer `num_ctx >= 8192` when the model supports it.
+- For `num_ctx=4096` with `max_tokens=1536`, consider raising `num_ctx` to `8192`, lowering `max_tokens` to `1024`, or both.
+- Pay particular attention to `ollama_minicpm_v4_5_q8_0` and `ollama_llama3_2_vision_11b_instruct_q8_0`, which currently use `num_ctx=4096` and `max_tokens=1536`.
+- Do not treat this as exact token accounting; it is a preflight risk signal.
 
 ## Offline analysis and VLM judge rereview
 
@@ -389,6 +420,8 @@ python scripts/analysis/summarize_rereview.py \
 ```
 
 Rule-based rereview is a heuristic filter. It cannot verify image-visible helpers and can still misread plans, so treat it as triage, not final evidence.
+
+`summarize_rereview.py` includes a `Context usage warnings` section in `aggregate_findings.md` when merged rows contain Ollama context metadata.
 
 ### Image-aware local VLM judge
 
