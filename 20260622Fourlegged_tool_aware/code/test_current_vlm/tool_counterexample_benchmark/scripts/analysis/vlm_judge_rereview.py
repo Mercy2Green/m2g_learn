@@ -107,10 +107,20 @@ def main() -> None:
 
     task_by_id = load_tasks_by_id()
     rule_by_key = load_rule_rows(args.rule_case_rereview)
-    results = [
-        judge_or_skip_row(row, args, task_by_id, rule_by_key)
-        for row in rows
-    ]
+    results: list[dict[str, Any]] = []
+    started_at = time.time()
+    if not args.quiet:
+        print(
+            f"[PROGRESS] starting VLM judge: rows={len(rows)} "
+            f"judge_model={args.judge_model} output_dir={output_dir}",
+            file=sys.stderr,
+            flush=True,
+        )
+    for index, row in enumerate(rows, start=1):
+        result = judge_or_skip_row(row, args, task_by_id, rule_by_key)
+        results.append(result)
+        if should_print_progress(index, len(rows), args.progress_every, args.quiet):
+            print(progress_message(index, len(rows), started_at, row, result), file=sys.stderr, flush=True)
 
     write_csv_dicts(output_dir / "vlm_case_rereview.csv", results, CSV_FIELDNAMES)
     write_jsonl(output_jsonl, results)
@@ -135,7 +145,50 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no_image", action="store_true")
     parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--max_retries", type=int, default=2)
+    parser.add_argument("--progress_every", type=int, default=1, help="Print progress every N rows. Default: 1.")
+    parser.add_argument("--quiet", action="store_true", help="Disable progress messages.")
     return parser.parse_args()
+
+
+def should_print_progress(index: int, total: int, every: int, quiet: bool) -> bool:
+    if quiet:
+        return False
+    if total == 0:
+        return False
+    every = max(1, every)
+    return index == 1 or index == total or index % every == 0
+
+
+def format_seconds(seconds: float) -> str:
+    seconds = max(0, int(seconds))
+    hours, remainder = divmod(seconds, 3600)
+    minutes, secs = divmod(remainder, 60)
+    if hours:
+        return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+    return f"{minutes:02d}:{secs:02d}"
+
+
+def progress_message(
+    index: int,
+    total: int,
+    started_at: float,
+    row: dict[str, Any],
+    result: dict[str, Any],
+) -> str:
+    elapsed = time.time() - started_at
+    avg = elapsed / index if index else 0.0
+    remaining = max(0, total - index) * avg
+    percent = (index / total * 100.0) if total else 100.0
+    label = result.get("vlm_rereview_label", "")
+    image_used = result.get("image_used", "")
+    image_missing = result.get("image_missing", "")
+    return (
+        f"[PROGRESS] {index}/{total} ({percent:.1f}%) "
+        f"elapsed={format_seconds(elapsed)} avg={avg:.1f}s/row eta={format_seconds(remaining)} "
+        f"task={row.get('task_id', '')} model={row.get('model_id', '')} "
+        f"prompt={row.get('prompt_id', '')} label={label} "
+        f"image_used={image_used} image_missing={image_missing}"
+    )
 
 
 def filter_rows(rows: list[dict[str, Any]], args: argparse.Namespace) -> list[dict[str, Any]]:
