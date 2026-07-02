@@ -13,6 +13,8 @@ These scripts build a row-level index from existing benchmark outputs and run a 
 
 `summary.md` and `failed_cases.md` are only navigation aids.
 
+Prompt categories should be analyzed separately: primary clean prompts are the main counterexample evidence; tool-prior, strong decomposition, and search-explicit strong decomposition prompts are intervention or upper-bound baselines; diagnostic probes are debugging evidence only.
+
 ## build_result_index.py
 
 `build_result_index.py` merges each output directory into one unified row-level table.

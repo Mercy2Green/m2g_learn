@@ -135,6 +135,12 @@ def evaluate_response(
             notes.append(
                 "Tool-prior intervention prompt: not clean counterexample evidence; use for prompted helper-awareness analysis."
             )
+        elif category == "strong_decomposition_intervention":
+            notes.append("Strong decomposition intervention prompt: not clean counterexample evidence.")
+        elif category == "search_explicit_strong_decomposition_intervention":
+            notes.append(
+                "Search-explicit strong decomposition intervention prompt: not clean counterexample evidence; use for helper-search upper-bound analysis."
+            )
         else:
             notes.append("Non-primary prompt: not clean counterexample evidence.")
 

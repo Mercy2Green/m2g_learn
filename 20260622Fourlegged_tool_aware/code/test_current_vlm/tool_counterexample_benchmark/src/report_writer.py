@@ -82,10 +82,16 @@ def write_summary(
     primary_rows = [row for row in evaluations if row.get("primary_for_counterexample") is True]
     probe_rows = [row for row in evaluations if row.get("prompt_category") == "diagnostic_probe"]
     tool_prior_rows = [row for row in evaluations if row.get("prompt_category") == "tool_prior_intervention"]
+    strong_rows = [row for row in evaluations if row.get("prompt_category") == "strong_decomposition_intervention"]
+    search_explicit_rows = [
+        row for row in evaluations if row.get("prompt_category") == "search_explicit_strong_decomposition_intervention"
+    ]
     counts = Counter(row.get("pass_fail", "") for row in evaluations)
     primary_counts = Counter(row.get("pass_fail", "") for row in primary_rows)
     probe_counts = Counter(row.get("pass_fail", "") for row in probe_rows)
     tool_prior_counts = Counter(row.get("pass_fail", "") for row in tool_prior_rows)
+    strong_counts = Counter(row.get("pass_fail", "") for row in strong_rows)
+    search_explicit_counts = Counter(row.get("pass_fail", "") for row in search_explicit_rows)
     strength_counts = Counter(row.get("counterexample_strength_hint", "") for row in primary_rows)
     failure_counts = Counter()
     for row in primary_rows:
@@ -103,6 +109,7 @@ def write_summary(
         "- Primary clean prompts are used for clean counterexample strength.",
         "- Structured probes are diagnostic only and are not clean main counterexample evidence.",
         "- Tool-prior intervention prompts are prompted upper-bound/intervention checks and are not clean counterexample evidence.",
+        "- Strong decomposition and search-explicit strong decomposition prompts are upper-bound intervention checks and are not clean counterexample evidence.",
         "",
         "## Provider and model information",
         "| Model | Provider | Provider label | Model name | Strength role | Supports vision |",
@@ -123,6 +130,10 @@ def write_summary(
             prompt_type = "primary clean prompt"
         elif prompt.get("prompt_category") == "tool_prior_intervention":
             prompt_type = "tool-prior intervention"
+        elif prompt.get("prompt_category") == "strong_decomposition_intervention":
+            prompt_type = "strong decomposition intervention"
+        elif prompt.get("prompt_category") == "search_explicit_strong_decomposition_intervention":
+            prompt_type = "search-explicit strong decomposition intervention"
         elif prompt.get("prompt_category") == "diagnostic_probe":
             prompt_type = "structured probe"
         else:
@@ -138,6 +149,8 @@ def write_summary(
     lines.append(_status_row("primary_clean", primary_counts))
     lines.append(_status_row("structured_probe", probe_counts))
     lines.append(_status_row("tool_prior_intervention", tool_prior_counts))
+    lines.append(_status_row("strong_decomposition_intervention", strong_counts))
+    lines.append(_status_row("search_explicit_strong_decomposition_intervention", search_explicit_counts))
 
     lines.extend(["", "## Clean counterexample strength hints", "| Hint | Count |", "| --- | ---: |"])
     for hint in ["strong_candidate", "medium_candidate", "weak_candidate", "invalid_or_unclear"]:

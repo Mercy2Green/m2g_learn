@@ -5,7 +5,7 @@ They activate `codex_ollama` automatically and generate a temporary models confi
 
 ## Prompt Categories
 
-There are 15 prompt settings.
+There are 18 prompt settings.
 
 Generic clean prompts:
 
@@ -34,13 +34,19 @@ Strong decomposition intervention prompts:
 - `strong_decomposition_free_plan_humanoid_dual_arm`
 - `strong_decomposition_free_plan_quadruped_single_arm`
 
+Search-explicit strong decomposition intervention prompts:
+
+- `search_explicit_strong_decomposition_free_plan`
+- `search_explicit_strong_decomposition_free_plan_humanoid_dual_arm`
+- `search_explicit_strong_decomposition_free_plan_quadruped_single_arm`
+
 Diagnostic probes:
 
 - `structured_tool_probe`
 - `structured_tool_action_chain_probe_humanoid_dual_arm`
 - `structured_tool_action_chain_probe_quadruped_single_arm`
 
-Clean prompts are the main evidence route. Tool-prior prompts are prompted helper-prior checks. Strong decomposition prompts are stronger relation-decomposition intervention baselines that keep the free-form schema. Diagnostic probes are for debugging action-chain behavior.
+Clean prompts are the main evidence route. Tool-prior prompts are prompted helper-prior checks. Strong decomposition prompts are stronger relation-decomposition intervention baselines that keep the free-form schema. Search-explicit strong decomposition prompts additionally state that the current image is only the current view and allow short-range helper search. Diagnostic probes are for debugging action-chain behavior.
 
 ## Models Used
 

@@ -37,6 +37,18 @@ Tool-prior intervention prompts explicitly ask the model to prioritize consideri
 - `tool_prior_free_plan_humanoid_dual_arm`
 - `tool_prior_free_plan_quadruped_single_arm`
 
+Strong decomposition intervention prompts force target/helper/relation decomposition while preserving the free-form schema. They are upper-bound prompt baselines and are not clean counterexample evidence:
+
+- `strong_decomposition_free_plan`
+- `strong_decomposition_free_plan_humanoid_dual_arm`
+- `strong_decomposition_free_plan_quadruped_single_arm`
+
+Search-explicit strong decomposition prompts are an additional upper-bound intervention. They explicitly state that the current image is only the robot's current view, not the complete environment, and permit short-range search for a suitable helper when the current view lacks one. They are mainly for testing whether helper-search failures, especially `task_002`, are caused by insufficient prompt permission to search. They should not be used as clean counterexample evidence:
+
+- `search_explicit_strong_decomposition_free_plan`
+- `search_explicit_strong_decomposition_free_plan_humanoid_dual_arm`
+- `search_explicit_strong_decomposition_free_plan_quadruped_single_arm`
+
 Structured action-chain diagnostic probes ask for helper/action-chain fields. They are diagnostic only:
 
 - `structured_tool_probe`
@@ -459,6 +471,34 @@ analysis_review/<judge_run>/
 ```
 
 The VLM judge is another model, not ground truth. Use it to reduce keyword-rule mistakes and prioritize human review; do not treat it as final paper evidence.
+
+### Round05 search-explicit runs
+
+Round05 adds `search_explicit_strong_decomposition_intervention` prompts to test whether helper-search failures are due to the model not knowing it may leave the current view for a short nearby search.
+
+Full run with all 18 prompt IDs, 6 tested Ollama models, rule-based analysis, and Qwen3-VL 32B VLM judge:
+
+```bash
+scripts/run_round05_all_prompts_with_search_explicit.sh
+```
+
+Quick task_002-only run with only the three search-explicit prompts:
+
+```bash
+scripts/run_round05_task002_search_explicit_only.sh
+```
+
+Both scripts accept environment overrides:
+
+```bash
+RUN_TAG=my_round05 \
+OUTPUT_DIR=outputs/my_round05 \
+ANALYSIS_DIR=analysis_review/my_round05 \
+VLM_JUDGE_DIR=analysis_review/my_round05_vlm_judge_qwen32 \
+scripts/run_round05_all_prompts_with_search_explicit.sh
+```
+
+These scripts run real inference and VLM judging. Use them only when Ollama is ready and you intend to start the full analysis.
 
 ## How to judge counterexamples
 
