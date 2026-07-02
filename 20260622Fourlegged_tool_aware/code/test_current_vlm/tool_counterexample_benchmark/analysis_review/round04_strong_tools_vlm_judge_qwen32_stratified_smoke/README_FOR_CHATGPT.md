@@ -3,11 +3,11 @@
 This is a local image-aware VLM judge rereview handoff. It is not final paper evidence.
 
 ## Scope
-- Rows judged: 5
-- Tested models: ollama_gemma3_27b_it_q8_0
-- Tasks: task_001, task_002
-- VLM labels: {'true_fail': 5}
-- Rule comparison types: {'consistent_or_other': 3, 'task002_search_agreement': 2}
+- Rows judged: 24
+- Tested models: ollama_gemma3_27b_it_q8_0, ollama_llama3_2_vision_11b_instruct_q8_0
+- Tasks: task_005, task_007, task_008, task_011
+- VLM labels: {'true_fail': 5, 'true_pass': 7, 'parse_error': 12}
+- Rule comparison types: {'rule_true_pass_vlm_true_fail': 4, 'consistent_or_other': 20}
 
 ## How To Read
 - `vlm_case_rereview.csv/jsonl` contains row-level judge decisions.
