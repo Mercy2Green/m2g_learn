@@ -1,0 +1,2 @@
+model_id,prompt_id,prompt_category,embodiment_profile,name,total_rows,true_pass,true_fail,uncertain,parse_error,skipped,reviewed_valid_rows,true_fail_rate,valid_helper_action_chain_rate,needs_visual_check_count,top_failure_modes
+ollama_qwen3_vl_32b_instruct_q4_K_M,search_explicit_strong_decomposition_free_plan,search_explicit_strong_decomposition_intervention,generic,ollama_qwen3_vl_32b_instruct_q4_K_M / search_explicit_strong_decomposition_free_plan,1,1,0,0,0,0,1,0.0,1.0,0,

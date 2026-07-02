@@ -40,7 +40,8 @@ def main() -> None:
     prompts_config = load_yaml(root_dir / args.prompts if not Path(args.prompts).is_absolute() else args.prompts)
 
     tasks = filter_by_ids(tasks_config.get("tasks", []), "task_id", args.task_ids)
-    models = filter_by_ids(enabled_items(models_config, "models"), "model_id", args.model_ids)
+    model_items = models_config.get("models", []) if args.model_ids else enabled_items(models_config, "models")
+    models = filter_by_ids(model_items, "model_id", args.model_ids)
     prompts = filter_by_ids(prompts_config.get("prompts", []), "prompt_id", args.prompt_ids)
 
     if args.dry_run:

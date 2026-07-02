@@ -136,7 +136,11 @@ run_round05_pipeline() {
   local config_dir="outputs/${RUN_TAG}_generated_configs"
   local run_models_config="${config_dir}/models_round05_enabled.yaml"
 
-  activate_codex_ollama
+  if [[ "${SKIP_CONDA_ACTIVATE:-0}" == "1" ]]; then
+    echo "[INFO] SKIP_CONDA_ACTIVATE=1, using current shell environment."
+  else
+    activate_codex_ollama
+  fi
 
   echo "[INFO] Python compile check..."
   python -m compileall scripts/analysis src
