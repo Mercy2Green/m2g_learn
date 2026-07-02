@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 RUN_TAG="${RUN_TAG:-all_prompts_with_search_explicit}"
 OUTPUT_DIR="${OUTPUT_DIR:-outputs/${RUN_TAG}}"
@@ -44,6 +44,6 @@ PROMPT_IDS=(
 TASK_ARGS=()
 
 # shellcheck source=scripts/_round05_pipeline_common.sh
-source scripts/_round05_pipeline_common.sh
+source scripts/bash/_round05_pipeline_common.sh
 
 run_round05_pipeline
