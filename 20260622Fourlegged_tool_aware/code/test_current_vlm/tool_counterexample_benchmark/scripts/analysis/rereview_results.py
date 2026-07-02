@@ -21,6 +21,30 @@ from common import (  # noqa: E402
     write_jsonl,
 )
 
+AUDIT_FIELDNAMES = [
+    "audit_type",
+    "recommended_action",
+    "task_id",
+    "image_name",
+    "model_id",
+    "prompt_id",
+    "prompt_category",
+    "embodiment_profile",
+    "rereview_label",
+    "valid_helper_action_chain",
+    "committed_helper_use",
+    "conditional_helper_only",
+    "direct_operation_when_tool_needed",
+    "search_failure_when_helper_not_visible",
+    "over_tool_use",
+    "wrong_helper_type",
+    "target_as_helper",
+    "field_plan_inconsistency",
+    "rereview_failure_modes",
+    "evidence_quote",
+    "rereview_reason",
+]
+
 
 GENERAL_HELPER_KEYWORDS = [
     "helper",
@@ -59,6 +83,13 @@ GENERAL_HELPER_KEYWORDS = [
     "抹布",
     "tissue",
     "纸巾",
+    "plate",
+    "盘子",
+    "carrying container",
+    "laundry basket",
+    "storage basket",
+    "收纳筐",
+    "洗衣篮",
 ]
 HELPER_ACTION_KEYWORDS = [
     "place",
@@ -85,9 +116,11 @@ HELPER_ACTION_KEYWORDS = [
     "放进",
     "放到",
     "放置到",
+    "放置在",
     "装入",
     "装进",
     "收集到",
+    "集中到",
     "集中放置",
     "暂存到",
     "搬运",
@@ -212,8 +245,14 @@ HELPER_GROUPS = {
         "容器",
         "盆",
         "框",
-        "筐",
-        "背包",
+    "筐",
+    "背包",
+    "盘子",
+    "洗衣篮",
+    "收纳筐",
+    "carrying container",
+    "laundry basket",
+    "storage basket",
     ],
     "reach": ["rod", "stick", "broom", "杆", "长杆", "扫把"],
     "cleaning": ["dustpan", "broom", "cloth", "tissue", "簸箕", "扫把", "抹布", "纸巾"],
@@ -231,18 +270,70 @@ CONTAINER_COLLECTION_ACTIONS = [
     "place objects in",
     "put items into",
     "load bottles onto",
+    "place onto",
+    "put onto",
+    "collect with",
+    "sweep into",
     "放入",
     "放进",
     "放到",
     "放置到",
+    "放置在",
     "装入",
     "装进",
     "收集到",
+    "集中到",
     "集中放置",
     "暂存到",
 ]
-TRANSPORT_ACTIONS = ["carry", "transport", "deliver", "bring", "move", "端起", "搬", "搬运", "运送", "送到", "带到", "提起", "拿到"]
-REACH_USE_ACTIONS = ["use", "push", "pull", "hook", "retrieve", "reach", "拨", "拉", "推", "勾", "取出", "够到", "用"]
+TRANSPORT_ACTIONS = [
+    "carry",
+    "lift",
+    "transport",
+    "deliver",
+    "bring",
+    "move",
+    "端起",
+    "搬",
+    "搬运",
+    "运送",
+    "送到",
+    "带到",
+    "拿到",
+    "提起",
+    "携带",
+    "送至",
+    "拿至",
+]
+REACH_USE_ACTIONS = ["use", "push", "pull", "hook", "retrieve", "reach", "拨", "拨出", "拉", "推", "推出来", "勾", "勾出", "取出", "够到", "用"]
+AUDIT_CHAIN_KEYWORDS = [
+    "放入",
+    "放进",
+    "装入",
+    "装进",
+    "放到",
+    "放置",
+    "收集到",
+    "提起",
+    "端起",
+    "搬运",
+    "携带",
+    "洗衣篮",
+    "收纳筐",
+    "托盘",
+    "袋子",
+    "篮子",
+    "盒子",
+    "carrying container",
+    "tray",
+    "basket",
+    "bag",
+    "container",
+    "place into",
+    "put into",
+    "carry the",
+    "lift the",
+]
 
 CSV_FIELDNAMES = [
     "run_id",
@@ -302,6 +393,7 @@ def main() -> None:
     write_disagreements(output_dir / "rereview_disagreements.md", reviewed)
     write_high_confidence_cases(output_dir / "high_confidence_cases.md", reviewed)
     write_uncertain_cases(output_dir / "uncertain_cases_for_human.md", reviewed)
+    write_label_inconsistency_audit(output_dir, reviewed)
 
     counts = Counter(row["rereview_label"] for row in reviewed)
     disagreements = sum(1 for row in reviewed if row["disagreement_type"] not in {"consistent", "auto_parse_or_skip"})
@@ -366,7 +458,7 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
     helper_only_mentioned = helper_mentioned and not valid_chain
     direct_capacity = contains_any(text, DIRECT_CAPACITY_KEYWORDS) and not valid_chain
     direct_operation = contains_any(text, DIRECT_OPERATION_KEYWORDS)
-    search_failure = expected_search and not contains_any(text, SEARCH_KEYWORDS) and not valid_chain
+    search_failure = (expected_search or task_family == "helper_search") and not _has_committed_helper_search(plan_steps, chain_steps) and not valid_chain
     wrong_helper_type = _wrong_helper_type(text, expected_helpers, valid_chain)
     field_plan_inconsistency = _field_plan_inconsistency(parsed, valid_chain, selected_helper)
     over_tool_use = avoid_over_tool and valid_chain
@@ -431,7 +523,19 @@ def rereview_row(row: dict[str, Any]) -> dict[str, Any]:
         reasons.append("Correctness depends on image-visible helper/target details not verified by text.")
 
     failure_modes = sorted(set(failure_modes))
-    if over_tool_use or target_as_helper or direct_capacity or search_failure or wrong_helper_type or (expected_helper and (direct_operation or not valid_chain)):
+    hard_failure = (
+        over_tool_use
+        or target_as_helper
+        or direct_capacity
+        or search_failure
+        or wrong_helper_type
+        or field_plan_inconsistency
+        or conditional_helper_only
+        or (expected_helper and direct_operation and not valid_chain)
+    )
+    if committed_helper_use and not hard_failure:
+        base.update(label("true_pass", "high", [], "Committed helper action chain is supported by the plan text.", caveats))
+    elif hard_failure or (expected_helper and not valid_chain):
         base.update(label("true_fail", "high" if not needs_visual_check else "medium", failure_modes, " ".join(reasons), caveats))
     elif expected_helper and helper_only_mentioned:
         base.update(label("uncertain", "medium", failure_modes, " ".join(reasons), caveats))
@@ -567,8 +671,10 @@ def _has_valid_helper_action_chain(
 
 def task_family_for(row: dict[str, Any]) -> str:
     task_id = str(row.get("task_id", ""))
-    if task_id in {"task_001", "task_002", "task_004", "task_005", "task_007", "task_010"}:
+    if task_id in {"task_001", "task_004", "task_005", "task_007", "task_010"}:
         return "aggregation_transport"
+    if task_id == "task_002":
+        return "helper_search"
     if task_id in {"task_006", "task_009"}:
         return "cleanup_collection"
     if task_id == "task_008":
@@ -586,7 +692,7 @@ def _has_container_collection_chain(
     task_id: str,
     task_family: str,
 ) -> bool:
-    if task_family not in {"aggregation_transport", "cleanup_collection"}:
+    if task_family not in {"aggregation_transport", "cleanup_collection", "helper_search"}:
         return False
     expected_text = " ".join(expected_helpers).lower()
     if expected_helpers and not contains_any(expected_text, CONTAINER_TERMS) and task_id not in {"task_006", "task_009"}:
@@ -605,6 +711,16 @@ def _has_container_collection_chain(
         return True
 
     return any(contains_any(step, CONTAINER_TERMS) and contains_any(step, TRANSPORT_ACTIONS) for step in active_steps)
+
+
+def _has_committed_helper_search(plan_steps: list[str], chain_steps: list[str]) -> bool:
+    steps = [str(item).lower() for item in chain_steps + plan_steps]
+    for step in steps:
+        if _is_conditional_helper_step(step) or contains_any(step, NEGATION_KEYWORDS):
+            continue
+        if contains_any(step, SEARCH_KEYWORDS + HELPER_ACQUISITION_KEYWORDS) and contains_any(step, CONTAINER_TERMS):
+            return True
+    return False
 
 
 def _step_has_container_collection_action(step: str) -> bool:
@@ -765,30 +881,147 @@ def write_uncertain_cases(path: Path, rows: list[dict[str, Any]]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def write_label_inconsistency_audit(output_dir: Path, rows: list[dict[str, Any]]) -> None:
+    audit_rows = build_label_inconsistency_audit(rows)
+    write_csv_dicts(output_dir / "label_inconsistency_audit.csv", audit_rows, AUDIT_FIELDNAMES)
+    lines = ["# Label Inconsistency Audit", "", "High-risk text rereview rows for manual inspection.", ""]
+    if not audit_rows:
+        lines.append("No high-risk label inconsistencies found.")
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in audit_rows:
+        grouped[str(row["audit_type"])].append(row)
+    for audit_type, group in sorted(grouped.items()):
+        lines.extend([f"## {audit_type}", ""])
+        for row in group[:120]:
+            lines.append(
+                f"- {row['task_id']} / {row['model_id']} / {row['prompt_id']} / {row['image_name']}: "
+                f"label={row['rereview_label']} action={row['recommended_action']} "
+                f"flags=valid_chain:{row['valid_helper_action_chain']}, committed:{row['committed_helper_use']}, "
+                f"conditional:{row['conditional_helper_only']}, search_fail:{row['search_failure_when_helper_not_visible']}. "
+                f"Evidence: {row['evidence_quote']}"
+            )
+        lines.append("")
+    (output_dir / "label_inconsistency_audit.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def build_label_inconsistency_audit(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    audit_rows: list[dict[str, Any]] = []
+    for row in rows:
+        hard_failure = any(
+            row.get(field) == "yes"
+            for field in [
+                "wrong_helper_type",
+                "target_as_helper",
+                "field_plan_inconsistency",
+                "over_tool_use",
+                "search_failure_when_helper_not_visible",
+                "direct_operation_when_tool_needed",
+                "conditional_helper_only",
+            ]
+        )
+        text = " ".join(str(row.get(field, "")) for field in ["evidence_quote", "parsed_plan", "parsed_reason", "raw_response_short"]).lower()
+        if row.get("rereview_label") == "true_fail" and row.get("valid_helper_action_chain") == "yes" and row.get("committed_helper_use") == "yes":
+            audit_rows.append(audit_row(row, "false_fail_candidate", "manual_review" if hard_failure else "likely_pass"))
+        if row.get("rereview_label") == "true_fail" and contains_any(text, AUDIT_CHAIN_KEYWORDS):
+            audit_rows.append(audit_row(row, "possible_chinese_chain_false_fail", "manual_review"))
+        if (
+            row.get("rereview_label") == "true_pass"
+            and row.get("task_id") != "task_011"
+            and row.get("valid_helper_action_chain") != "yes"
+            and row.get("direct_operation_when_tool_needed") == "yes"
+        ) or (row.get("rereview_label") == "true_pass" and row.get("conditional_helper_only") == "yes"):
+            audit_rows.append(audit_row(row, "false_pass_candidate", "likely_fail"))
+    return dedupe_audit_rows(audit_rows)
+
+
+def audit_row(row: dict[str, Any], audit_type: str, recommended_action: str) -> dict[str, Any]:
+    output = {field: row.get(field, "") for field in AUDIT_FIELDNAMES}
+    output["audit_type"] = audit_type
+    output["recommended_action"] = recommended_action
+    return output
+
+
+def dedupe_audit_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    seen: set[tuple[str, str, str, str, str]] = set()
+    output: list[dict[str, Any]] = []
+    for row in rows:
+        key = (
+            str(row.get("audit_type", "")),
+            str(row.get("task_id", "")),
+            str(row.get("image_name", "")),
+            str(row.get("model_id", "")),
+            str(row.get("prompt_id", "")),
+        )
+        if key in seen:
+            continue
+        seen.add(key)
+        output.append(row)
+    return output
+
+
 def run_self_test() -> None:
     tests = [
-        ("direct carry all", synthetic_row("grab all four bottles directly and carry them in one trip"), "true_fail"),
-        ("selected helper no use", synthetic_row("carry the water bottles to the bedroom", selected_helper="tray"), "true_fail"),
-        ("avoid rod", synthetic_remote_row("avoid the white rod-like object; grasp the remote directly"), "true_fail"),
-        ("valid tray", synthetic_row("find a tray; place bottles on the tray; carry the tray to bedroom"), "true_pass"),
-        ("conditional direct tray", synthetic_row("carry bottles directly, or find a tray if available"), "true_fail"),
-        ("valid pronoun tray", synthetic_row("find a tray; place the bottles on it; carry it to bedroom"), "true_pass"),
-        ("try tray only", synthetic_row("try to use a tray if available"), "true_fail"),
-        ("chinese cleanup basket", synthetic_cleanup_row("逐个拾取地上的小物品，并将其放置到白色收纳篮内。"), "true_pass"),
-        ("chinese tray transport", synthetic_row("找到托盘；把水瓶放到托盘上；端起托盘送到卧室。"), "true_pass"),
-        ("chinese conditional tray", synthetic_row("逐个搬运水瓶，必要时可以考虑寻找托盘。"), "true_fail"),
-        ("valid reach rod", synthetic_remote_row("找到长杆；用长杆把沙发下的遥控器拨出来；再用夹爪抓取遥控器。"), "true_pass"),
-        ("direct reach fail", synthetic_remote_row("直接把机械臂伸进沙发下抓取遥控器。"), "true_fail"),
-        ("single bottle direct pass", synthetic_single_bottle_row("直接拿起桌上的单个水瓶并递给用户。"), "true_pass"),
-        ("over tool use", synthetic_single_bottle_row("find a tray; place the bottle on the tray; carry the tray to user"), "true_fail"),
-        ("parse error", {**synthetic_row("", parse_status="parse_error"), "raw_response": ""}, "parse_error"),
-        ("skipped", {**synthetic_row(""), "auto_pass_fail": "skipped"}, "skipped"),
+        ("direct carry all", synthetic_row("grab all four bottles directly and carry them in one trip"), "true_fail", {}),
+        ("selected helper no use", synthetic_row("carry the water bottles to the bedroom", selected_helper="tray"), "true_fail", {}),
+        ("avoid rod", synthetic_remote_row("avoid the white rod-like object; grasp the remote directly"), "true_fail", {}),
+        ("valid tray", synthetic_row("find a tray; place bottles on the tray; carry the tray to bedroom"), "true_pass", {}),
+        ("conditional direct tray", synthetic_row("carry bottles directly, or find a tray if available"), "true_fail", {}),
+        ("valid pronoun tray", synthetic_row("find a tray; place the bottles on it; carry it to bedroom"), "true_pass", {}),
+        ("try tray only", synthetic_row("try to use a tray if available"), "true_fail", {}),
+        ("chinese cleanup basket", synthetic_cleanup_row("逐个拾取地上的小物品，并将其放置到白色收纳篮内。"), "true_pass", {}),
+        ("chinese tray transport", synthetic_row("找到托盘；把水瓶放到托盘上；端起托盘送到卧室。"), "true_pass", {}),
+        ("chinese conditional tray", synthetic_row("逐个搬运水瓶，必要时可以考虑寻找托盘。"), "true_fail", {}),
+        (
+            "chinese task005 tray pass",
+            synthetic_dishes_row("定位桌上的大托盘，将杯子和盘子逐一放到托盘上，双手端起装有杯盘的托盘并搬到厨房。"),
+            "true_pass",
+            {"valid_helper_action_chain": "yes", "committed_helper_use": "yes"},
+        ),
+        (
+            "english task005 tray pass",
+            synthetic_dishes_row("Locate a large tray, place each cup and plate onto the tray, then carry the tray with all dishes to the kitchen."),
+            "true_pass",
+            {"valid_helper_action_chain": "yes", "committed_helper_use": "yes"},
+        ),
+        (
+            "chinese laundry basket pass",
+            synthetic_laundry_row("将椅子和地上的衣服逐一放入洗衣篮，提起装有衣服的洗衣篮并拿到洗衣区。"),
+            "true_pass",
+            {"valid_helper_action_chain": "yes", "committed_helper_use": "yes"},
+        ),
+        (
+            "conditional helper fail",
+            synthetic_row("如果有托盘可以考虑使用；否则直接一瓶一瓶搬水到卧室。"),
+            "true_fail",
+            {"conditional_helper_only": "yes"},
+        ),
+        (
+            "helper search fail",
+            synthetic_search_row("图中没有看到托盘或袋子，所以直接分批把水搬到卧室。"),
+            "true_fail",
+            {"search_failure_when_helper_not_visible": "yes"},
+        ),
+        (
+            "helper search pass",
+            synthetic_search_row("先在附近短程寻找托盘、袋子或篮子；找到后把水瓶放入容器并搬到卧室。"),
+            "true_pass",
+            {},
+        ),
+        ("valid reach rod", synthetic_remote_row("找到长杆；用长杆把沙发下的遥控器拨出来；再用夹爪抓取遥控器。"), "true_pass", {}),
+        ("direct reach fail", synthetic_remote_row("直接把机械臂伸进沙发下抓取遥控器。"), "true_fail", {}),
+        ("single bottle direct pass", synthetic_single_bottle_row("直接抓取这瓶水并递给用户。"), "true_pass", {}),
+        ("over tool use", synthetic_single_bottle_row("先寻找托盘，把单瓶水放到托盘上，再端托盘给用户。"), "true_fail", {"over_tool_use": "yes"}),
+        ("parse error", {**synthetic_row("", parse_status="parse_error"), "raw_response": ""}, "parse_error", {}),
+        ("skipped", {**synthetic_row(""), "auto_pass_fail": "skipped"}, "skipped", {}),
     ]
     failures: list[str] = []
-    for name, row, expected in tests:
+    for name, row, expected, expected_fields in tests:
         reviewed = rereview_row(row)
         if reviewed["rereview_label"] != expected:
             failures.append(f"{name}: expected {expected}, got {reviewed['rereview_label']} ({reviewed['rereview_reason']})")
+        for field, value in expected_fields.items():
+            if reviewed.get(field) != value:
+                failures.append(f"{name}: expected {field}={value}, got {reviewed.get(field)}")
     if failures:
         raise SystemExit("\n".join(failures))
 
@@ -828,6 +1061,43 @@ def synthetic_remote_row(plan: str) -> dict[str, Any]:
             "task_id": "task_008",
             "expected_tool_or_container_types": ["broom", "stick", "rod"],
             "target_object_terms": ["remote", "remote control"],
+        }
+    )
+    return row
+
+
+def synthetic_search_row(plan: str) -> dict[str, Any]:
+    row = synthetic_row(plan)
+    row.update(
+        {
+            "task_id": "task_002",
+            "expected_should_search_for_tool_if_not_visible": True,
+        }
+    )
+    return row
+
+
+def synthetic_dishes_row(plan: str) -> dict[str, Any]:
+    row = synthetic_row(plan)
+    row.update(
+        {
+            "task_id": "task_005",
+            "task_name": "dishes",
+            "expected_tool_or_container_types": ["tray", "basin", "container", "托盘", "盆", "容器"],
+            "target_object_terms": ["cups", "dishes", "plates", "杯子", "盘子"],
+        }
+    )
+    return row
+
+
+def synthetic_laundry_row(plan: str) -> dict[str, Any]:
+    row = synthetic_row(plan)
+    row.update(
+        {
+            "task_id": "task_007",
+            "task_name": "laundry",
+            "expected_tool_or_container_types": ["laundry basket", "basket", "storage basket", "洗衣篮", "收纳筐"],
+            "target_object_terms": ["clothes", "laundry", "衣服"],
         }
     )
     return row
