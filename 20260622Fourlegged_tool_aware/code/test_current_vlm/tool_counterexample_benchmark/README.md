@@ -352,6 +352,114 @@ outputs/<run_name>/
 
 Raw responses are always saved, including provider errors and parse failures. API keys are not saved.
 
+## Offline analysis and VLM judge rereview
+
+After benchmark runs finish, do analysis offline from saved `raw_responses.jsonl`, `parsed_results.jsonl`, `evaluation.csv`, and `config_snapshot/`. Do not rerun Ollama or cloud APIs for rule-based analysis.
+
+Build a merged row index from an output root:
+
+```bash
+python scripts/analysis/build_result_index.py \
+  --outputs_root outputs/20260702_strong_tools \
+  --output_dir analysis_review/round04_strong_tools_v2
+```
+
+Run rule-based text rereview and summarize it:
+
+```bash
+python scripts/analysis/rereview_results.py \
+  --input analysis_review/round04_strong_tools_v2/all_rows_merged.jsonl \
+  --output_dir analysis_review/round04_strong_tools_v2
+
+python scripts/analysis/summarize_rereview.py \
+  --input analysis_review/round04_strong_tools_v2/case_rereview.jsonl \
+  --output_dir analysis_review/round04_strong_tools_v2
+```
+
+Rule-based rereview is a heuristic filter. It cannot verify image-visible helpers and can still misread plans, so treat it as triage, not final evidence.
+
+### Image-aware local VLM judge
+
+Use the image-aware judge when you want a second-pass semantic rereview of each tested model output. The default judge is:
+
+```text
+qwen3-vl:32b-instruct-q4_K_M
+```
+
+Secondary judge configs are listed in `config/vlm_judge.yaml`, but full runs should normally start with the Qwen3-VL 32B judge. Do not use `qwen3-vl:4b`, `qwen3-vl:8b`, `qwen3.5:35b`, or `llama3.2-vision:11b-instruct-q8_0` as the default formal image-aware judge.
+
+Full VLM judge run over existing merged rows:
+
+```bash
+python scripts/analysis/vlm_judge_rereview.py \
+  --input analysis_review/round04_strong_tools_v2/all_rows_merged.jsonl \
+  --output_dir analysis_review/round04_strong_tools_vlm_judge_qwen32_full \
+  --judge_model qwen3-vl:32b-instruct-q4_K_M \
+  --rule_case_rereview analysis_review/round04_strong_tools_v2/case_rereview.csv \
+  --overwrite \
+  --progress_every 1
+```
+
+Summarize VLM judge results:
+
+```bash
+python scripts/analysis/summarize_vlm_judge.py \
+  --input_dir analysis_review/round04_strong_tools_vlm_judge_qwen32_full \
+  --rule_case_rereview analysis_review/round04_strong_tools_v2/case_rereview.csv
+```
+
+Progress output is printed during judge runs. Use `--progress_every 5` to print less often, or `--quiet` to disable progress logs.
+
+Expected full-run checks for the current strong prompt set:
+
+```bash
+wc -l analysis_review/round04_strong_tools_vlm_judge_qwen32_full/vlm_case_rereview.jsonl
+wc -l analysis_review/round04_strong_tools_vlm_judge_qwen32_full/vlm_case_rereview.csv
+```
+
+For the current 198-row round04 set, expected counts are 198 JSONL lines and 199 CSV lines including the header.
+
+### VLM judge failure mode labels
+
+The VLM judge is prompted to return `failure_modes` only from a fixed enum. The script also normalizes unexpected natural-language outputs before writing CSV/JSONL:
+
+```text
+aggregation_failure
+container_affordance_miss
+helper_search_failure
+helper_mention_without_use
+tool_necessity_miss
+target_as_helper
+wrong_helper_type
+over_tool_use
+direct_operation_without_helper
+conditional_helper_only
+visual_uncertainty
+physical_capacity_hallucination
+parse_failure
+tested_model_parse_error
+judge_parse_error
+```
+
+`raw_failure_modes` preserves the judge's original output. `failure_modes` is the normalized enum list used by summaries. Unmapped free-form details are stored in `other_judge_reason` instead of polluting aggregate statistics.
+
+Main VLM judge outputs:
+
+```text
+analysis_review/<judge_run>/
+  vlm_case_rereview.csv
+  vlm_case_rereview.jsonl
+  vlm_rule_comparison.csv
+  vlm_rule_disagreements.md
+  vlm_high_risk_cases_for_human.md
+  vlm_aggregate_findings.md
+  vlm_task_family_summary.csv
+  vlm_model_prompt_matrix.csv
+  README_FOR_CHATGPT.md
+```
+
+The VLM judge is another model, not ground truth. Use it to reduce keyword-rule mistakes and prioritize human review; do not treat it as final paper evidence.
+
 ## How to judge counterexamples
 
 The evaluator is an automatic first pass, not a substitute for manual review. For primary clean prompts, it infers helper use from the free-form plan text with bilingual keyword heuristics.
