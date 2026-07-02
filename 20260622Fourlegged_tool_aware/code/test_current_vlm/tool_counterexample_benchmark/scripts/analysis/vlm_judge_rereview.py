@@ -30,6 +30,24 @@ DEFAULT_OUTPUT_DIR = "analysis_review/round04_strong_tools_vlm_judge_qwen32_smok
 DEFAULT_JUDGE_MODEL = "qwen3-vl:32b-instruct-q4_K_M"
 DEFAULT_OLLAMA_URL = "http://localhost:11434"
 
+ALLOWED_FAILURE_MODES = [
+    "aggregation_failure",
+    "container_affordance_miss",
+    "helper_search_failure",
+    "helper_mention_without_use",
+    "tool_necessity_miss",
+    "target_as_helper",
+    "wrong_helper_type",
+    "over_tool_use",
+    "direct_operation_without_helper",
+    "conditional_helper_only",
+    "visual_uncertainty",
+    "physical_capacity_hallucination",
+    "parse_failure",
+    "tested_model_parse_error",
+    "judge_parse_error",
+]
+
 SCHEMA_FIELDS = [
     "rereview_label",
     "confidence",
@@ -47,7 +65,9 @@ SCHEMA_FIELDS = [
     "direct_operation_when_helper_needed",
     "search_failure_when_helper_not_visible",
     "over_tool_use",
+    "raw_failure_modes",
     "failure_modes",
+    "other_judge_reason",
     "evidence_quote",
     "rationale",
 ]
@@ -82,7 +102,9 @@ CSV_FIELDNAMES = [
     "direct_operation_when_helper_needed",
     "search_failure_when_helper_not_visible",
     "over_tool_use",
+    "raw_failure_modes",
     "failure_modes",
+    "other_judge_reason",
     "evidence_quote",
     "rationale",
     "judge_model",
@@ -246,7 +268,8 @@ def judge_or_skip_row(
                 {
                     "vlm_rereview_label": "uncertain",
                     "vlm_confidence": "low",
-                    "failure_modes": ["parse_recoverable"],
+                    "raw_failure_modes": ["parse_recoverable"],
+                    "failure_modes": ["parse_failure"],
                     "rationale": "Tested model output was not parsed as JSON, but raw response appears recoverable. Judge was not called.",
                 }
             )
@@ -255,6 +278,7 @@ def judge_or_skip_row(
                 {
                     "vlm_rereview_label": "parse_error",
                     "vlm_confidence": "high",
+                    "raw_failure_modes": ["tested_model_parse_error"],
                     "failure_modes": ["tested_model_parse_error"],
                     "rationale": "Tested model output parse_status is not ok. Judge was not called.",
                 }
@@ -280,7 +304,8 @@ def judge_or_skip_row(
                 "vlm_confidence": "low",
                 "judge_parse_error": str(exc),
                 "judge_raw_response_short": "",
-                "failure_modes": ["judge_error"],
+                "raw_failure_modes": ["judge_error"],
+                "failure_modes": ["judge_parse_error"],
                 "rationale": str(exc),
             }
         )
@@ -326,7 +351,9 @@ def base_result(
         "direct_operation_when_helper_needed": "uncertain",
         "search_failure_when_helper_not_visible": "uncertain",
         "over_tool_use": "uncertain",
+        "raw_failure_modes": [],
         "failure_modes": [],
+        "other_judge_reason": "",
         "evidence_quote": "",
         "rationale": "",
         "judge_model": judge_model,
@@ -390,6 +417,9 @@ Do not reward a plan merely for mentioning helper objects.
 A valid helper chain requires committed use in the plan.
 The helper must be a non-target object. Do not count target objects as helpers.
 Return only one valid JSON object. No markdown, no comments, no code fences.
+The `failure_modes` field must contain only labels from this allowed list:
+{json.dumps(ALLOWED_FAILURE_MODES, ensure_ascii=False)}
+If none apply, return an empty list. If you need free-form detail, put it in `rationale`, not `failure_modes`.
 
 Task-family rubric:
 
@@ -435,7 +465,7 @@ Output JSON schema:
   "direct_operation_when_helper_needed": "yes | no | uncertain",
   "search_failure_when_helper_not_visible": "yes | no | not_applicable | uncertain",
   "over_tool_use": "yes | no | uncertain",
-  "failure_modes": ["string"],
+  "failure_modes": ["one or more allowed failure mode labels only"],
   "evidence_quote": "string",
   "rationale": "string"
 }}"""
@@ -520,6 +550,11 @@ def merge_judge_output(base: dict[str, Any], parsed: dict[str, Any], raw_respons
     for field in SCHEMA_FIELDS:
         if field in parsed:
             base[field] = parsed[field]
+    raw_failure_modes = normalize_list_field(parsed.get("failure_modes", []))
+    normalized_failure_modes, other_judge_reason = normalize_failure_modes(raw_failure_modes)
+    base["raw_failure_modes"] = raw_failure_modes
+    base["failure_modes"] = normalized_failure_modes
+    base["other_judge_reason"] = other_judge_reason
     base["vlm_rereview_label"] = str(parsed.get("rereview_label", "uncertain"))
     base["vlm_confidence"] = str(parsed.get("confidence", "low"))
     if image_used == "no" and base["vlm_confidence"] == "high":
@@ -527,6 +562,52 @@ def merge_judge_output(base: dict[str, Any], parsed: dict[str, Any], raw_respons
     base["judge_raw_response_short"] = compact_text(raw_response, 800)
     base["judge_parse_error"] = ""
     return base
+
+
+def normalize_failure_modes(raw_modes: list[Any]) -> tuple[list[str], str]:
+    normalized: list[str] = []
+    other: list[str] = []
+    for value in raw_modes:
+        mode = str(value).strip()
+        if not mode:
+            continue
+        mapped = failure_mode_to_allowed(mode)
+        if mapped:
+            if mapped not in normalized:
+                normalized.append(mapped)
+        else:
+            other.append(mode)
+    if other and not normalized:
+        normalized.append("visual_uncertainty")
+    return normalized, "; ".join(other)
+
+
+def failure_mode_to_allowed(mode: str) -> str:
+    normalized = mode.strip().lower().replace(" ", "_").replace("-", "_")
+    if normalized in ALLOWED_FAILURE_MODES:
+        return normalized
+    text = mode.lower()
+    checks = [
+        ("tested_model_parse_error", ["tested model parse", "model parse", "tested_model_parse", "parse_status"]),
+        ("judge_parse_error", ["judge parse", "judge json", "judge error"]),
+        ("parse_failure", ["parse", "json", "format"]),
+        ("target_as_helper", ["target as helper", "selected helper is target", "target object", "目标物", "目标当作"]),
+        ("wrong_helper_type", ["wrong helper", "inappropriate helper", "wrong tool", "不合适", "错误工具"]),
+        ("over_tool_use", ["over tool", "unnecessary", "single bottle", "多余", "不必要"]),
+        ("conditional_helper_only", ["conditional", "if available", "if needed", "consider", "optional", "如果", "若有", "可考虑", "必要时"]),
+        ("helper_search_failure", ["search", "no helper visible", "no container visible", "does not search", "寻找", "搜索", "没有看到", "未搜索"]),
+        ("helper_mention_without_use", ["mention", "mentioned", "not used", "without use", "只提到", "提到但", "没有使用"]),
+        ("container_affordance_miss", ["visible basket", "visible tray", "visible container", "affordance", "可见", "收纳篮", "托盘", "容器"]),
+        ("physical_capacity_hallucination", ["capacity", "carry all", "all loose", "physically", "一次拿", "全部拿", "承载"]),
+        ("direct_operation_without_helper", ["direct", "one by one", "by hand", "hand carrying", "direct hand", "直接", "逐个", "一件一件", "一瓶一瓶"]),
+        ("tool_necessity_miss", ["tool needed", "helper needed", "necessity", "需要工具", "需要辅助"]),
+        ("aggregation_failure", ["aggregation", "aggregate", "batch", "no aggregation", "container before transport", "聚合", "分批"]),
+        ("visual_uncertainty", ["visual", "image", "visible", "unclear", "uncertain", "看不清", "图像", "不确定"]),
+    ]
+    for label, keywords in checks:
+        if any(keyword in text for keyword in keywords):
+            return label
+    return ""
 
 
 def task_family_for(task_id: str) -> str:

@@ -12,6 +12,24 @@ if __package__ is None or __package__ == "":
 
 from common import normalize_list_field, read_csv_dicts, write_csv_dicts  # noqa: E402
 
+ALLOWED_FAILURE_MODES = {
+    "aggregation_failure",
+    "container_affordance_miss",
+    "helper_search_failure",
+    "helper_mention_without_use",
+    "tool_necessity_miss",
+    "target_as_helper",
+    "wrong_helper_type",
+    "over_tool_use",
+    "direct_operation_without_helper",
+    "conditional_helper_only",
+    "visual_uncertainty",
+    "physical_capacity_hallucination",
+    "parse_failure",
+    "tested_model_parse_error",
+    "judge_parse_error",
+}
+
 
 def main() -> None:
     args = parse_args()
@@ -42,7 +60,7 @@ def metric_row(name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
     helper_yes = sum(1 for row in judged if row.get("valid_helper_action_chain") == "yes")
     failure_modes = Counter()
     for row in rows:
-        failure_modes.update(mode for mode in normalize_list_field(row.get("failure_modes")) if mode)
+        failure_modes.update(mode for mode in normalized_failure_modes(row) if mode)
     return {
         "name": name,
         "total_rows": len(rows),
@@ -59,6 +77,46 @@ def metric_row(name: str, rows: list[dict[str, Any]]) -> dict[str, Any]:
         "helper_chain_rate": round(helper_yes / len(judged), 4) if judged else 0,
         "top_failure_modes": "; ".join(f"{mode}:{count}" for mode, count in failure_modes.most_common(6)),
     }
+
+
+def normalized_failure_modes(row: dict[str, Any]) -> list[str]:
+    output: list[str] = []
+    raw_modes = normalize_list_field(row.get("failure_modes"))
+    for mode in raw_modes:
+        label = failure_mode_to_allowed(str(mode))
+        if label and label not in output:
+            output.append(label)
+    if raw_modes and not output:
+        output.append("visual_uncertainty")
+    return output
+
+
+def failure_mode_to_allowed(mode: str) -> str:
+    normalized = mode.strip().lower().replace(" ", "_").replace("-", "_")
+    if normalized in ALLOWED_FAILURE_MODES:
+        return normalized
+    text = mode.lower()
+    checks = [
+        ("tested_model_parse_error", ["tested model parse", "model parse", "tested_model_parse", "parse_status"]),
+        ("judge_parse_error", ["judge parse", "judge json", "judge error"]),
+        ("parse_failure", ["parse", "json", "format"]),
+        ("target_as_helper", ["target as helper", "selected helper is target", "target object", "目标物", "目标当作"]),
+        ("wrong_helper_type", ["wrong helper", "inappropriate helper", "wrong tool", "不合适", "错误工具"]),
+        ("over_tool_use", ["over tool", "unnecessary", "single bottle", "多余", "不必要"]),
+        ("conditional_helper_only", ["conditional", "if available", "if needed", "consider", "optional", "如果", "若有", "可考虑", "必要时"]),
+        ("helper_search_failure", ["search", "no helper visible", "no container visible", "does not search", "寻找", "搜索", "没有看到", "未搜索"]),
+        ("helper_mention_without_use", ["mention", "mentioned", "not used", "without use", "只提到", "提到但", "没有使用"]),
+        ("container_affordance_miss", ["visible basket", "visible tray", "visible container", "affordance", "可见", "收纳篮", "托盘", "容器"]),
+        ("physical_capacity_hallucination", ["capacity", "carry all", "all loose", "physically", "一次拿", "全部拿", "承载"]),
+        ("direct_operation_without_helper", ["direct", "one by one", "by hand", "hand carrying", "direct hand", "直接", "逐个", "一件一件", "一瓶一瓶"]),
+        ("tool_necessity_miss", ["tool needed", "helper needed", "necessity", "需要工具", "需要辅助"]),
+        ("aggregation_failure", ["aggregation", "aggregate", "batch", "no aggregation", "container before transport", "聚合", "分批"]),
+        ("visual_uncertainty", ["visual", "image", "visible", "unclear", "uncertain", "看不清", "图像", "不确定"]),
+    ]
+    for label, keywords in checks:
+        if any(keyword in text for keyword in keywords):
+            return label
+    return ""
 
 
 def summarize_by(rows: list[dict[str, Any]], key: str) -> list[dict[str, Any]]:
