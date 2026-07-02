@@ -5,7 +5,7 @@ They activate `codex_ollama` automatically and generate a temporary models confi
 
 ## Prompt Categories
 
-There are 12 prompt settings.
+There are 15 prompt settings.
 
 Generic clean prompts:
 
@@ -28,13 +28,19 @@ Tool-prior intervention prompts:
 - `tool_prior_free_plan_humanoid_dual_arm`
 - `tool_prior_free_plan_quadruped_single_arm`
 
+Strong decomposition intervention prompts:
+
+- `strong_decomposition_free_plan`
+- `strong_decomposition_free_plan_humanoid_dual_arm`
+- `strong_decomposition_free_plan_quadruped_single_arm`
+
 Diagnostic probes:
 
 - `structured_tool_probe`
 - `structured_tool_action_chain_probe_humanoid_dual_arm`
 - `structured_tool_action_chain_probe_quadruped_single_arm`
 
-Clean prompts are the main evidence route. Tool-prior prompts are prompted upper-bound/intervention checks. Diagnostic probes are for debugging action-chain behavior.
+Clean prompts are the main evidence route. Tool-prior prompts are prompted helper-prior checks. Strong decomposition prompts are stronger relation-decomposition intervention baselines that keep the free-form schema. Diagnostic probes are for debugging action-chain behavior.
 
 ## Models Used
 
@@ -86,6 +92,12 @@ Run tool-prior intervention prompts:
 
 ```bash
 scripts/bash/run_ollama_tool_prior_intervention.sh
+```
+
+Run strong decomposition intervention prompts:
+
+```bash
+scripts/bash/run_ollama_strong_decomposition_intervention.sh
 ```
 
 Run diagnostic probes:

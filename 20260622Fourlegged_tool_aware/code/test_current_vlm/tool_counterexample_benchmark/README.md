@@ -173,11 +173,42 @@ Recommended local models:
 - `minicpm-v4.5:q8_0`: optional local open VLM candidate; verify image support first.
 - `qwen3.5:35b`: disabled by default and should not be treated as VLM evidence unless an image smoke test confirms vision support.
 
-Start Ollama:
+Start Ollama (system-level, using GPUs 0–3):
 
 ```bash
-ollama serve
+# ollama runs as systemd service; no manual start needed
+ollama list  # verify models visible
 ```
+
+### Ollama GPU management
+
+The system-level ollama (systemd, running as `ollama` user) sees all 4 GPUs (0–3) by default. Models are stored at `/data0/yurunze/ollama/models/` (configured via systemd override `OLLAMA_MODELS`).
+
+**Temporarily restrict ollama to GPU 2,3 only** (for local testing without contention on GPU 0,1):
+
+```bash
+# 1. Stop the system-level ollama
+sudo systemctl stop ollama
+
+# 2. Start your own instance on GPU 2,3
+CUDA_VISIBLE_DEVICES=2,3 OLLAMA_MODELS=/data0/yurunze/ollama/models ollama serve
+
+# 3. When done (Ctrl+C), restore system service
+sudo systemctl start ollama
+```
+
+**Quick check which GPUs ollama is using:**
+
+```bash
+nvidia-smi | grep -A1 'ollama\|llama'
+```
+
+**GPU allocation reference for this machine (bld-SP2C621D):**
+
+| GPU | Usage |
+|-----|-------|
+| 0,1 | System ollama (default) or shared with other workloads |
+| 2,3 | Free for local ollama instance with `CUDA_VISIBLE_DEVICES=2,3` |
 
 Pull candidate models:
 

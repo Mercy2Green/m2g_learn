@@ -19,6 +19,10 @@ run_prompt_category "tool_prior_intervention" \
   tool_prior_free_plan \
   tool_prior_free_plan_humanoid_dual_arm \
   tool_prior_free_plan_quadruped_single_arm
+run_prompt_category "strong_decomposition_intervention" \
+  strong_decomposition_free_plan \
+  strong_decomposition_free_plan_humanoid_dual_arm \
+  strong_decomposition_free_plan_quadruped_single_arm
 run_prompt_category "diagnostic_probes" \
   structured_tool_probe \
   structured_tool_action_chain_probe_humanoid_dual_arm \

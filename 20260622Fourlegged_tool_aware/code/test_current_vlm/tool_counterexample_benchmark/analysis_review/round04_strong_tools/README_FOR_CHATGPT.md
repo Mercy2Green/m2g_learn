@@ -1,0 +1,49 @@
+# README For ChatGPT
+
+This is an automatic text-based rereview handoff. It suggests analysis directions but is not final paper evidence.
+
+## Data Scope
+- Rows: 198
+- Models: 6 (ollama_gemma3_27b_it_q8_0, ollama_llama3_2_vision_11b_instruct_q8_0, ollama_minicpm_v4_5_q8_0, ollama_qwen3_5_35b, ollama_qwen3_vl_30b_a3b_instruct_q4_K_M, ollama_qwen3_vl_32b_instruct_q4_K_M)
+- Tasks: 11 (task_001, task_002, task_003, task_004, task_005, task_006, task_007, task_008, task_009, task_010, task_011)
+- Prompt categories: {'strong_decomposition_intervention': 198}
+- Rereview labels: {'true_fail': 79, 'true_pass': 73, 'parse_error': 46}
+
+## Rereview Rubric Summary
+- Valid helper use requires a committed action chain, not just helper mention.
+- Conditional helper-only plans are not counted as valid helper use.
+- Tool-prior prompts are intervention checks, not clean evidence.
+- Visual uncertainty remains unresolved until image-level review.
+
+## Top 10 Findings
+- helper_mention_without_use: 58 text-based labels
+- visual_uncertainty: 58 text-based labels
+- parse_failure: 46 text-based labels
+- tool_necessity_miss: 17 text-based labels
+- helper_search_failure: 10 text-based labels
+- aggregation_failure: 4 text-based labels
+- container_affordance_miss: 4 text-based labels
+- physical_capacity_hallucination: 2 text-based labels
+
+## Top Clean Counterexample Candidates
+
+## Top Prompted Improvement Cases
+- None in the summarized rows.
+
+## Top Robust Failures Across Clean/Tool-Prior
+- None in the summarized rows.
+
+## Main Uncertainty Sources
+- Image visibility of helpers/targets was not checked.
+- Parse-recoverable outputs need manual interpretation.
+- Some helper mentions may be background or conditional rather than committed use.
+
+## Generated Files
+- `aggregate_findings.md`: aggregate text-rereview metrics.
+- `task_family_summary.csv`: per-task metrics.
+- `model_prompt_matrix.csv`: per-model/prompt matrix.
+- `prompt_intervention_delta.md`: clean vs tool-prior comparisons.
+- `counterexample_candidates_ranked.md`: ranked clean failure candidates.
+
+## Warning
+Automatic text rereview is not final paper evidence. Selected claims require image-level human review.
