@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-RUN_TAG="${RUN_TAG:-round05_all_prompts_with_search_explicit}"
+RUN_TAG="${RUN_TAG:-all_prompts_with_search_explicit}"
 OUTPUT_DIR="${OUTPUT_DIR:-outputs/${RUN_TAG}}"
 ANALYSIS_DIR="${ANALYSIS_DIR:-analysis_review/${RUN_TAG}}"
 VLM_JUDGE_DIR="${VLM_JUDGE_DIR:-analysis_review/${RUN_TAG}_vlm_judge_qwen32}"
