@@ -130,6 +130,39 @@ Run clean prompts for one model:
 scripts/bash/run_ollama_one_model_all_clean.sh ollama_qwen3_vl_32b_instruct_q4_K_M
 ```
 
+Run image-aware local VLM judge analysis and summary generation for saved benchmark outputs:
+
+```bash
+scripts/bash/run_vlm_judge_analysis.sh
+```
+
+By default this analyzes the current round04 strong-tools merged rows:
+
+```text
+analysis_review/round04_strong_tools_v2/all_rows_merged.jsonl
+```
+
+and writes:
+
+```text
+analysis_review/round04_strong_tools_vlm_judge_qwen32_full/
+```
+
+Use different paths for another round:
+
+```bash
+scripts/bash/run_vlm_judge_analysis.sh \
+  --input analysis_review/another_round/all_rows_merged.jsonl \
+  --output_dir analysis_review/another_round_vlm_judge \
+  --rule_case_rereview analysis_review/another_round/case_rereview.csv
+```
+
+Quick judge smoke test:
+
+```bash
+scripts/bash/run_vlm_judge_analysis.sh --limit 5 --progress_every 1
+```
+
 ## Extra run_batch Arguments
 
 Any extra arguments are passed through to `python -m src.run_batch`.
