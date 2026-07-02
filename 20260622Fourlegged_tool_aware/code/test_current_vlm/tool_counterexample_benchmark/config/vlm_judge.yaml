@@ -1,0 +1,28 @@
+judges:
+  - judge_id: qwen3_vl_32b_primary
+    provider: ollama
+    model: qwen3-vl:32b-instruct-q4_K_M
+    temperature: 0
+    max_retries: 2
+    use_image: true
+
+  - judge_id: gemma3_27b_cross_check
+    provider: ollama
+    model: gemma3:27b-it-q8_0
+    temperature: 0
+    max_retries: 2
+    use_image: true
+
+  - judge_id: minicpm_v45_cross_check
+    provider: ollama
+    model: minicpm-v4.5:q8_0
+    temperature: 0
+    max_retries: 2
+    use_image: true
+
+  - judge_id: qwen3_vl_30b_cross_check
+    provider: ollama
+    model: qwen3-vl:30b-a3b-instruct-q4_K_M
+    temperature: 0
+    max_retries: 2
+    use_image: true
