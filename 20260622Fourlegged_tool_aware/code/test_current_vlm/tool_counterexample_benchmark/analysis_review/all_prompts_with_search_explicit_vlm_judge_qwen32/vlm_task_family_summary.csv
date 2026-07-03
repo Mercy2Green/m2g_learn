@@ -1,0 +1,12 @@
+name,total_rows,true_pass,true_fail,uncertain,tested_model_parse_error,judge_parse_error,image_used,image_missing,needs_visual_check,judged_non_parse_rows,fail_rate,helper_chain_rate,top_failure_modes
+task_001,108,15,70,0,23,0,85,0,0,85,0.8235,0.1765,direct_operation_without_helper:69; tested_model_parse_error:23; aggregation_failure:18; helper_mention_without_use:7; conditional_helper_only:3
+task_002,108,0,85,0,23,0,85,0,0,85,1.0,0.0,helper_search_failure:84; direct_operation_without_helper:84; tested_model_parse_error:23; conditional_helper_only:3; helper_mention_without_use:2
+task_003,108,66,14,0,28,0,80,0,0,80,0.175,0.825,tested_model_parse_error:28; direct_operation_without_helper:14; helper_mention_without_use:7
+task_004,108,9,72,0,27,0,81,0,0,81,0.8889,0.1111,direct_operation_without_helper:71; tested_model_parse_error:27; helper_mention_without_use:9; conditional_helper_only:8; aggregation_failure:1
+task_005,108,9,69,0,30,0,78,0,0,78,0.8846,0.1154,direct_operation_without_helper:68; tested_model_parse_error:30; helper_mention_without_use:17; aggregation_failure:5; conditional_helper_only:1; tool_necessity_miss:1
+task_006,108,62,22,0,24,0,84,0,0,84,0.2619,0.7381,tested_model_parse_error:24; direct_operation_without_helper:21; container_affordance_miss:17
+task_007,108,45,40,0,23,0,85,0,0,85,0.4706,0.5294,direct_operation_without_helper:40; tested_model_parse_error:23; helper_mention_without_use:5; aggregation_failure:2; conditional_helper_only:1; container_affordance_miss:1
+task_008,108,25,62,0,21,0,87,0,0,87,0.7126,0.2874,direct_operation_without_helper:61; tested_model_parse_error:21; conditional_helper_only:19; helper_mention_without_use:2; physical_capacity_hallucination:1
+task_009,108,50,32,0,26,0,82,0,0,82,0.3902,0.6098,direct_operation_without_helper:32; tested_model_parse_error:26; conditional_helper_only:2
+task_010,108,26,52,0,30,0,78,0,0,78,0.6667,0.3462,direct_operation_without_helper:43; helper_mention_without_use:37; tested_model_parse_error:30; conditional_helper_only:6; container_affordance_miss:4; aggregation_failure:4
+task_011,108,90,0,0,18,0,90,0,0,90,0.0,0.0,tested_model_parse_error:18

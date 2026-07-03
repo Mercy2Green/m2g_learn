@@ -1,0 +1,12 @@
+name,total_rows,true_pass,true_fail,uncertain,parse_error,skipped,reviewed_valid_rows,true_fail_rate,valid_helper_action_chain_rate,needs_visual_check_count,top_failure_modes
+task_001,108,16,69,0,23,0,85,0.8118,0.1882,29,helper_mention_without_use:39; aggregation_failure:30; container_affordance_miss:30; visual_uncertainty:29; parse_failure:23
+task_002,108,8,77,0,23,0,85,0.9059,0.0941,32,helper_search_failure:77; helper_mention_without_use:46; visual_uncertainty:32; aggregation_failure:31; container_affordance_miss:31
+task_003,108,74,6,0,28,0,80,0.075,0.925,6,parse_failure:28; helper_mention_without_use:6; visual_uncertainty:6; tool_necessity_miss:1
+task_004,108,16,65,0,27,0,81,0.8025,0.1975,22,helper_mention_without_use:34; aggregation_failure:31; container_affordance_miss:31; parse_failure:27; visual_uncertainty:22
+task_005,108,44,34,0,30,0,78,0.4359,0.5641,22,parse_failure:30; helper_mention_without_use:26; visual_uncertainty:22; aggregation_failure:8; container_affordance_miss:8
+task_006,108,70,14,0,24,0,84,0.1667,0.8333,9,parse_failure:24; helper_mention_without_use:11; visual_uncertainty:9; tool_necessity_miss:4; aggregation_failure:3
+task_007,108,66,19,0,23,0,85,0.2235,0.7765,16,parse_failure:23; helper_mention_without_use:18; visual_uncertainty:16; tool_necessity_miss:6; physical_capacity_hallucination:1
+task_008,108,38,49,0,21,0,87,0.5632,0.4368,22,helper_mention_without_use:33; visual_uncertainty:22; parse_failure:21; aggregation_failure:16; container_affordance_miss:16
+task_009,108,53,29,0,26,0,82,0.3537,0.7195,9,parse_failure:26; helper_mention_without_use:12; aggregation_failure:11; container_affordance_miss:11; visual_uncertainty:9
+task_010,108,59,19,0,30,0,78,0.2436,0.7564,12,parse_failure:30; helper_mention_without_use:16; visual_uncertainty:12; aggregation_failure:3; container_affordance_miss:3
+task_011,108,85,5,0,18,0,90,0.0556,0.0,0,parse_failure:18; helper_mention_without_use:5

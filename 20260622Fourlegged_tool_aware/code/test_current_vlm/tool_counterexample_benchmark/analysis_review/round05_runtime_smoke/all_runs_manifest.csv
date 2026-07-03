@@ -1,2 +1,0 @@
-run_id,output_dir,inferred_run_category,inferred_model_id,status,issues,evaluation_rows,parsed_rows,raw_rows,merged_rows
-round05_runtime_smoke,/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/round05_runtime_smoke,unknown,,ok,,1,1,1,1

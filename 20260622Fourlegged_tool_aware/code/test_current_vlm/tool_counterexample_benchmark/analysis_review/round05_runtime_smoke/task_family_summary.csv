@@ -1,2 +1,0 @@
-name,total_rows,true_pass,true_fail,uncertain,parse_error,skipped,reviewed_valid_rows,true_fail_rate,valid_helper_action_chain_rate,needs_visual_check_count,top_failure_modes
-task_002,1,1,0,0,0,0,1,0.0,1.0,0,
