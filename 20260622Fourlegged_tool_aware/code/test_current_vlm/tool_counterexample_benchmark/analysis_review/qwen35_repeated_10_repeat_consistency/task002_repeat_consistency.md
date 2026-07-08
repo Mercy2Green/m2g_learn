@@ -1,0 +1,38 @@
+# task_002 Repeat Consistency
+
+- Prompts that never pass: 17 / 18
+- Prompts with occasional pass: 1 / 18
+- VLM true_pass rows: 2
+- Groups with pass/fail flip: 1
+- Search-explicit prompts stable pass: 0 / 3
+- Search-explicit prompts stable fail: 1 / 3
+
+## True Pass Rows
+
+| run_id | prompt_id | parsed_plan | evidence_quote | rationale |
+| --- | --- | --- | --- | --- |
+| repeat_03_ollama_qwen3_5_35b | search_explicit_strong_decomposition_free_plan | 先短程检查书桌周围地面或椅子旁是否有合适的辅助物体（如收纳箱、托盘），以便一次性集中搬运多瓶水。; 将桌上的所有矿泉水收集并放入找到的辅助容器中，或者分批拿取。; 携带水瓶前往卧室并完成交付。 | 先短程检查书桌周围地面或椅子旁是否有合适的辅助物体（如收纳箱、托盘），以便一次性集中搬运多瓶水。; 将桌上的所有矿泉水收集并放入找到的辅助容器中，或者分批拿取。; 携带水瓶前往卧室并完成交付。 | 模型计划明确要求先在书桌周围搜索合适的辅助物体（如收纳箱、托盘），这符合任务对helper_search的要求——即当无可见容器时必须主动搜寻。虽然图像中未显示任何可用的容器，但模型并未直接建议手拿搬运，而是提出分批或使用找到的容器进行运输，体现了对工具必要性的理解与搜索意图。计划中‘收集并放入找到的辅助容器’表明有明确的helper使用承诺（committed_helper_use），且未将目标物体作为helper，也无过度工具化行为。因此，该计划符合任务要求，构成有效helper链。 |
+| repeat_07_ollama_qwen3_5_35b | search_explicit_strong_decomposition_free_plan | 检查桌面周围地面或相邻台面，寻找合适的辅助容器（如购物袋、收纳篮）。; 若找到合适容器，将水瓶依次放入容器中；若无明显大容器，则尝试分批次抓取搬运（每次约3瓶）。; 携带水前往卧室并放置。 | 检查桌面周围地面或相邻台面，寻找合适的辅助容器（如购物袋、收纳篮）。; 若找到合适容器，将水瓶依次放入容器中；若无明显大容器，则尝试分批次抓取搬运（每次约3瓶）。; 携带水前往卧室并放置。 | The model correctly identifies that no visible container is present in the image for transporting multiple water bottles, and explicitly plans to search for a suitable helper (e.g., bag, basket) before aggregating and transporting. Since no such container is visible, it conditionally falls back to batched carrying (3 bottles at a time), which is acceptable under the task's allowance of fallback when no helper is found. The plan includes committed use of a helper if found, and does not default... |
+
+## Prompt Groups
+
+| prompt_id | consistency_type | vlm_true_pass_count | vlm_true_fail_count | parse_error_count | label_sequence_by_repeat |
+| --- | --- | --- | --- | --- | --- |
+| efficient_safe_free_plan | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| efficient_safe_free_plan_humanoid_dual_arm | stable_nonparse_fail_with_parse | 0 | 9 | 1 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:parse_error \| repeat_09:true_fail \| repeat_10:true_fail |
+| efficient_safe_free_plan_quadruped_single_arm | stable_nonparse_fail_with_parse | 0 | 4 | 6 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:parse_error \| repeat_04:true_fail \| repeat_05:parse_error \| repeat_06:parse_error \| repeat_07:parse_error \| repeat_08:parse_error \| repeat_09:parse_error \| repeat_10:true_fail |
+| natural_free_plan | stable_nonparse_fail_with_parse | 0 | 9 | 1 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:parse_error \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| natural_free_plan_humanoid_dual_arm | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| natural_free_plan_quadruped_single_arm | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| search_explicit_strong_decomposition_free_plan | mixed_pass_fail_with_parse | 2 | 5 | 3 | repeat_01:true_fail \| repeat_02:parse_error \| repeat_03:true_pass \| repeat_04:true_fail \| repeat_05:parse_error \| repeat_06:parse_error \| repeat_07:true_pass \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| search_explicit_strong_decomposition_free_plan_humanoid_dual_arm | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| search_explicit_strong_decomposition_free_plan_quadruped_single_arm | stable_nonparse_fail_with_parse | 0 | 4 | 6 | repeat_01:true_fail \| repeat_02:parse_error \| repeat_03:parse_error \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:parse_error \| repeat_08:parse_error \| repeat_09:parse_error \| repeat_10:parse_error |
+| strong_decomposition_free_plan | stable_nonparse_fail_with_parse | 0 | 8 | 2 | repeat_01:true_fail \| repeat_02:parse_error \| repeat_03:true_fail \| repeat_04:parse_error \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| strong_decomposition_free_plan_humanoid_dual_arm | stable_nonparse_fail_with_parse | 0 | 9 | 1 | repeat_01:parse_error \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| strong_decomposition_free_plan_quadruped_single_arm | stable_nonparse_fail_with_parse | 0 | 9 | 1 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:parse_error \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| structured_tool_action_chain_probe_humanoid_dual_arm | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| structured_tool_action_chain_probe_quadruped_single_arm | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| structured_tool_probe | stable_nonparse_fail_with_parse | 0 | 1 | 9 | repeat_01:parse_error \| repeat_02:parse_error \| repeat_03:parse_error \| repeat_04:parse_error \| repeat_05:parse_error \| repeat_06:parse_error \| repeat_07:parse_error \| repeat_08:true_fail \| repeat_09:parse_error \| repeat_10:parse_error |
+| tool_prior_free_plan | stable_all_fail | 0 | 10 | 0 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:true_fail \| repeat_04:true_fail \| repeat_05:true_fail \| repeat_06:true_fail \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| tool_prior_free_plan_humanoid_dual_arm | stable_nonparse_fail_with_parse | 0 | 7 | 3 | repeat_01:true_fail \| repeat_02:true_fail \| repeat_03:parse_error \| repeat_04:true_fail \| repeat_05:parse_error \| repeat_06:parse_error \| repeat_07:true_fail \| repeat_08:true_fail \| repeat_09:true_fail \| repeat_10:true_fail |
+| tool_prior_free_plan_quadruped_single_arm | stable_nonparse_fail_with_parse | 0 | 3 | 7 | repeat_01:true_fail \| repeat_02:parse_error \| repeat_03:parse_error \| repeat_04:parse_error \| repeat_05:parse_error \| repeat_06:true_fail \| repeat_07:parse_error \| repeat_08:parse_error \| repeat_09:true_fail \| repeat_10:parse_error |

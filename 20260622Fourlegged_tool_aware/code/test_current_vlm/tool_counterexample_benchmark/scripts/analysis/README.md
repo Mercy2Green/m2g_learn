@@ -125,6 +125,40 @@ Generated files:
 - `counterexample_candidates_ranked.md`
 - `README_FOR_CHATGPT.md`
 
+## analyze_repeat_consistency.py
+
+`analyze_repeat_consistency.py` checks whether repeated runs of the same model
+on the same task, image, and prompt produce stable VLM judge labels and stable
+helper-action-chain judgments. It is offline-only: it reads existing VLM judge,
+text rereview, and merged-row files, and does not call Ollama or any VLM.
+
+```bash
+python scripts/analysis/analyze_repeat_consistency.py \
+  --vlm_case_csv analysis_review/qwen35_repeated_10_vlm_judge_qwen32/vlm_case_rereview.csv \
+  --text_case analysis_review/qwen35_repeated_10/case_rereview.jsonl \
+  --merged_rows analysis_review/qwen35_repeated_10/all_rows_merged.jsonl \
+  --output_dir analysis_review/qwen35_repeated_10_repeat_consistency \
+  --expected_repeats 10
+```
+
+If `--text_case` or `--merged_rows` is missing or points to a nonexistent file,
+the script skips the corresponding comparison/audit and still writes the core
+VLM repeat consistency outputs.
+
+Generated files include:
+
+- `repeat_consistency_by_task_prompt.csv`
+- `repeat_consistency_summary.md`
+- `repeat_consistency_by_task.csv`
+- `repeat_consistency_by_prompt.csv`
+- `top_unstable_task_prompt_groups.md`
+- `stable_failure_groups.md`
+- `stable_success_groups.md`
+- `task002_repeat_consistency.md`
+- `task005_repeat_consistency.md`
+- `repeat_input_integrity_audit.csv` and `.md` when merged rows exist
+- `repeat_consistency_vlm_vs_text_comparison.csv` and `.md` when text rereview exists
+
 ## Limitations
 
 - Text rereview cannot verify image contents.
