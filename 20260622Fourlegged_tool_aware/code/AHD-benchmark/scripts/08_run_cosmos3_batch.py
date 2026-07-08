@@ -47,10 +47,15 @@ def main() -> None:
     run_log_dir = ROOT / str(config["run_log_dir"])
     run_log_dir.mkdir(parents=True, exist_ok=True)
     work_dir = run_log_dir / f"{run_name}_work"
+    cosmos_input = config["cosmos_input"]
     runtime = Cosmos3Runtime(
         ahd_root=ROOT,
         cosmos_root=(ROOT / str(config["cosmos_root"])).resolve(),
-        resolution=str(config["default_resolution"]),
+        target_output_size=str(config["target_output_size"]),
+        cosmos_resolution=str(cosmos_input["resolution"]),
+        cosmos_aspect_ratio=str(cosmos_input["aspect_ratio"]),
+        expected_width=int(cosmos_input["expected_width"]),
+        expected_height=int(cosmos_input["expected_height"]),
         num_steps=int(config["default_num_steps"]),
         guidance_scale=float(config["default_guidance_scale"]),
     )
@@ -68,6 +73,11 @@ def main() -> None:
             "dry_run": is_dry_mode,
             "cosmos_input_path": str(input_path),
             "cosmos_output_dir": str(output_dir),
+            "target_output_size": runtime.target_output_size,
+            "cosmos_resolution": runtime.cosmos_resolution,
+            "cosmos_aspect_ratio": runtime.cosmos_aspect_ratio,
+            "expected_width": runtime.expected_width,
+            "expected_height": runtime.expected_height,
             "expected_primary_generated_path": str(output_dir / "t2i" / "vision.jpg"),
             "final_output_image_path": row["output_image_path"],
             "command": command_preview(command, runtime),

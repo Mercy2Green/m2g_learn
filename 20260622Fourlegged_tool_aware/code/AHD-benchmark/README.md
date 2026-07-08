@@ -118,6 +118,13 @@ python scripts/09_summarize_cosmos3_outputs.py \
   --results data/runs/ahd_cosmos3_one_image_test_results.jsonl
 ```
 
-The configured `default_resolution: 960x960` is mapped to the local Cosmos image tier `resolution=720` plus `aspect_ratio=1,1`, matching the verified 960x960 Cosmos3 smoke output.
+AHD `target_output_size` is the desired final image size. Cosmos3 `cosmos_input.resolution` is an internal preset/bucket, not the final pixel width or height. The current verified mapping is:
+
+```text
+target_output_size: 960x960
+cosmos_input.resolution: "720"
+cosmos_input.aspect_ratio: "1,1"
+observed output: 960x960
+```
 
 Only after one-image success and manual inspection should you run the full `smoke12` manifest. See `docs/COSMOS3_INTEGRATION.md` for details.

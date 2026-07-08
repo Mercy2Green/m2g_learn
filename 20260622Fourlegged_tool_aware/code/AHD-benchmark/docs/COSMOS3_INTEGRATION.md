@@ -73,7 +73,13 @@ python scripts/08_run_cosmos3_batch.py \
 - Early outputs should be manually inspected before any larger generation run.
 - Actual generation refuses batches larger than 12 images unless `--yes` is provided.
 - The runner wraps the local Cosmos3 workflow documented in `../cosmos3/README.md`.
-- `default_resolution: 960x960` is converted to the local Cosmos image tier `resolution=720` with `aspect_ratio=1,1`, which produces a 960x960 image in the verified local framework.
+- AHD `target_output_size` is the desired final image size.
+- Cosmos3 `cosmos_input.resolution` is an internal preset/bucket, not the final pixel width or height.
+- Current verified mapping:
+  - `target_output_size: 960x960`
+  - `cosmos_input.resolution: "720"`
+  - `cosmos_input.aspect_ratio: "1,1"`
+  - observed output: `960x960`
 - It uses local Cosmos3-Nano by default:
   - env: `/data0/yurunze/conda_envs/codex_cosmos`
   - checkpoint: `/data0/yurunze/models/Cosmos3-Nano`

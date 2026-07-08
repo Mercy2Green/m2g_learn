@@ -18,7 +18,11 @@ class Cosmos3Runtime:
     hf_home: str = "/data0/yurunze/models/hf-cache"
     cuda_visible_devices: str = "1"
     extra_args: tuple[str, ...] = ("--no-use-torch-compile",)
-    resolution: str = "960x960"
+    target_output_size: str = "960x960"
+    cosmos_resolution: str = "720"
+    cosmos_aspect_ratio: str = "1,1"
+    expected_width: int = 960
+    expected_height: int = 960
     num_steps: int = 35
     guidance_scale: float = 6.0
 
@@ -46,15 +50,14 @@ def build_cosmos3_command(
     output_dir = work_dir / "outputs" / sample_name
     input_path.parent.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
-    resolution, aspect_ratio = _cosmos_resolution_fields(runtime.resolution)
     sample = {
         "name": sample_name,
         "model_mode": "text2image",
         "prompt": str(row["prompt"]),
         "negative_prompt": str(row.get("negative_prompt", "")),
         "seed": int(row.get("seed", 0)),
-        "resolution": resolution,
-        "aspect_ratio": aspect_ratio,
+        "resolution": runtime.cosmos_resolution,
+        "aspect_ratio": runtime.cosmos_aspect_ratio,
         "num_frames": 1,
         "num_steps": runtime.num_steps,
         "guidance": runtime.guidance_scale,
@@ -62,6 +65,11 @@ def build_cosmos3_command(
             "spec_id": row.get("spec_id"),
             "spec_type": row.get("spec_type"),
             "prompt_source": row.get("prompt_source"),
+            "target_output_size": runtime.target_output_size,
+            "expected_width": runtime.expected_width,
+            "expected_height": runtime.expected_height,
+            "cosmos_resolution": runtime.cosmos_resolution,
+            "cosmos_aspect_ratio": runtime.cosmos_aspect_ratio,
         },
     }
     input_path.write_text(json.dumps(sample, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -149,7 +157,7 @@ def run_cosmos3_one(
             check=False,
         )
     except Exception as exc:  # pragma: no cover - subprocess environment dependent
-        return _result(row, "failed", error=str(exc), command=command_preview(command, runtime))
+        return _result(row, "failed", runtime, error=str(exc), command=command_preview(command, runtime))
 
     sample_name = _safe_name(str(row["spec_id"]))
     generated = find_generated_vision_image(output_dir, sample_name)
@@ -172,6 +180,7 @@ def run_cosmos3_one(
     return _result(
         row,
         status,
+        runtime,
         error=None if status == "success" else error or probe.get("error"),
         command=command_preview(command, runtime),
         probe=probe,
@@ -244,6 +253,7 @@ def _probe_image_with_stdlib(path: Path) -> dict[str, Any] | None:
 def _result(
     row: dict[str, Any],
     status: str,
+    runtime: Cosmos3Runtime,
     *,
     error: str | None,
     command: str,
@@ -262,14 +272,30 @@ def _result(
         "error": error,
         "generator": "Cosmos3-Nano",
         "command": command,
+        "target_output_size": runtime.target_output_size,
+        "cosmos_resolution": runtime.cosmos_resolution,
+        "cosmos_aspect_ratio": runtime.cosmos_aspect_ratio,
+        "expected_width": runtime.expected_width,
+        "expected_height": runtime.expected_height,
+        "image_size_matches_expected": None,
+        "warning": None,
     }
     if probe:
+        width = probe.get("width")
+        height = probe.get("height")
+        matches_expected = (
+            width == runtime.expected_width
+            and height == runtime.expected_height
+        )
         result.update({
             "image_exists": probe.get("exists"),
             "valid_image": probe.get("valid_image"),
-            "width": probe.get("width"),
-            "height": probe.get("height"),
+            "width": width,
+            "height": height,
+            "image_size_matches_expected": matches_expected if width and height else None,
         })
+        if status == "success" and not matches_expected:
+            result["warning"] = "image_size_mismatch"
     if input_path:
         result["cosmos_input_path"] = input_path
     if cosmos_output_dir:
@@ -279,7 +305,13 @@ def _result(
     return result
 
 
-def _cosmos_resolution_fields(resolution: str) -> tuple[str, str]:
+def _legacy_target_size_to_cosmos_fields(resolution: str) -> tuple[str, str]:
+    """Convert a legacy target pixel size into Cosmos preset fields.
+
+    This is retained only for old callers. The primary configuration path is
+    explicit `cosmos_input.resolution` plus `cosmos_input.aspect_ratio`.
+    Cosmos `resolution` is an internal preset/bucket, not a final pixel size.
+    """
     value = str(resolution).lower().strip()
     if "x" not in value:
         return value, "1,1"
