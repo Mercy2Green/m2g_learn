@@ -14,7 +14,7 @@ cosmos3/
 └── .cache/                   # HF/uv 默认缓存位置，已 gitignore
 ```
 
-当前推荐模型：`nvidia/Cosmos3-Nano`。
+当前推荐模型：`nv-community/Cosmos3-Nano`（ModelScope），对应 Hugging Face 上的 `nvidia/Cosmos3-Nano`。
 
 ## 当前机器配置
 
@@ -66,28 +66,25 @@ bash setup/setup_codex_cosmos_env.sh
 
 ## 下载 Cosmos3-Nano 权重
 
-先在 Hugging Face 上接受 `nvidia/Cosmos3-Nano` 的模型许可，并准备 read token：
-
-```bash
-export HF_TOKEN=hf_xxx
-```
-
-国内网络优先使用 HF mirror，默认脚本会设置 `HF_ENDPOINT=https://hf-mirror.com`：
+默认从 ModelScope 下载：
 
 ```bash
 cd /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3
 
-HF_HOME=/data0/yurunze/cosmos3/hf-cache \
-MODEL_LOCAL_DIR=/data0/yurunze/cosmos3/models/Cosmos3-Nano \
+MODELSCOPE_CACHE=/data0/yurunze/models/modelscope-cache \
+MODEL_LOCAL_DIR=/data0/yurunze/models/Cosmos3-Nano \
 bash setup/download_cosmos3_nano_weights.sh
 ```
 
-如果 gated model 授权在镜像上失败，改用官方端点：
+如果要改回 Hugging Face 下载，先在 Hugging Face 上接受 `nvidia/Cosmos3-Nano` 的模型许可，并准备 read token：
 
 ```bash
-HF_ENDPOINT=https://huggingface.co \
+export HF_TOKEN=hf_xxx
+
+DOWNLOAD_SOURCE=huggingface \
+MODEL_ID=nvidia/Cosmos3-Nano \
 HF_HOME=/data0/yurunze/cosmos3/hf-cache \
-MODEL_LOCAL_DIR=/data0/yurunze/cosmos3/models/Cosmos3-Nano \
+MODEL_LOCAL_DIR=/data0/yurunze/models/Cosmos3-Nano \
 bash setup/download_cosmos3_nano_weights.sh
 ```
 
@@ -105,7 +102,7 @@ code/cosmos3/weights/Cosmos3-Nano
 cd /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3
 
 COSMOS_CONDA_PREFIX=/data0/yurunze/conda_envs/codex_cosmos \
-CHECKPOINT_PATH=/data0/yurunze/cosmos3/models/Cosmos3-Nano \
+CHECKPOINT_PATH=/data0/yurunze/models/Cosmos3-Nano \
 bash setup/run_t2i_smoke.sh
 ```
 
@@ -134,12 +131,12 @@ bash setup/check_local_status.sh
 - 本地脚本：`code/cosmos3/setup`
 - 推荐 conda 环境：`/data0/yurunze/conda_envs/codex_cosmos`
 - 推荐 uv cache：`/data0/yurunze/cosmos3/uv-cache`
-- 推荐 HF cache：`/data0/yurunze/cosmos3/hf-cache`
-- 推荐 Nano 权重：`/data0/yurunze/cosmos3/models/Cosmos3-Nano`
+- 推荐 ModelScope cache：`/data0/yurunze/models/modelscope-cache`
+- 推荐 Nano 权重：`/data0/yurunze/models/Cosmos3-Nano`
 
 ## 参考
 
 - `upstream/README.md`
 - `framework/docs/setup.md`
 - `framework/docs/inference.md`
-- Hugging Face：`nvidia/Cosmos3-Nano`
+- ModelScope：`nv-community/Cosmos3-Nano`

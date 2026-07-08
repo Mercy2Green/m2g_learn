@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter, defaultdict
 import json
 import sys
 from pathlib import Path
@@ -32,6 +33,43 @@ FORBIDDEN_OUTPUT_FIELDS = [
 
 def _model_id_for_path(model: str) -> str:
     return model.replace(":", "_").replace("/", "_")
+
+
+def _load_specs(path: Path) -> list[dict[str, Any]]:
+    specs: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_no, line in enumerate(handle, start=1):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            value = json.loads(stripped)
+            if not isinstance(value, dict):
+                raise ValueError(f"JSONL row {line_no} is not an object: {path}")
+            specs.append(value)
+    return specs
+
+
+def _select_first_specs(specs: list[dict[str, Any]], max_specs: int) -> list[dict[str, Any]]:
+    return specs[:max_specs]
+
+
+def _select_stratified_specs(specs: list[dict[str, Any]], per_type: int) -> list[dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for spec in specs:
+        grouped[str(spec.get("spec_type", ""))].append(spec)
+
+    selected: list[dict[str, Any]] = []
+    for spec_type in sorted(grouped):
+        ordered = sorted(grouped[spec_type], key=lambda item: str(item.get("spec_id", "")))
+        selected.extend(ordered[:per_type])
+    return selected
+
+
+def _print_counts_by_spec_type(specs: list[dict[str, Any]]) -> None:
+    counts = Counter(str(spec.get("spec_type", "")) for spec in specs)
+    print("Selected specs by spec_type:")
+    for spec_type in sorted(counts):
+        print(f"  {spec_type}: {counts[spec_type]}")
 
 
 def _public_spec(spec: dict[str, Any]) -> dict[str, Any]:
@@ -148,6 +186,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", default=None)
     parser.add_argument("--max_specs", type=int, default=None)
+    parser.add_argument("--stratified_per_type", type=int, default=None)
     args = parser.parse_args()
 
     load_dotenv(ROOT / ".env")
@@ -162,14 +201,20 @@ def main() -> None:
             "and scripts/03_expand_cosmos_prompts.py first."
         )
 
-    specs = []
-    with input_path.open("r", encoding="utf-8") as handle:
-        for line in handle:
-            stripped = line.strip()
-            if stripped:
-                specs.append(json.loads(stripped))
-            if len(specs) >= max_specs:
-                break
+    all_specs = _load_specs(input_path)
+    if args.stratified_per_type is not None:
+        if args.stratified_per_type <= 0:
+            raise SystemExit("--stratified_per_type must be a positive integer")
+        specs = _select_stratified_specs(all_specs, args.stratified_per_type)
+        output_rel = (
+            f"specs/enrichment/llm_enriched_{_model_id_for_path(model_id)}_"
+            f"stratified{args.stratified_per_type}_preview.jsonl"
+        )
+    else:
+        specs = _select_first_specs(all_specs, max_specs)
+        output_rel = str(config["output_path_template"]).format(model_id=_model_id_for_path(model_id))
+
+    _print_counts_by_spec_type(specs)
 
     client = OllamaClient(
         base_url=str(config["ollama_base_url"]),
@@ -201,7 +246,6 @@ def main() -> None:
                 row[field] = [] if field == "notes" else ""
         rows.append(row)
 
-    output_rel = str(config["output_path_template"]).format(model_id=_model_id_for_path(model_id))
     output_path = ROOT / output_rel
     write_jsonl(output_path, rows)
     print(f"Wrote {len(rows)} enrichment preview rows to {output_rel}")
