@@ -1,0 +1,17 @@
+{
+  "name": "agg_o0_000006",
+  "model_mode": "text2image",
+  "prompt": "Realistic robot first-person image in student dorm room. Show 7 visible sports drink bottles on carpeted floor. Include book, cup. Camera: low quadruped camera view. Lighting: even overhead lighting. Natural household scale, no staged puzzle layout.",
+  "negative_prompt": "Do not show basket, tray, box, bag, shopping bag, carrying container. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 100005,
+  "resolution": "960",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "agg_o0_000006",
+    "spec_type": "aggregate_transport_o0_target_visible_helper_absent",
+    "prompt_source": "deterministic"
+  }
+}

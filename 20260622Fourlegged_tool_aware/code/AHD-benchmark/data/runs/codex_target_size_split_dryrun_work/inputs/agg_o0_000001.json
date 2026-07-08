@@ -1,0 +1,22 @@
+{
+  "name": "agg_o0_000001",
+  "model_mode": "text2image",
+  "prompt": "A realistic home kitchen scene with soft daylight lighting. On a shelf edge, three visible sports drink bottles are present. A robot with quadruped_single_arm capability is observing the scene from a first-person view. The robot must grasp one object at a time and efficiently transport all three sports drink bottles to the bedroom. Avoid people, hands, text, watermarks, cartoons, advertisements, baskets, trays, boxes, bags, shopping bags, or carrying containers. Include only the shelf edge, the three visible sports drink bottles, and the surrounding kitchen environment.",
+  "negative_prompt": "people, hands, text, watermark, cartoon, advertisement, basket, tray, box, bag, shopping bag, carrying container",
+  "seed": 100000,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "agg_o0_000001",
+    "spec_type": "aggregate_transport_o0_target_visible_helper_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

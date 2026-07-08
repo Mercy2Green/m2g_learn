@@ -1,0 +1,22 @@
+{
+  "name": "direct_o0_000002",
+  "model_mode": "text2image",
+  "prompt": "A slightly wide robot view of a small apartment living room with warm indoor lighting. The scene includes a carpeted floor, a single reachable water bottle, a small towel, and a cloth. There are no people, hands, text, watermarks, cartoons, or advertisements visible. The camera is positioned to capture the entire area without any obstructions.",
+  "negative_prompt": "people, hands, text, watermark, cartoon, advertisement, basket, tray, box, bag, broom, stick, rod, hanger",
+  "seed": 140001,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "direct_o0_000002",
+    "spec_type": "direct_is_enough_o0_single_target",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "wrong_o1_000003",
+  "model_mode": "text2image",
+  "prompt": "Realistic robot first-person image in office kitchenette. Show empty cup as the main visible object near low table. Include toy block, cup, cloth. Camera: low quadruped camera view. Lighting: even overhead lighting.",
+  "negative_prompt": "Do not show water bottle, drink can, remote control, small ball, basket, tray, open box, box, tote bag, bag, carrying container, broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 240002,
+  "resolution": "960",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "wrong_o1_000003",
+    "spec_type": "wrong_helper_o1_target_absent",
+    "prompt_source": "deterministic"
+  }
+}

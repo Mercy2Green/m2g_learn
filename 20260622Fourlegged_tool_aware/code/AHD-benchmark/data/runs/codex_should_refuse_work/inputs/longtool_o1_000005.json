@@ -1,0 +1,17 @@
+{
+  "name": "longtool_o1_000005",
+  "model_mode": "text2image",
+  "prompt": "Realistic robot first-person image in small apartment living room. Show rod as the main visible object near tile floor. Include phone charger, small towel, cloth, cup. Camera: near floor mobile robot view. Lighting: even overhead lighting.",
+  "negative_prompt": "Do not show water bottle, drink can, remote control, small ball, basket, tray, box, bag. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 220004,
+  "resolution": "960",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "longtool_o1_000005",
+    "spec_type": "long_tool_helper_o1_target_absent",
+    "prompt_source": "deterministic"
+  }
+}

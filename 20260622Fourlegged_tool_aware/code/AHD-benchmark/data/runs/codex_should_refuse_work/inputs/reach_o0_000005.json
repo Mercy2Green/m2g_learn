@@ -1,0 +1,17 @@
+{
+  "name": "reach_o0_000005",
+  "model_mode": "text2image",
+  "prompt": "Realistic robot first-person image in office kitchenette. Show small toy partly visible under sofa partly under sofa, visible but not directly graspable. Include low table and book, cup. Camera: robot first-person view. Lighting: even overhead lighting.",
+  "negative_prompt": "Do not show broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 120004,
+  "resolution": "960",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "reach_o0_000005",
+    "spec_type": "extend_reach_o0_target_under_furniture",
+    "prompt_source": "deterministic"
+  }
+}

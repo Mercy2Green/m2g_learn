@@ -1,0 +1,17 @@
+{
+  "name": "container_o1_000001",
+  "model_mode": "text2image",
+  "prompt": "A low quadruped camera view of an office kitchenette, showing a kitchen counter with even overhead lighting. The scene includes an empty open box on the counter, along with distractors such as a cup, toy block, phone charger, and book. No people, hands, text, watermarks, cartoons, or advertisements are visible. The environment is clean and organized, with no forbidden objects like water bottles, drink cans, remote controls, small balls, brooms, sticks, rods, or hangers present.",
+  "negative_prompt": "Do not show water bottle, drink can, remote control, small ball, broom, stick, rod, hanger. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 200000,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "container_o1_000001",
+    "spec_type": "container_helper_o1_target_absent",
+    "prompt_source": "llm_enriched"
+  }
+}

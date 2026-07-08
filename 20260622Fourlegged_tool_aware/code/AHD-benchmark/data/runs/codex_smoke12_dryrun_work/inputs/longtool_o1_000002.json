@@ -1,0 +1,17 @@
+{
+  "name": "longtool_o1_000002",
+  "model_mode": "text2image",
+  "prompt": "A low-angle view from a quadruped robot in a bedroom corner, showing a low table with soft daylight lighting. On the table is a hanger, which is the only allowed object. The scene includes toy blocks and a cup as distractors but excludes water bottles, drink cans, remote controls, small balls, baskets, trays, boxes, and bags. No people, hands, text, watermarks, cartoons, or advertisements are visible.",
+  "negative_prompt": "people, hands, text, watermark, cartoon, advertisement, water bottle, drink can, remote control, small ball, basket, tray, box, bag",
+  "seed": 220001,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "longtool_o1_000002",
+    "spec_type": "long_tool_helper_o1_target_absent",
+    "prompt_source": "llm_enriched"
+  }
+}

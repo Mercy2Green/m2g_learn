@@ -1,0 +1,17 @@
+{
+  "name": "direct_o0_000002",
+  "model_mode": "text2image",
+  "prompt": "Realistic robot first-person image in small apartment living room. Show single reachable water bottle on carpeted floor, clearly reachable and unobstructed. Include small towel, cloth. Camera: slightly wide robot view. Lighting: warm indoor lighting.",
+  "negative_prompt": "Do not show basket, tray, box, bag, broom, stick, rod, hanger. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 140001,
+  "resolution": "960",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "direct_o0_000002",
+    "spec_type": "direct_is_enough_o0_single_target",
+    "prompt_source": "deterministic"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "reach_o0_000002",
+  "model_mode": "text2image",
+  "prompt": "A low quadruped camera view of a realistic home kitchen with warm indoor lighting. A bed is positioned in the scene, and under it, a remote control is partially visible on a tile floor. The surrounding area includes a cloth and a book as distractors, but no people, hands, text, watermarks, cartoons, or advertisements are present. The camera angle ensures that only the necessary objects—bed and remote control—are clearly visible, with no long tools like brooms, sticks, rods, hangers, or other elongated items in view.",
+  "negative_prompt": "No people, hands, text, watermarks, cartoons, advertisements, brooms, sticks, long sticks, rods, hangers, or long tools are visible in the scene. The remote control is not fully visible above the bed surface.",
+  "seed": 120001,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "reach_o0_000002",
+    "spec_type": "extend_reach_o0_target_under_furniture",
+    "prompt_source": "llm_enriched"
+  }
+}
