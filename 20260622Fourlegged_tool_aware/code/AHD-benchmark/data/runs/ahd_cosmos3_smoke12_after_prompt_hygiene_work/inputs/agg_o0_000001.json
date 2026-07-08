@@ -1,0 +1,22 @@
+{
+  "name": "agg_o0_000001",
+  "model_mode": "text2image",
+  "prompt": "robot first-person view of a realistic home kitchen with soft daylight lighting, showing a shelf edge with multiple visible sports drink bottles (roughly 3 to 6), including various brands and colors, placed on the surface; no people, hands, text, watermarks, cartoons, or advertisements are present; distractors such as a phone charger, book, and empty mug are visible but not interacting with the bottles; all objects are clearly in focus and naturally arranged.",
+  "negative_prompt": "Do not show basket, tray, box, bag, shopping bag, carrying container. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 100000,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "agg_o0_000001",
+    "spec_type": "aggregate_transport_o0_target_visible_helper_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

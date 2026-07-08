@@ -1,0 +1,22 @@
+{
+  "name": "longtool_o1_000002",
+  "model_mode": "text2image",
+  "prompt": "robot first-person view of a robotics lab lounge with even overhead lighting, showing a wooden desk that includes a broom; visible objects include a toy block, small towel, empty mug, and the broom; no people, hands, text, watermark, cartoon, or advertisement are present",
+  "negative_prompt": "Do not show water bottle, drink can, remote control, small ball, basket, tray, box, bag. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 220001,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "longtool_o1_000002",
+    "spec_type": "long_tool_helper_o1_target_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}
