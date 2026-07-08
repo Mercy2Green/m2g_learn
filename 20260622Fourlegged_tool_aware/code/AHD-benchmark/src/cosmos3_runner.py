@@ -202,8 +202,43 @@ def probe_output_image(path: str | Path) -> dict[str, Any]:
             result["width"], result["height"] = image.size
             result["valid_image"] = True
     except Exception as exc:  # pragma: no cover - depends on local image/Pillow
-        result["error"] = str(exc)
+        fallback = _probe_image_with_stdlib(file_path)
+        if fallback is not None:
+            result.update(fallback)
+        else:
+            result["error"] = str(exc)
     return result
+
+
+def _probe_image_with_stdlib(path: Path) -> dict[str, Any] | None:
+    data = path.read_bytes()
+    if data.startswith(b"\x89PNG\r\n\x1a\n") and len(data) >= 24:
+        width = int.from_bytes(data[16:20], "big")
+        height = int.from_bytes(data[20:24], "big")
+        return {"valid_image": width > 0 and height > 0, "width": width, "height": height, "error": None}
+
+    if data.startswith(b"\xff\xd8"):
+        index = 2
+        while index + 9 < len(data):
+            if data[index] != 0xFF:
+                index += 1
+                continue
+            marker = data[index + 1]
+            index += 2
+            if marker in {0xD8, 0xD9}:
+                continue
+            if index + 2 > len(data):
+                break
+            segment_length = int.from_bytes(data[index : index + 2], "big")
+            if segment_length < 2 or index + segment_length > len(data):
+                break
+            if marker in {0xC0, 0xC1, 0xC2, 0xC3, 0xC5, 0xC6, 0xC7, 0xC9, 0xCA, 0xCB, 0xCD, 0xCE, 0xCF}:
+                height = int.from_bytes(data[index + 3 : index + 5], "big")
+                width = int.from_bytes(data[index + 5 : index + 7], "big")
+                return {"valid_image": width > 0 and height > 0, "width": width, "height": height, "error": None}
+            index += segment_length
+
+    return None
 
 
 def _result(
@@ -251,8 +286,25 @@ def _cosmos_resolution_fields(resolution: str) -> tuple[str, str]:
     width_text, height_text = value.split("x", 1)
     width = int(width_text)
     height = int(height_text)
+    exact_image_tiers = {
+        (256, 256): ("256", "1,1"),
+        (640, 640): ("480", "1,1"),
+        (960, 960): ("720", "1,1"),
+        (1024, 1024): ("768", "1,1"),
+        (1440, 1440): ("1080", "1,1"),
+        (1280, 720): ("720", "16,9"),
+        (720, 1280): ("720", "9,16"),
+        (1024, 768): ("768", "4,3"),
+        (768, 1024): ("768", "3,4"),
+    }
+    if (width, height) in exact_image_tiers:
+        return exact_image_tiers[(width, height)]
+
     if width == height:
-        return str(height), "1,1"
+        raise ValueError(
+            f"Unsupported square Cosmos3 image size: {resolution}. "
+            "Use one of 256x256, 640x640, 960x960, 1024x1024, 1440x1440."
+        )
     if width * 9 == height * 16:
         return str(height), "16,9"
     if width * 16 == height * 9:
