@@ -176,6 +176,8 @@ def _next_indent(lines: list[tuple[int, str, int]], index: int, fallback: int) -
 
 
 def _looks_like_key_value(text: str) -> bool:
+    if text.startswith(("'", '"')):
+        return False
     return ":" in text and not text.startswith(("http://", "https://"))
 
 

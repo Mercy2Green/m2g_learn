@@ -1,0 +1,14 @@
+version: ahd_v01
+default_model: 'qwen3-vl:32b-instruct-q4_K_M'
+candidate_models:
+  - 'qwen3-vl:32b-instruct-q4_K_M'
+  - 'qwen3-vl:30b-a3b-instruct-q4_K_M'
+  - 'qwen3.5:35b'
+  - 'gemma3:27b-it_q8_0'
+ollama_base_url: ${OLLAMA_BASE_URL:-http://localhost:11434}
+temperature: 0.0
+num_ctx: 8192
+timeout_seconds: 300
+max_specs: 50
+input_specs_path: specs/scene_specs_checked.jsonl
+output_path_template: specs/enrichment/llm_enriched_{model_id}_preview.jsonl

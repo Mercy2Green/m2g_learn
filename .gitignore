@@ -20,6 +20,8 @@
 
 20260622Fourlegged_tool_aware/code/AHD-benchmark/specs/*.jsonl
 20260622Fourlegged_tool_aware/code/AHD-benchmark/specs/*_report.md
+20260622Fourlegged_tool_aware/code/AHD-benchmark/specs/enrichment/*.jsonl
+20260622Fourlegged_tool_aware/code/AHD-benchmark/specs/enrichment/*_report.md
 20260622Fourlegged_tool_aware/code/AHD-benchmark/prompts/*.jsonl
 20260622Fourlegged_tool_aware/code/AHD-benchmark/docs/DATA_DISTRIBUTION_PREVIEW.md
 20260622Fourlegged_tool_aware/code/AHD-benchmark/data/images/o0/*
@@ -27,6 +29,7 @@
 20260622Fourlegged_tool_aware/code/AHD-benchmark/data/filter_reports/*
 20260622Fourlegged_tool_aware/code/AHD-benchmark/data/samples/*
 !20260622Fourlegged_tool_aware/code/AHD-benchmark/specs/.gitkeep
+!20260622Fourlegged_tool_aware/code/AHD-benchmark/specs/enrichment/.gitkeep
 !20260622Fourlegged_tool_aware/code/AHD-benchmark/prompts/.gitkeep
 !20260622Fourlegged_tool_aware/code/AHD-benchmark/data/images/o0/.gitkeep
 !20260622Fourlegged_tool_aware/code/AHD-benchmark/data/images/o1/.gitkeep
