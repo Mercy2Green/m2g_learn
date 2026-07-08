@@ -183,7 +183,7 @@ def make_direct_o0_spec(
         },
     )
     spec["gold"] = {
-        "stage": "direct_action",
+        "stage": "search_trigger",
         "mode": "direct",
         "needed_helper_function": "none",
         "target_memory": {
@@ -266,6 +266,24 @@ def make_wrong_helper_o1_spec(**kwargs: Any) -> dict[str, Any]:
     return _make_o1_spec(
         spec_type="wrong_helper_o1_target_absent",
         helper_function="none",
-        must_exclude=["water bottle", "drink can", "remote control", "small ball"],
+        must_exclude=[
+            "water bottle",
+            "drink can",
+            "remote control",
+            "small ball",
+            "basket",
+            "tray",
+            "open box",
+            "box",
+            "tote bag",
+            "bag",
+            "carrying container",
+            "broom",
+            "stick",
+            "long stick",
+            "rod",
+            "hanger",
+            "long tool",
+        ],
         **kwargs,
     )

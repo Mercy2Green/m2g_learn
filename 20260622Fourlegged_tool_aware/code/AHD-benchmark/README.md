@@ -19,6 +19,8 @@ This stage generates:
 
 The 2,000 specs are candidates. Later stages should select about 600-800 image specs for Cosmos3 generation, then filter into paired samples.
 
+Running scripts `01` through `04` creates local generated artifacts under `specs/`, `prompts/`, and `docs/DATA_DISTRIBUTION_PREVIEW.md`. These outputs are gitignored and should not be committed in the Stage 0 repository state. Keep source code, configs, docs, and `.gitkeep` placeholders in version control.
+
 ## Task Families
 
 - `aggregate_transport`: multiple bottles or drinks are visible; a container-like helper is absent in O0.

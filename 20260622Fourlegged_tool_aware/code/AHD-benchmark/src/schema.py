@@ -24,6 +24,13 @@ O0_GOLD_REQUIRED = [
     "direct_fallback_allowed",
 ]
 
+O0_ALLOWED_MODES = {"search_helper", "direct"}
+O0_ALLOWED_HELPER_FUNCTIONS = {
+    "container_for_multiple_objects",
+    "long_rigid_reach_extension",
+    "none",
+}
+
 
 def _missing(mapping: dict[str, Any], keys: list[str]) -> list[str]:
     return [key for key in keys if key not in mapping]
@@ -72,10 +79,15 @@ def validate_o0_spec(spec: dict[str, Any]) -> list[str]:
     gold = _expect_dict(spec, "gold", errors)
     for key in _missing(gold, O0_GOLD_REQUIRED):
         errors.append(f"gold missing required field: {key}")
-    if gold.get("mode") not in {"search_helper", "direct"}:
+    if gold.get("mode") not in O0_ALLOWED_MODES:
         errors.append("gold.mode must be search_helper or direct")
-    if gold.get("stage") not in {"search_trigger", "direct_action"}:
-        errors.append("gold.stage must be search_trigger or direct_action")
+    if gold.get("stage") != "search_trigger":
+        errors.append("gold.stage must be search_trigger")
+    if gold.get("needed_helper_function") not in O0_ALLOWED_HELPER_FUNCTIONS:
+        errors.append(
+            "gold.needed_helper_function must be one of: "
+            "container_for_multiple_objects, long_rigid_reach_extension, none"
+        )
     if not isinstance(gold.get("target_memory"), dict):
         errors.append("gold.target_memory must be a mapping")
     if not isinstance(gold.get("direct_fallback_allowed"), bool):

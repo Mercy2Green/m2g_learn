@@ -20,7 +20,7 @@ One JSONL row describes one image spec, not a paired O0/O1 sample.
 
 O0 specs include `gold`:
 
-- `stage`: `search_trigger` or `direct_action`.
+- `stage`: `search_trigger`.
 - `mode`: `search_helper` or `direct`.
 - `needed_helper_function`: functional target memory label.
 - `target_memory`: object, count, location, and task-relevant property.

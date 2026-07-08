@@ -9,6 +9,7 @@ Stage 0 complete criteria:
 
 Later stages:
 
+- Stage 1 will implement Cosmos3-Nano T2I smoke generation for only 5 images.
 - Add Cosmos3-Nano generation script with dry-run mode.
 - Add small image-generation smoke test.
 - Add VLM filtering for generated O0/O1 images.
