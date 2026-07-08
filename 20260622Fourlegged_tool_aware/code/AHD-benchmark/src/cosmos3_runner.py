@@ -18,6 +18,9 @@ class Cosmos3Runtime:
     hf_home: str = "/data0/yurunze/models/hf-cache"
     cuda_visible_devices: str = "1"
     extra_args: tuple[str, ...] = ("--no-use-torch-compile",)
+    resolution: str = "960x960"
+    num_steps: int = 35
+    guidance_scale: float = 6.0
 
     @property
     def framework_dir(self) -> Path:
@@ -43,17 +46,18 @@ def build_cosmos3_command(
     output_dir = work_dir / "outputs" / sample_name
     input_path.parent.mkdir(parents=True, exist_ok=True)
     output_dir.mkdir(parents=True, exist_ok=True)
+    resolution, aspect_ratio = _cosmos_resolution_fields(runtime.resolution)
     sample = {
         "name": sample_name,
         "model_mode": "text2image",
         "prompt": str(row["prompt"]),
         "negative_prompt": str(row.get("negative_prompt", "")),
         "seed": int(row.get("seed", 0)),
-        "resolution": "720",
-        "aspect_ratio": "1,1",
+        "resolution": resolution,
+        "aspect_ratio": aspect_ratio,
         "num_frames": 1,
-        "num_steps": 35,
-        "guidance": 6.0,
+        "num_steps": runtime.num_steps,
+        "guidance": runtime.guidance_scale,
         "extra": {
             "spec_id": row.get("spec_id"),
             "spec_type": row.get("spec_type"),
@@ -79,6 +83,30 @@ def build_cosmos3_command(
         "--no-guardrails",
     ]
     return command, input_path, output_dir
+
+
+def find_generated_vision_image(output_dir: Path, sample_name: str) -> Path | None:
+    candidates = [
+        output_dir / "t2i" / "vision.jpg",
+        output_dir / sample_name / "vision.jpg",
+        output_dir / "vision.jpg",
+    ]
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+
+    vision_matches = sorted(path for path in output_dir.rglob("vision.jpg") if path.is_file())
+    if len(vision_matches) == 1:
+        return vision_matches[0]
+
+    image_matches = sorted(
+        path for path in output_dir.rglob("*")
+        if path.is_file() and path.suffix.lower() in {".jpg", ".jpeg", ".png"}
+    )
+    if len(image_matches) == 1:
+        return image_matches[0]
+
+    return None
 
 
 def command_preview(command: list[str], runtime: Cosmos3Runtime) -> str:
@@ -123,16 +151,21 @@ def run_cosmos3_one(
     except Exception as exc:  # pragma: no cover - subprocess environment dependent
         return _result(row, "failed", error=str(exc), command=command_preview(command, runtime))
 
-    generated = output_dir / _safe_name(str(row["spec_id"])) / "vision.jpg"
+    sample_name = _safe_name(str(row["spec_id"]))
+    generated = find_generated_vision_image(output_dir, sample_name)
     target = runtime.ahd_root / str(row["output_image_path"])
     error: str | None = None
-    if completed.returncode == 0 and generated.exists():
+    if completed.returncode == 0 and generated is not None:
         ensure_output_parent(target)
         shutil.copy2(generated, target)
     else:
         stderr_tail = completed.stderr.strip().splitlines()[-8:]
         stdout_tail = completed.stdout.strip().splitlines()[-8:]
-        error = "\n".join(stderr_tail or stdout_tail) or f"returncode={completed.returncode}"
+        log_error = "\n".join(stderr_tail or stdout_tail) or f"returncode={completed.returncode}"
+        if completed.returncode == 0 and generated is None:
+            error = f"Generated image not found. {_output_dir_diagnostics(output_dir)}"
+        else:
+            error = f"{log_error}\n{_output_dir_diagnostics(output_dir)}"
 
     probe = probe_output_image(target)
     status = "success" if completed.returncode == 0 and probe["exists"] and probe["valid_image"] else "failed"
@@ -144,6 +177,7 @@ def run_cosmos3_one(
         probe=probe,
         input_path=str(input_path),
         cosmos_output_dir=str(output_dir),
+        cosmos_generated_image_path=str(generated) if generated is not None else None,
     )
 
 
@@ -181,6 +215,7 @@ def _result(
     probe: dict[str, Any] | None = None,
     input_path: str | None = None,
     cosmos_output_dir: str | None = None,
+    cosmos_generated_image_path: str | None = None,
 ) -> dict[str, Any]:
     result = {
         "spec_id": row.get("spec_id"),
@@ -204,7 +239,40 @@ def _result(
         result["cosmos_input_path"] = input_path
     if cosmos_output_dir:
         result["cosmos_output_dir"] = cosmos_output_dir
+    if cosmos_generated_image_path:
+        result["cosmos_generated_image_path"] = cosmos_generated_image_path
     return result
+
+
+def _cosmos_resolution_fields(resolution: str) -> tuple[str, str]:
+    value = str(resolution).lower().strip()
+    if "x" not in value:
+        return value, "1,1"
+    width_text, height_text = value.split("x", 1)
+    width = int(width_text)
+    height = int(height_text)
+    if width == height:
+        return str(height), "1,1"
+    if width * 9 == height * 16:
+        return str(height), "16,9"
+    if width * 16 == height * 9:
+        return str(height), "9,16"
+    if width * 3 == height * 4:
+        return str(height), "4,3"
+    if width * 4 == height * 3:
+        return str(height), "3,4"
+    raise ValueError(f"Unsupported Cosmos3 resolution/aspect ratio: {resolution}")
+
+
+def _output_dir_diagnostics(output_dir: Path, max_entries: int = 20) -> str:
+    if not output_dir.exists():
+        return f"output_dir does not exist: {output_dir}"
+    files = sorted(path for path in output_dir.rglob("*") if path.is_file())
+    if not files:
+        return f"output_dir contains no files: {output_dir}"
+    entries = [f"{path.relative_to(output_dir)} ({path.stat().st_size} bytes)" for path in files[:max_entries]]
+    suffix = "" if len(files) <= max_entries else f"; ... {len(files) - max_entries} more files"
+    return f"output_dir files: {entries}{suffix}"
 
 
 def _safe_name(value: str) -> str:

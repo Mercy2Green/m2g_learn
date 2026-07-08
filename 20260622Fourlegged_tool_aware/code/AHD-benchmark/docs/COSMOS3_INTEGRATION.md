@@ -42,24 +42,36 @@ python scripts/08_run_cosmos3_batch.py \
   --dry_run
 ```
 
-Run the actual batch manually only after inspecting the plan:
+First actual one-image test, only after inspecting the dry-run plan:
 
 ```bash
 python scripts/08_run_cosmos3_batch.py \
   --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl \
-  --limit 1
+  --limit 1 \
+  --run_name ahd_cosmos3_one_image_test \
+  --yes
 ```
 
-Summarize a completed run:
+Summarize the one-image test:
 
 ```bash
 python scripts/09_summarize_cosmos3_outputs.py \
-  --results data/runs/<run_name>_results.jsonl
+  --results data/runs/ahd_cosmos3_one_image_test_results.jsonl
+```
+
+Only after the one-image output is successful and manually inspected should you run the full `smoke12` manifest:
+
+```bash
+python scripts/08_run_cosmos3_batch.py \
+  --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl \
+  --run_name ahd_cosmos3_smoke12 \
+  --yes
 ```
 
 ## Notes
 
 - Early outputs should be manually inspected before any larger generation run.
+- Actual generation refuses batches larger than 12 images unless `--yes` is provided.
 - The runner wraps the local Cosmos3 workflow documented in `../cosmos3/README.md`.
 - It uses local Cosmos3-Nano by default:
   - env: `/data0/yurunze/conda_envs/codex_cosmos`

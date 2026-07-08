@@ -27,6 +27,7 @@ def main() -> None:
     parser.add_argument("--print_commands_only", action="store_true")
     parser.add_argument("--run_name", default=None)
     parser.add_argument("--timeout_seconds", type=int, default=None)
+    parser.add_argument("--yes", action="store_true", help="Confirm actual generation, required for batches larger than 12.")
     args = parser.parse_args()
 
     config = load_yaml(ROOT / "configs" / "cosmos3_batch_generation.yaml")
@@ -35,6 +36,12 @@ def main() -> None:
     selected = rows[args.start_index:]
     if args.limit is not None:
         selected = selected[: args.limit]
+    is_dry_mode = bool(args.dry_run or args.print_commands_only)
+    if not is_dry_mode:
+        image_count = len(selected)
+        print(f"WARNING: Actual Cosmos3 generation will run {image_count} images. Use --limit 1 first for smoke testing.")
+        if image_count > 12 and not args.yes:
+            raise SystemExit("Refusing to run more than 12 images without --yes.")
 
     run_name = args.run_name or f"{manifest_path.stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     run_log_dir = ROOT / str(config["run_log_dir"])
@@ -43,6 +50,9 @@ def main() -> None:
     runtime = Cosmos3Runtime(
         ahd_root=ROOT,
         cosmos_root=(ROOT / str(config["cosmos_root"])).resolve(),
+        resolution=str(config["default_resolution"]),
+        num_steps=int(config["default_num_steps"]),
+        guidance_scale=float(config["default_guidance_scale"]),
     )
 
     plan_rows = []
@@ -55,16 +65,18 @@ def main() -> None:
             "output_image_path": row["output_image_path"],
             "seed": row["seed"],
             "generator": str(config["generator_name"]),
-            "dry_run": bool(args.dry_run or args.print_commands_only),
+            "dry_run": is_dry_mode,
             "cosmos_input_path": str(input_path),
             "cosmos_output_dir": str(output_dir),
+            "expected_primary_generated_path": str(output_dir / "t2i" / "vision.jpg"),
+            "final_output_image_path": row["output_image_path"],
             "command": command_preview(command, runtime),
         }
         plan_rows.append(plan)
         print(f"[{index}] {row['spec_id']} -> {row['output_image_path']}")
         print(plan["command"])
 
-    if args.dry_run or args.print_commands_only:
+    if is_dry_mode:
         plan_path = run_log_dir / f"{run_name}_plan.jsonl"
         save_manifest(plan_path, plan_rows)
         print(f"Wrote dry-run plan: {plan_path}")

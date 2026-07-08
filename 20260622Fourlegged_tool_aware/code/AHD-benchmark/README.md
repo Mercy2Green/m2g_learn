@@ -101,18 +101,21 @@ python scripts/08_run_cosmos3_batch.py \
   --dry_run
 ```
 
-After manually inspecting the plan, run the actual batch yourself:
+First actual test must be one image:
 
 ```bash
 python scripts/08_run_cosmos3_batch.py \
-  --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl
+  --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl \
+  --limit 1 \
+  --run_name ahd_cosmos3_one_image_test \
+  --yes
 ```
 
-Summarize a completed run:
+Summarize the one-image test:
 
 ```bash
 python scripts/09_summarize_cosmos3_outputs.py \
-  --results data/runs/<run_name>_results.jsonl
+  --results data/runs/ahd_cosmos3_one_image_test_results.jsonl
 ```
 
-See `docs/COSMOS3_INTEGRATION.md` for details. Early runs should be manually inspected before any larger generation.
+Only after one-image success and manual inspection should you run the full `smoke12` manifest. See `docs/COSMOS3_INTEGRATION.md` for details.
