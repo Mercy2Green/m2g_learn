@@ -47,6 +47,17 @@ FORBIDDEN_LEAKAGE_TERMS = [
     "task-relevant",
 ]
 
+COSMOS_PROMPT_FORBIDDEN_ACTION_TERMS = [
+    "transport",
+    "bedroom",
+    "retrieve",
+    "grasp one object",
+    "single arm",
+    "task is",
+    "must grasp",
+    "efficiently transport",
+]
+
 
 def validate_enrichment_row(row: dict[str, Any]) -> list[str]:
     errors: list[str] = []
@@ -81,6 +92,11 @@ def check_forbidden_label_leakage(row: dict[str, Any]) -> list[str]:
             for term in FORBIDDEN_LEAKAGE_TERMS:
                 if _contains_term(joined, term):
                     errors.append(f"{key} contains forbidden label term: {term}")
+    cosmos_prompt = row.get("cosmos_prompt_variant")
+    if isinstance(cosmos_prompt, str):
+        for term in COSMOS_PROMPT_FORBIDDEN_ACTION_TERMS:
+            if _contains_term(cosmos_prompt, term):
+                errors.append(f"cosmos_prompt_variant contains forbidden action/task term: {term}")
     return errors
 
 

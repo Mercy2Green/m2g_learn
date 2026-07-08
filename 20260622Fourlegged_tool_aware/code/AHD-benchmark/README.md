@@ -93,6 +93,8 @@ python scripts/07_build_cosmos3_manifest.py \
   --enrichment_file specs/enrichment/<your_file>.jsonl
 ```
 
+Manifest building prints enrichment coverage and writes a sidecar report next to the manifest. Review deterministic fallback rows before generation.
+
 Dry-run the Cosmos3 commands without generating images:
 
 ```bash
@@ -128,3 +130,12 @@ observed output: 960x960
 ```
 
 Only after one-image success and manual inspection should you run the full `smoke12` manifest. See `docs/COSMOS3_INTEGRATION.md` for details.
+
+Smoke generation success is only an engineering check. Before scaling past `smoke12`, run a manual semantic audit:
+
+```bash
+python scripts/10_create_visual_audit_sheet.py \
+  --results data/runs/ahd_cosmos3_smoke12_results.jsonl
+```
+
+For `aggregate_transport` O0 images, exact object count mismatch is a warning, not an automatic failure. The formal visual filter should require a reasonable group of target drinks with count `>= 3`, target visibility, and container/helper absence.

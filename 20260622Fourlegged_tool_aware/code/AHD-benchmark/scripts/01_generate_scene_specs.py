@@ -45,9 +45,24 @@ def _choice(rng: random.Random, values: list[str]) -> str:
     return rng.choice(values)
 
 
-def _common_kwargs(rng: random.Random) -> dict[str, Any]:
+def sample_environment_for_context(
+    rng: random.Random,
+    task_or_spec_type: str,
+    furniture: str | None = None,
+) -> str:
+    if task_or_spec_type == "extend_reach_o0_target_under_furniture" or task_or_spec_type == "extend_reach":
+        if furniture == "bed":
+            return _choice(rng, ["bedroom corner", "student dorm room"])
+        if furniture in {"sofa", "low couch"}:
+            return _choice(rng, ["small apartment living room", "robotics lab lounge"])
+        if furniture == "cabinet":
+            return _choice(rng, ["office kitchenette", "realistic home kitchen", "robotics lab lounge"])
+    return _choice(rng, ENVIRONMENTS)
+
+
+def _common_kwargs(rng: random.Random, *, environment: str | None = None) -> dict[str, Any]:
     return {
-        "environment": _choice(rng, ENVIRONMENTS),
+        "environment": environment or sample_environment_for_context(rng, "general"),
         "surface": _choice(rng, SURFACES),
         "distractors": _sample_distractors(rng),
         "camera": _choice(rng, CAMERAS),
@@ -72,12 +87,14 @@ def generate_specs(plan: dict[str, Any], seed: int) -> list[dict[str, Any]]:
 
     for index in range(counts["extend_reach_o0_target_under_furniture"]):
         target = _choice(rng, ["remote control", "small ball", "dropped key ring", "small toy"])
+        furniture = _choice(rng, FURNITURE)
+        environment = sample_environment_for_context(rng, "extend_reach_o0_target_under_furniture", furniture)
         specs.append(make_extend_reach_o0_spec(
             spec_id=f"reach_o0_{index + 1:06d}",
             seed=120000 + index,
-            furniture=_choice(rng, FURNITURE),
+            furniture=furniture,
             target_object=target,
-            **_common_kwargs(rng),
+            **_common_kwargs(rng, environment=environment),
         ))
 
     for index in range(counts["direct_is_enough_o0_single_target"]):
@@ -101,7 +118,7 @@ def generate_specs(plan: dict[str, Any], seed: int) -> list[dict[str, Any]]:
         specs.append(make_long_tool_o1_spec(
             spec_id=f"longtool_o1_{index + 1:06d}",
             seed=220000 + index,
-            helper_name=_choice(rng, ["broom", "long stick", "rod", "hanger"]),
+            helper_name=_choice(rng, ["broom", "long stick", "rod"]),
             **_common_kwargs(rng),
         ))
 

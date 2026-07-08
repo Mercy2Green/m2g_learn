@@ -34,6 +34,8 @@ python scripts/07_build_cosmos3_manifest.py \
   --enrichment_file specs/enrichment/llm_enriched_qwen3-vl_30b-a3b-instruct-q4_K_M_stratified10_preview.jsonl
 ```
 
+Review the printed enrichment coverage and the sidecar manifest report before generation. Deterministic fallback rows are allowed for traceability, but they should not be silent.
+
 Dry-run the manifest and inspect commands:
 
 ```bash
@@ -68,9 +70,18 @@ python scripts/08_run_cosmos3_batch.py \
   --yes
 ```
 
+Create a manual audit sheet before deciding whether to scale beyond `smoke12`:
+
+```bash
+python scripts/10_create_visual_audit_sheet.py \
+  --results data/runs/ahd_cosmos3_smoke12_results.jsonl
+```
+
 ## Notes
 
 - Early outputs should be manually inspected before any larger generation run.
+- A 12/12 `smoke12` engineering success only proves the local generation pipeline works; it does not prove semantic AHD usability.
+- For `aggregate_transport` O0, exact count mismatch is a warning rather than an automatic failure. The formal visual filter should use count `>= 3`, target visibility, and container/helper absence.
 - Actual generation refuses batches larger than 12 images unless `--yes` is provided.
 - The runner wraps the local Cosmos3 workflow documented in `../cosmos3/README.md`.
 - AHD `target_output_size` is the desired final image size.

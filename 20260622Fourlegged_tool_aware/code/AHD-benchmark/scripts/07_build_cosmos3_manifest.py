@@ -94,8 +94,17 @@ def main() -> None:
 
     output_path = _resolve_path(args.output_manifest) if args.output_manifest else ROOT / str(config["manifest_dir"]) / default_name
     save_manifest(output_path, rows)
+    report_path = output_path.with_name(f"{output_path.stem}_report.md")
+    _write_manifest_report(report_path, rows)
+    enriched_count = sum(1 for row in rows if row["prompt_source"] == "llm_enriched")
+    fallback_ids = [str(row["spec_id"]) for row in rows if row["prompt_source"] == "deterministic"]
     print(f"Wrote {len(rows)} rows to {output_path}")
     print(f"Plan: {args.plan}; enrichment: {args.use_enrichment}")
+    print(f"Total rows: {len(rows)}")
+    print(f"LLM enriched rows: {enriched_count}")
+    print(f"Deterministic fallback rows: {len(fallback_ids)}")
+    print(f"Fallback spec_ids: {', '.join(fallback_ids) if fallback_ids else 'none'}")
+    print(f"Wrote report: {report_path}")
 
 
 def _resolve_path(path_text: str | None) -> Path:
@@ -103,6 +112,27 @@ def _resolve_path(path_text: str | None) -> Path:
         raise ValueError("Path is required")
     path = Path(path_text)
     return path if path.is_absolute() else ROOT / path
+
+
+def _write_manifest_report(path: Path, rows: list[dict[str, Any]]) -> None:
+    enriched = [row for row in rows if row["prompt_source"] == "llm_enriched"]
+    fallback = [row for row in rows if row["prompt_source"] == "deterministic"]
+    lines = [
+        f"# Cosmos3 Manifest Report: {path.stem.removesuffix('_report')}",
+        "",
+        f"- total rows: {len(rows)}",
+        f"- llm_enriched rows: {len(enriched)}",
+        f"- deterministic fallback rows: {len(fallback)}",
+        "",
+        "## Fallback Spec IDs",
+        "",
+    ]
+    if fallback:
+        lines.extend(f"- {row['spec_id']}" for row in fallback)
+    else:
+        lines.append("- none")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

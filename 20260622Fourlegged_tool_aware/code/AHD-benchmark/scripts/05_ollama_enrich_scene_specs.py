@@ -79,7 +79,6 @@ def _public_spec(spec: dict[str, Any]) -> dict[str, Any]:
         "task_family": spec.get("task_family"),
         "spec_type": spec.get("spec_type"),
         "language": spec.get("language", {}),
-        "robot_context": spec.get("robot_context", {}),
         "visual_scene": spec.get("visual_scene", {}),
     }
 
@@ -101,7 +100,10 @@ def _build_messages(spec: dict[str, Any], model_id: str) -> list[dict[str, str]]
             "Do not include answer labels.",
             "Do not mention helper correctness.",
             "Preserve all required visible objects and forbidden visible objects.",
-            "Use only visual wording and natural task wording.",
+            "instruction_en_variant and instruction_zh_variant may describe the task naturally.",
+            "cosmos_prompt_variant must be visual-only image-generation wording.",
+            "cosmos_prompt_variant may mention camera viewpoint such as robot first-person view or low robot view.",
+            "cosmos_prompt_variant must not mention transport to bedroom, retrieve, use single arm, robot must grasp one object at a time, task is to, efficient transport, or any action plan.",
             "Return only valid JSON with exactly the requested fields.",
             f"Never output these fields: {', '.join(FORBIDDEN_OUTPUT_FIELDS)}.",
         ],

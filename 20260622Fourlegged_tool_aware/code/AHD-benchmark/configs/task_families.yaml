@@ -37,6 +37,7 @@ task_families:
       - broom
       - long stick
       - rod
+    optional_hard_case_later:
       - hanger
     wrong_helpers:
       - basket

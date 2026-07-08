@@ -3,6 +3,7 @@ stage: placeholder
 notes:
   - Stage 0 does not run VLM filtering.
   - Later stages should verify required visible objects, forbidden visible objects, realism, and target/helper salience.
+  - For aggregate_transport O0, exact target count mismatch is a warning; the visual rule should require count >= 3.
 
 leakage_terms_for_visual_prompts:
   - useful

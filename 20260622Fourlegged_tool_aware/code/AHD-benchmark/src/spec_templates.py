@@ -59,7 +59,7 @@ def make_aggregate_o0_spec(
     camera: str,
     lighting: str,
 ) -> dict[str, Any]:
-    target_description = f"{target_count} visible {target_object}"
+    target_description = f"multiple visible {target_object}, roughly 3 to 6"
     spec = _base_spec(
         spec_id=spec_id,
         view_stage="O0",
