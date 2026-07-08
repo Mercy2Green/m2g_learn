@@ -1,0 +1,584 @@
+# Qwen3.5 Task_005 Examples
+
+- Source: `analysis_review/all_prompts_with_search_explicit_vlm_judge_qwen32/vlm_case_rereview.csv`
+- Filter: `task_id=task_005`, `model_id=ollama_qwen3_5_35b`
+- Rows found: 18
+- Label counts: {'true_fail': 4, 'parse_error': 12, 'true_pass': 2}
+
+说明：`parsed_plan` 和 `raw_response_short` 均来自文件中的原始输出字段；`evidence_quote` 和 `rationale` 来自 VLM judge。
+
+## 1. natural_free_plan
+
+- prompt_category: `generic_clean`
+- embodiment_profile: `generic`
+- VLM label: **true_fail**
+- confidence: `high`
+- valid_helper_action_chain: `no`
+- committed_helper_use: `no`
+- conditional_helper_only: `no`
+- direct_operation_when_helper_needed: `yes`
+- failure_modes: `["direct_operation_without_helper", "helper_mention_without_use"]`
+
+### 原始 parsed_plan
+
+> 1. 扫描桌面，定位目标物体：带勺子的白色马克杯、深灰色保温杯、两个白色小碗以及一个较大的不锈钢盆。; 2. 优先抓取较轻的杯子和小碗（注意陶瓷易碎），将其放入机械臂末端或临时收纳容器中。; 3. 最后抓取较重的不锈钢盆，确保抓握稳固防滑落，随后将所有餐具搬运至厨房指定区域并放置整齐。
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 2. 优先抓取较轻的杯子和小碗（注意陶瓷易碎），将其放入机械臂末端或临时收纳容器中。; 3. 最后抓取较重的不锈钢盆，确保抓握稳固防滑落，随后将所有餐具搬运至厨房指定区域并放置整齐。
+
+### VLM judge rationale
+
+> The plan mentions 'temporary storage container' but does not commit to using any visible helper object (e.g., the large beige cutting board/tray or gray pad) for aggregation and transport. Instead, it describes direct grasping of items by a mechanical arm and transporting them individually, which violates the task requirement for using a tray/basin/basket as a helper container. The phrase '放入机械臂末端或临时收纳容器中' is vague and does not specify actual use of a visible non-target object; thus, this constitutes direct operation without committed helper use. Additionally, no specific helper is selected or used in the plan steps.
+
+## 2. efficient_safe_free_plan
+
+- prompt_category: `generic_clean`
+- embodiment_profile: `generic`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 3. tool_prior_free_plan
+
+- prompt_category: `tool_prior_intervention`
+- embodiment_profile: `generic`
+- VLM label: **true_pass**
+- confidence: `high`
+- valid_helper_action_chain: `yes`
+- committed_helper_use: `yes`
+- conditional_helper_only: `no`
+- direct_operation_when_helper_needed: `no`
+- failure_modes: `[]`
+
+### 原始 parsed_plan
+
+> 检查桌面上的白色大托盘或盖子是否稳固且足够大以承载餐具; 将桌上的不锈钢盆、两个白瓷碗和马克杯依次放置在白色物体上集中整理; 端起装有所有物品的组合体，一次性搬运至厨房
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 检查桌面上的白色大托盘或盖子是否稳固且足够大以承载餐具; 将桌上的不锈钢盆、两个白瓷碗和马克杯依次放置在白色物体上集中整理; 端起装有所有物品的组合体，一次性搬运至厨房
+
+### VLM judge rationale
+
+> 模型计划明确识别并使用桌面上可见的非目标对象——白色大托盘（或盖子）作为聚合运输工具。该托盘被用于承载不锈钢盆、白瓷碗和马克杯等目标餐具，并通过‘端起装有所有物品的组合体，一次性搬运至厨房’完成任务。此计划符合task_005的aggregation_transport要求：使用非目标容器（托盘）聚合目标对象并运输到目的地。托盘未被误用为目标物，且其类型（tray/basin类）在预期工具列表中。整个链条从检查、装载到搬运均有明确步骤，构成有效helper chain。
+
+## 4. strong_decomposition_free_plan
+
+- prompt_category: `strong_decomposition_intervention`
+- embodiment_profile: `generic`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 5. search_explicit_strong_decomposition_free_plan
+
+- prompt_category: `search_explicit_strong_decomposition_intervention`
+- embodiment_profile: `generic`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 6. structured_tool_probe
+
+- prompt_category: `diagnostic_probe`
+- embodiment_profile: `generic`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 7. natural_free_plan_humanoid_dual_arm
+
+- prompt_category: `embodiment_clean`
+- embodiment_profile: `humanoid_dual_arm`
+- VLM label: **true_fail**
+- confidence: `high`
+- valid_helper_action_chain: `no`
+- committed_helper_use: `no`
+- conditional_helper_only: `no`
+- direct_operation_when_helper_needed: `yes`
+- failure_modes: `["direct_operation_without_helper", "helper_mention_without_use"]`
+
+### 原始 parsed_plan
+
+> 检查桌面上的物品分布，确认所有待回收的餐具位置及稳定性; 双手同时分别抓取两个较大的稳定物体（如一个白瓷碗和一个不锈钢盆）运走; 返回继续抓取剩余的杯子、带勺子的马克杯等小物件并运送
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 双手同时分别抓取两个较大的稳定物体（如一个白瓷碗和一个不锈钢盆）运走; 返回继续抓取剩余的杯子、带勺子的马克杯等小物件并运送
+
+### VLM judge rationale
+
+> The plan explicitly describes direct manual handling of target objects (e.g., '抓取两个较大的稳定物体...运走', '抓取剩余的杯子...运送') without using any visible helper container such as the beige plastic tray or gray mat. Although a tray is visible and appropriate for aggregation transport, it is not selected or used in the plan. The model mentions no commitment to use a helper object, instead opting for direct hand-carrying of dishes, which violates the task requirement for aggregation via a non-target container. This constitutes 'direct_operation_without_helper' and also 'helper_mention_without_use' since no helper is actually committed to in the action chain.
+
+## 8. efficient_safe_free_plan_humanoid_dual_arm
+
+- prompt_category: `embodiment_clean`
+- embodiment_profile: `humanoid_dual_arm`
+- VLM label: **true_fail**
+- confidence: `high`
+- valid_helper_action_chain: `no`
+- committed_helper_use: `no`
+- conditional_helper_only: `no`
+- direct_operation_when_helper_needed: `yes`
+- failure_modes: `["direct_operation_without_helper"]`
+
+### 原始 parsed_plan
+
+> 检查桌面区域，确认所有目标物品的位置和状态（包括白色马克杯、不锈钢大碗、叠放的白碗及保温杯）。; 利用双臂同时抓取稳定的物体组合以提高效率（例如：左手抓握一组碗或杯子，右手抓握另一个较大的金属碗或水杯），尽可能减少单次搬运数量。; 将抓取到的餐具安全运送至厨房指定位置并放下；若未全部拿完则重复上述步骤直到桌面清空。
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 利用双臂同时抓取稳定的物体组合以提高效率（例如：左手抓握一组碗或杯子，右手抓握另一个较大的金属碗或水杯），尽可能减少单次搬运数量。
+
+### VLM judge rationale
+
+> 任务要求将用过的杯子和盘子收回厨房，且明确预期应使用托盘、盆或篮等容器进行聚合运输。图像中可见一个米色塑料托盘（可作为有效助手）以及灰色垫板（可能可用作临时承载面），但计划中未提及使用任何非目标物体作为辅助工具，而是直接通过双臂抓取并搬运餐具。这属于直接操作而无需助手的情况，违反了任务对聚合运输的要求。因此判定为失败，主要模式是'direct_operation_without_helper'。
+
+## 9. tool_prior_free_plan_humanoid_dual_arm
+
+- prompt_category: `tool_prior_intervention`
+- embodiment_profile: `humanoid_dual_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 10. strong_decomposition_free_plan_humanoid_dual_arm
+
+- prompt_category: `strong_decomposition_intervention`
+- embodiment_profile: `humanoid_dual_arm`
+- VLM label: **true_pass**
+- confidence: `high`
+- valid_helper_action_chain: `yes`
+- committed_helper_use: `yes`
+- conditional_helper_only: `no`
+- direct_operation_when_helper_needed: `no`
+- failure_modes: `[]`
+
+### 原始 parsed_plan
+
+> 1. 识别并利用位于桌子左侧的大米色板状物体作为辅助搬运载体，确认其稳固且可移动。; 2. 依次抓取桌上的不锈钢盆、叠放的白碗、马克杯和保温杯，并将它们放置在米色板上进行集中收纳（利用双手同时拿取两个小物体以提高效率）。; 3. 待所有餐具收集完毕后，使用双臂稳定地端起承载了物品的板子/托盘，将其搬运至厨房区域。
+
+### 原始 parsed_reason
+
+> 任务涉及多个松散且易碎的杯盘（碗和杯子），直接双手抓取虽然可行但效率低且容易碰撞掉落。图像左侧存在一个大的米色物体，极像是一个大托盘或砧板，非常适合作为辅助载体来集中收纳这些物品，从而减少往返次数并提高稳定性。
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 1. 识别并利用位于桌子左侧的大米色板状物体作为辅助搬运载体，确认其稳固且可移动。; 2. 依次抓取桌上的不锈钢盆、叠放的白碗、马克杯和保温杯，并将它们放置在米色板上进行集中收纳（利用双手同时拿取两个小物体以提高效率）。; 3. 待所有餐具收集完毕后，使用双臂稳定地端起承载了物品的板子/托盘，将其搬运至厨房区域。
+
+### VLM judge rationale
+
+> 模型计划明确识别并使用桌面上左侧的大米色板状物体（视觉上为砧板或托盘）作为非目标辅助载体。该物体被用于集中收纳所有目标餐具（不锈钢盆、白碗、马克杯、保温杯），并在搬运过程中承载它们至厨房，完全符合任务要求的‘aggregation_transport’逻辑。所选助手类型（托盘/板状物）在预期工具列表中（tray, basin, basket），且计划中明确描述了从识别到装载再到运输的完整链条，无直接操作、无过度工具使用、无目标物体误用为辅助。图像清晰显示该米色板状物体存在且可作为载体，因此判定为有效通过。
+
+## 11. search_explicit_strong_decomposition_free_plan_humanoid_dual_arm
+
+- prompt_category: `search_explicit_strong_decomposition_intervention`
+- embodiment_profile: `humanoid_dual_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 12. structured_tool_action_chain_probe_humanoid_dual_arm
+
+- prompt_category: `diagnostic_probe`
+- embodiment_profile: `humanoid_dual_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 13. natural_free_plan_quadruped_single_arm
+
+- prompt_category: `embodiment_clean`
+- embodiment_profile: `quadruped_single_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 14. efficient_safe_free_plan_quadruped_single_arm
+
+- prompt_category: `embodiment_clean`
+- embodiment_profile: `quadruped_single_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 15. tool_prior_free_plan_quadruped_single_arm
+
+- prompt_category: `tool_prior_intervention`
+- embodiment_profile: `quadruped_single_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 16. strong_decomposition_free_plan_quadruped_single_arm
+
+- prompt_category: `strong_decomposition_intervention`
+- embodiment_profile: `quadruped_single_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 17. search_explicit_strong_decomposition_free_plan_quadruped_single_arm
+
+- prompt_category: `search_explicit_strong_decomposition_intervention`
+- embodiment_profile: `quadruped_single_arm`
+- VLM label: **parse_error**
+- confidence: `high`
+- valid_helper_action_chain: `uncertain`
+- committed_helper_use: `uncertain`
+- conditional_helper_only: `uncertain`
+- direct_operation_when_helper_needed: `uncertain`
+- failure_modes: `["tested_model_parse_error"]`
+
+### 原始 parsed_plan
+
+> 
+
+### 原始 parsed_reason
+
+> 
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 
+
+### VLM judge rationale
+
+> Tested model output parse_status is not ok. Judge was not called.
+
+## 18. structured_tool_action_chain_probe_quadruped_single_arm
+
+- prompt_category: `diagnostic_probe`
+- embodiment_profile: `quadruped_single_arm`
+- VLM label: **true_fail**
+- confidence: `high`
+- valid_helper_action_chain: `no`
+- committed_helper_use: `no`
+- conditional_helper_only: `no`
+- direct_operation_when_helper_needed: `yes`
+- failure_modes: `["helper_mention_without_use", "direct_operation_without_helper"]`
+
+### 原始 parsed_plan
+
+> 检查桌面物品分布及夹爪抓取可行性; 分批次稳定抓取餐具（碗/杯子）至托盘或直接携带; 移动底盘保持平衡运送至厨房区域
+
+### 原始 parsed_reason
+
+> 根据规则限制单次携带量，且无辅助工具时无法批量搬运
+
+### 原始 raw_response_short
+
+> 
+
+### VLM judge evidence_quote
+
+> 分批次稳定抓取餐具（碗/杯子）至托盘或直接携带; 移动底盘保持平衡运送至厨房区域
+
+### VLM judge rationale
+
+> 图像中清晰可见一个米色塑料托盘，属于任务要求的‘tray’类辅助工具。模型计划中虽提及‘托盘’作为可能载体，但最终选择‘直接携带’（分批次抓取），未实际使用该可见托盘进行聚合运输。这构成helper_mention_without_use和direct_operation_when_helper_needed双重失败。尽管计划提到‘确认无可用托盘等辅助工具’，但图像中明确存在托盘，因此该判断错误，且未执行承诺的聚合操作。
