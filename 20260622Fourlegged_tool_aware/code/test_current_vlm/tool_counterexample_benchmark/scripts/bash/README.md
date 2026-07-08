@@ -142,6 +142,31 @@ Run image-aware local VLM judge analysis and summary generation for saved benchm
 scripts/bash/run_vlm_judge_analysis.sh
 ```
 
+Run Qwen-only repeated sampling with the same analysis and VLM judge pipeline:
+
+```bash
+scripts/bash/run_qwen_repeated_10_with_analysis.sh
+```
+
+This defaults to 10 repeats across `ollama_qwen3_vl_4b`, `ollama_qwen3_vl_8b`,
+`ollama_qwen3_vl_30b_a3b_instruct_q4_K_M`,
+`ollama_qwen3_vl_32b_instruct_q4_K_M`, and `ollama_qwen3_5_35b`. It loops by
+repeat first, then model, so the same model is not run 10 times consecutively.
+Override `REPEATS`, `RUN_TAG`, `OUTPUT_ROOT`, `ANALYSIS_DIR`, or
+`VLM_JUDGE_DIR` as needed.
+
+Run only `qwen3.5:35b` for 10 repeats across all tasks and all prompt settings:
+
+```bash
+scripts/bash/run_qwen35_repeated_10_with_analysis.sh
+```
+
+This uses `ollama_qwen3_5_35b` only. To reduce cross-run residency effects, it
+overrides the temporary model config to `keep_alive=0`, runs each repeat in a
+separate `run_batch` process, and defaults to `ollama stop qwen3.5:35b` before
+and after each repeat. Set `OLLAMA_STOP_BETWEEN_REPEATS=0` to skip the explicit stop, or
+override `OLLAMA_KEEP_ALIVE` if you want a different Ollama residency policy.
+
 By default this analyzes the current round04 strong-tools merged rows:
 
 ```text

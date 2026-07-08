@@ -1,0 +1,12 @@
+name,total_rows,true_pass,true_fail,uncertain,parse_error,skipped,reviewed_valid_rows,true_fail_rate,valid_helper_action_chain_rate,needs_visual_check_count,top_failure_modes
+task_001,180,49,75,0,56,0,124,0.6048,0.3952,50,helper_mention_without_use:67; parse_failure:56; visual_uncertainty:50; aggregation_failure:8; container_affordance_miss:8
+task_002,180,27,113,0,40,0,140,0.8071,0.1929,55,helper_search_failure:109; helper_mention_without_use:68; visual_uncertainty:55; aggregation_failure:45; container_affordance_miss:45
+task_003,180,85,18,0,77,0,103,0.1748,0.8252,14,parse_failure:77; helper_mention_without_use:16; visual_uncertainty:14; aggregation_failure:2; container_affordance_miss:2
+task_004,180,54,54,0,72,0,108,0.5,0.5,30,parse_failure:72; helper_mention_without_use:48; visual_uncertainty:30; tool_necessity_miss:11; aggregation_failure:6
+task_005,180,63,19,0,98,0,82,0.2317,0.7683,13,parse_failure:98; helper_mention_without_use:17; visual_uncertainty:13; aggregation_failure:2; container_affordance_miss:2
+task_006,180,118,1,0,61,0,119,0.0084,0.9916,1,parse_failure:61; helper_mention_without_use:1; visual_uncertainty:1
+task_007,180,98,16,0,66,0,114,0.1404,0.8596,9,parse_failure:66; helper_mention_without_use:16; visual_uncertainty:9; field_plan_inconsistency:2; target_as_helper:2
+task_008,180,79,77,0,24,0,156,0.4936,0.5064,46,helper_mention_without_use:63; visual_uncertainty:46; parse_failure:24; aggregation_failure:14; container_affordance_miss:14
+task_009,180,90,15,0,75,0,105,0.1429,0.9333,7,parse_failure:75; wrong_helper_type:8; helper_mention_without_use:7; visual_uncertainty:7
+task_010,180,42,12,0,126,0,54,0.2222,0.7778,1,parse_failure:126; helper_mention_without_use:12; field_plan_inconsistency:6; target_as_helper:4; visual_uncertainty:1
+task_011,180,161,15,0,4,0,176,0.0852,0.0,0,helper_mention_without_use:15; parse_failure:4

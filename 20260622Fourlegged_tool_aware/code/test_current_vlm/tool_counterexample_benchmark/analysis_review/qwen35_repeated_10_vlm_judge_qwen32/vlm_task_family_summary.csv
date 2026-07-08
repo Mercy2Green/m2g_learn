@@ -1,0 +1,12 @@
+name,total_rows,true_pass,true_fail,uncertain,tested_model_parse_error,judge_parse_error,image_used,image_missing,needs_visual_check,judged_non_parse_rows,fail_rate,helper_chain_rate,top_failure_modes
+task_001,180,67,57,0,56,0,124,0,0,124,0.4597,0.5403,direct_operation_without_helper:57; tested_model_parse_error:56; helper_mention_without_use:21; aggregation_failure:4; conditional_helper_only:1
+task_002,180,2,138,0,40,0,140,0,0,140,0.9857,0.0143,direct_operation_without_helper:137; helper_search_failure:128; tested_model_parse_error:40; helper_mention_without_use:12; conditional_helper_only:4
+task_003,180,89,14,0,77,0,103,0,0,103,0.1359,0.8641,tested_model_parse_error:77; direct_operation_without_helper:14; helper_mention_without_use:8; conditional_helper_only:1
+task_004,180,45,63,0,72,0,108,0,0,108,0.5833,0.4167,tested_model_parse_error:72; direct_operation_without_helper:57; helper_mention_without_use:11; container_affordance_miss:5; aggregation_failure:4; conditional_helper_only:3
+task_005,180,44,38,0,98,0,82,0,0,82,0.4634,0.5366,tested_model_parse_error:98; direct_operation_without_helper:38; helper_mention_without_use:14; aggregation_failure:1
+task_006,180,112,7,0,61,0,119,0,0,119,0.0588,0.9412,tested_model_parse_error:61; direct_operation_without_helper:7; helper_mention_without_use:2
+task_007,180,109,5,0,66,0,114,0,0,114,0.0439,0.9649,tested_model_parse_error:66; direct_operation_without_helper:4; helper_mention_without_use:3
+task_008,180,64,92,0,24,0,156,0,0,156,0.5897,0.4103,direct_operation_without_helper:92; tested_model_parse_error:24; conditional_helper_only:5; helper_mention_without_use:1
+task_009,180,87,18,0,75,0,105,0,0,105,0.1714,0.8286,tested_model_parse_error:75; direct_operation_without_helper:18; helper_mention_without_use:2; conditional_helper_only:1
+task_010,180,32,22,0,126,0,54,0,0,54,0.4074,0.6111,tested_model_parse_error:126; direct_operation_without_helper:17; helper_mention_without_use:16; aggregation_failure:4; container_affordance_miss:1
+task_011,180,176,0,0,4,0,176,0,0,176,0.0,0.017,tested_model_parse_error:4
