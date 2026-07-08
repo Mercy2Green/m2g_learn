@@ -79,3 +79,40 @@ specs/enrichment/llm_enriched_<model_id>_preview_report.md
 
 Stage 0 scripts do not make model API calls.
 The optional Stage 0.5 enrichment script calls only a local Ollama endpoint when explicitly run.
+
+## Stage 1: Cosmos3 Smoke Generation Bridge
+
+Stage 1 builds small deterministic manifests that connect AHD prompt artifacts to the local Cosmos3-Nano setup under `../cosmos3`. It is intentionally lightweight: build manifests, dry-run commands, then manually launch small batches after inspection.
+
+Build a `smoke12` manifest with the recommended enrichment source:
+
+```bash
+python scripts/07_build_cosmos3_manifest.py \
+  --plan smoke12 \
+  --use_enrichment true \
+  --enrichment_file specs/enrichment/<your_file>.jsonl
+```
+
+Dry-run the Cosmos3 commands without generating images:
+
+```bash
+python scripts/08_run_cosmos3_batch.py \
+  --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl \
+  --dry_run
+```
+
+After manually inspecting the plan, run the actual batch yourself:
+
+```bash
+python scripts/08_run_cosmos3_batch.py \
+  --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl
+```
+
+Summarize a completed run:
+
+```bash
+python scripts/09_summarize_cosmos3_outputs.py \
+  --results data/runs/<run_name>_results.jsonl
+```
+
+See `docs/COSMOS3_INTEGRATION.md` for details. Early runs should be manually inspected before any larger generation.

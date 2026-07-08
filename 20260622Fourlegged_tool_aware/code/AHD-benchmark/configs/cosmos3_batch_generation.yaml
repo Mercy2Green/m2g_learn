@@ -1,0 +1,23 @@
+generator_name: Cosmos3-Nano
+cosmos_root: ../cosmos3
+cosmos_readme_path: ../cosmos3/README.md
+smoke_script_path: ../cosmos3/setup/run_t2i_smoke.sh
+default_output_root: data/images
+manifest_dir: prompts/manifests
+run_log_dir: data/runs
+default_resolution: 960x960
+default_num_steps: 35
+default_guidance_scale: 6.0
+default_model_prompt_source: llm_enriched
+default_enrichment_model: qwen3-vl:30b-a3b-instruct-q4_K_M
+
+smoke12_plan:
+  aggregate_transport_o0_target_visible_helper_absent: 2
+  extend_reach_o0_target_under_furniture: 2
+  direct_is_enough_o0_single_target: 2
+  container_helper_o1_target_absent: 2
+  long_tool_helper_o1_target_absent: 2
+  wrong_helper_o1_target_absent: 2
+
+mini36_plan:
+  each_spec_type: 6
