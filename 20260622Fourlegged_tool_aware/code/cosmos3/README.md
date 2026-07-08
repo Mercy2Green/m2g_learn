@@ -26,7 +26,7 @@ cosmos3/
 - CUDA runtime：12.8
 - 已验证可 import：`torch`、`transformers`、`diffusers`、`cosmos_framework`、`huggingface_hub`
 
-根分区当前空间较紧，建议把 conda 环境、uv cache、HF cache、权重都放到 `/data0/yurunze/cosmos3/` 或其它大盘。
+根分区当前空间较紧，建议把 conda 环境、uv cache、HF cache、权重都放到 `/data0/yurunze/` 或其它大盘。
 
 ## 环境配置
 
@@ -103,6 +103,9 @@ cd /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3
 
 COSMOS_CONDA_PREFIX=/data0/yurunze/conda_envs/codex_cosmos \
 CHECKPOINT_PATH=/data0/yurunze/models/Cosmos3-Nano \
+HF_HOME=/data0/yurunze/models/hf-cache \
+CUDA_VISIBLE_DEVICES=1 \
+OUTPUT_DIR=/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3/framework/outputs/codex_t2i_nano_smoke_modelscope \
 bash setup/run_t2i_smoke.sh
 ```
 
@@ -112,7 +115,80 @@ bash setup/run_t2i_smoke.sh
 code/cosmos3/framework/outputs/codex_t2i_nano_smoke
 ```
 
-脚本使用 `framework/inputs/omni/t2i.json`，并加了 `--no-guardrails`，避免 smoke test 额外拉 guardrail 模型。
+脚本使用 `framework/inputs/omni/t2i.json`，默认额外传入 `--no-use-torch-compile`，并加了 `--no-guardrails`，避免 smoke test 额外拉 guardrail 模型。需要覆盖额外参数时设置 `INFERENCE_EXTRA_ARGS`。
+
+首次运行官方 framework 推理时，除了 `/data0/yurunze/models/Cosmos3-Nano` 主权重，还会自动下载以下辅助组件到 `HF_HOME`：
+
+- `Qwen/Qwen3-VL-8B-Instruct`
+- `Wan-AI/Wan2.2-TI2V-5B` 的 `Wan2.2_VAE.pth`
+- `nvidia/Cosmos3-Nano` 的 `sound_tokenizer/*`
+
+本机已缓存到：
+
+```text
+/data0/yurunze/models/hf-cache
+```
+
+后续 smoke test 会复用这些缓存，不需要重复下载。
+
+## 已通过的 smoke tests
+
+测试日期：2026-07-08。
+
+1. 环境导入与 CUDA 检查
+
+```bash
+/data0/yurunze/conda_envs/codex_cosmos/bin/python - <<'PY'
+import cosmos_framework, torch
+print(cosmos_framework.__file__)
+print(torch.__version__)
+print(torch.cuda.is_available(), torch.cuda.device_count())
+PY
+```
+
+结果：
+
+```text
+cosmos_framework: code/cosmos3/framework/cosmos_framework/__init__.py
+torch: 2.10.0+cu128
+cuda: True 4
+```
+
+2. CLI 可用性检查
+
+```bash
+cd /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3/framework
+/data0/yurunze/conda_envs/codex_cosmos/bin/python -m cosmos_framework.scripts.inference --help
+```
+
+结果：成功输出 inference 参数说明。
+
+3. Cosmos3-Nano text-to-image 本地权重推理
+
+```bash
+cd /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3
+
+COSMOS_CONDA_PREFIX=/data0/yurunze/conda_envs/codex_cosmos \
+CHECKPOINT_PATH=/data0/yurunze/models/Cosmos3-Nano \
+HF_HOME=/data0/yurunze/models/hf-cache \
+CUDA_VISIBLE_DEVICES=1 \
+OUTPUT_DIR=/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/cosmos3/framework/outputs/codex_t2i_nano_smoke_modelscope \
+bash setup/run_t2i_smoke.sh
+```
+
+结果：
+
+```text
+status: success
+output: code/cosmos3/framework/outputs/codex_t2i_nano_smoke_modelscope/t2i/vision.jpg
+image: JPEG, 960x960
+```
+
+同一命令通过 `setup/run_t2i_smoke.sh` 包装脚本复测通过，输出：
+
+```text
+code/cosmos3/framework/outputs/codex_t2i_nano_smoke_script/t2i/vision.jpg
+```
 
 ## 状态检查
 

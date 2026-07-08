@@ -10,6 +10,7 @@ CHECKPOINT_PATH="${CHECKPOINT_PATH:-${CODE_DIR}/weights/Cosmos3-Nano}"
 OUTPUT_DIR="${OUTPUT_DIR:-${FRAMEWORK_DIR}/outputs/codex_t2i_nano_smoke}"
 HF_HOME="${HF_HOME:-${CODE_DIR}/.cache/huggingface}"
 CUDA_VISIBLE_DEVICES="${CUDA_VISIBLE_DEVICES:-0}"
+INFERENCE_EXTRA_ARGS="${INFERENCE_EXTRA_ARGS:---no-use-torch-compile}"
 
 if [[ ! -d "${FRAMEWORK_DIR}" ]]; then
   echo "ERROR: Cosmos framework repo not found: ${FRAMEWORK_DIR}" >&2
@@ -38,6 +39,7 @@ cd "${FRAMEWORK_DIR}"
 
 python -m cosmos_framework.scripts.inference \
   --parallelism-preset=latency \
+  ${INFERENCE_EXTRA_ARGS} \
   -i "inputs/omni/t2i.json" \
   -o "${OUTPUT_DIR}" \
   --checkpoint-path "${CHECKPOINT_PATH}" \
