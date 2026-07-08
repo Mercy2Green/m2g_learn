@@ -1,0 +1,25 @@
+version: ahd_v01
+description: Image-level schema for AHD scene spec candidates. One JSONL row describes one O0 or O1 image.
+required_common_fields:
+  - spec_id
+  - version
+  - view_stage
+  - task_family
+  - spec_type
+  - seed
+  - language
+  - robot_context
+  - visual_scene
+  - quality
+o0_required_gold_fields:
+  - stage
+  - mode
+  - needed_helper_function
+  - target_memory
+  - direct_fallback_allowed
+o1_required_fields:
+  - helper_candidates_gold
+  - pairing_role
+allowed_view_stages:
+  - O0
+  - O1

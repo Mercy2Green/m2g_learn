@@ -1,0 +1,16 @@
+version: ahd_v01
+stage: placeholder
+notes:
+  - Stage 0 does not run VLM filtering.
+  - Later stages should verify required visible objects, forbidden visible objects, realism, and target/helper salience.
+
+leakage_terms_for_visual_prompts:
+  - useful
+  - task-relevant
+  - helper function
+  - needed helper
+  - correct helper
+  - wrong helper
+  - use this
+  - should use
+  - answer

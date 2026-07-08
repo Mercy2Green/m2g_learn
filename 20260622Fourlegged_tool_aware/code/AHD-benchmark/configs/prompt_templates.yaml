@@ -1,0 +1,25 @@
+version: ahd_v01
+templates:
+  aggregate_transport_o0_target_visible_helper_absent:
+    positive_prompt_template: "Realistic robot first-person image in {environment}. Show {target_description} on {surface}. Include {distractors}. Camera: {camera}. Lighting: {lighting}. Natural household scale, no staged puzzle layout."
+    negative_prompt_template: "Do not show {must_exclude}. Avoid {avoid}."
+
+  extend_reach_o0_target_under_furniture:
+    positive_prompt_template: "Realistic robot first-person image in {environment}. Show {target_description} partly under {furniture}, visible but not directly graspable. Include {surface} and {distractors}. Camera: {camera}. Lighting: {lighting}."
+    negative_prompt_template: "Do not show {must_exclude}. Avoid {avoid}."
+
+  direct_is_enough_o0_single_target:
+    positive_prompt_template: "Realistic robot first-person image in {environment}. Show {target_description} on {surface}, clearly reachable and unobstructed. Include {distractors}. Camera: {camera}. Lighting: {lighting}."
+    negative_prompt_template: "Do not show {must_exclude}. Avoid {avoid}."
+
+  container_helper_o1_target_absent:
+    positive_prompt_template: "Realistic robot first-person image in {environment}. Show {helper_description} as the main visible object near {surface}. Include {distractors}. Camera: {camera}. Lighting: {lighting}."
+    negative_prompt_template: "Do not show {must_exclude}. Avoid {avoid}."
+
+  long_tool_helper_o1_target_absent:
+    positive_prompt_template: "Realistic robot first-person image in {environment}. Show {helper_description} as the main visible object near {surface}. Include {distractors}. Camera: {camera}. Lighting: {lighting}."
+    negative_prompt_template: "Do not show {must_exclude}. Avoid {avoid}."
+
+  wrong_helper_o1_target_absent:
+    positive_prompt_template: "Realistic robot first-person image in {environment}. Show {helper_description} as the main visible object near {surface}. Include {distractors}. Camera: {camera}. Lighting: {lighting}."
+    negative_prompt_template: "Do not show {must_exclude}. Avoid {avoid}."

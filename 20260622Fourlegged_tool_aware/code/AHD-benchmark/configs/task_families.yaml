@@ -1,0 +1,64 @@
+version: ahd_v01
+benchmark_name: AHD-Benchmark
+benchmark_full_name: Active Helper Discovery Benchmark
+
+task_families:
+  - id: aggregate_transport
+    description: Multiple loose objects should be transported efficiently with a container-like helper.
+    o0_spec_types:
+      - aggregate_transport_o0_target_visible_helper_absent
+    target_objects:
+      - water bottles
+      - drink cans
+    needed_helper_function: container_for_multiple_objects
+    valid_helpers:
+      - basket
+      - tray
+      - open box
+      - tote bag
+    wrong_helpers:
+      - broom
+      - stick
+      - cloth
+      - book
+    stage1_gold:
+      mode: search_helper
+      direct_fallback_allowed: false
+
+  - id: extend_reach
+    description: A target object is under furniture or too far to grasp directly, requiring a long rigid helper.
+    o0_spec_types:
+      - extend_reach_o0_target_under_furniture
+    target_objects:
+      - remote control under sofa
+      - small ball under sofa
+    needed_helper_function: long_rigid_reach_extension
+    valid_helpers:
+      - broom
+      - long stick
+      - rod
+      - hanger
+    wrong_helpers:
+      - basket
+      - tray
+      - box
+      - cloth
+    stage1_gold:
+      mode: search_helper
+      direct_fallback_allowed: false
+
+  - id: direct_is_enough
+    description: A single reachable object should be handled directly without searching for helpers.
+    o0_spec_types:
+      - direct_is_enough_o0_single_target
+    target_objects:
+      - single water bottle
+    needed_helper_function: none
+    valid_helpers: []
+    wrong_helpers:
+      - basket
+      - tray
+      - box
+    stage1_gold:
+      mode: direct
+      direct_fallback_allowed: true

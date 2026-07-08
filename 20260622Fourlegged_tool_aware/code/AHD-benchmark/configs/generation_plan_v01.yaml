@@ -1,0 +1,34 @@
+version: ahd_v01
+random_seed: 42
+
+raw_scene_specs:
+  total: 2000
+  o0:
+    total: 1000
+    spec_types:
+      aggregate_transport_o0_target_visible_helper_absent: 400
+      extend_reach_o0_target_under_furniture: 400
+      direct_is_enough_o0_single_target: 200
+  o1:
+    total: 1000
+    spec_types:
+      container_helper_o1_target_absent: 350
+      long_tool_helper_o1_target_absent: 350
+      wrong_helper_o1_target_absent: 300
+
+first_image_generation_subset:
+  total: 700
+  o0:
+    aggregate_transport_o0_target_visible_helper_absent: 150
+    extend_reach_o0_target_under_furniture: 150
+    direct_is_enough_o0_single_target: 80
+  o1:
+    container_helper_o1_target_absent: 120
+    long_tool_helper_o1_target_absent: 120
+    wrong_helper_o1_target_absent: 80
+
+pairing_targets:
+  final_sample_target: 300
+  same_o1_different_o0_groups: 40
+  wrong_helper_ratio_min: 0.30
+  no_tool_control_ratio_min: 0.20
