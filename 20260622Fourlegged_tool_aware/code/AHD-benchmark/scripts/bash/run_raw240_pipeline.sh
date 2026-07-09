@@ -65,7 +65,6 @@ echo "[5/9] actual raw240 generation"
 python scripts/08_run_cosmos3_batch.py \
   --manifest "${MANIFEST}" \
   --run_name "${RUN_NAME}" \
-  --timeout_seconds 900 \
   --yes
 
 echo "[6/9] summarize generation"
