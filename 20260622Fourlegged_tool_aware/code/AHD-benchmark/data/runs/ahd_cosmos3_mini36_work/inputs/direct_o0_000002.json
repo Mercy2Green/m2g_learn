@@ -1,0 +1,22 @@
+{
+  "name": "direct_o0_000002",
+  "model_mode": "text2image",
+  "prompt": "robot first-person view of a realistic home kitchen with warm indoor lighting, showing a kitchen counter that includes a single reachable sports drink bottle; visible objects include an empty mug, toy block, phone charger, and small towel as distractors; no people, hands, text, watermark, cartoon, or advertisement are present; the scene excludes baskets, trays, boxes, bags, brooms, sticks, rods, and hangers",
+  "negative_prompt": "Do not show basket, tray, box, bag, broom, stick, rod, hanger. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 140001,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "direct_o0_000002",
+    "spec_type": "direct_is_enough_o0_single_target",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

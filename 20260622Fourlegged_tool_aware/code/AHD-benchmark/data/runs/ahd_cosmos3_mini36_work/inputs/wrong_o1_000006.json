@@ -1,0 +1,22 @@
+{
+  "name": "wrong_o1_000006",
+  "model_mode": "text2image",
+  "prompt": "low quadruped camera view of a small apartment living room with even overhead lighting, showing a carpeted floor with an empty cup, a small towel, a toy block, and a cloth; no people, hands, text, watermark, cartoon, or advertisement are visible.",
+  "negative_prompt": "Do not show water bottle, drink can, remote control, small ball, basket, tray, open box, box, tote bag, bag, carrying container, broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 240005,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "wrong_o1_000006",
+    "spec_type": "wrong_helper_o1_target_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

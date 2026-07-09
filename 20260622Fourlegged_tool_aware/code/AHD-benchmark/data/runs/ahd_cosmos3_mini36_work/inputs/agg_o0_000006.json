@@ -1,0 +1,22 @@
+{
+  "name": "agg_o0_000006",
+  "model_mode": "text2image",
+  "prompt": "low quadruped camera view of a student dorm room with carpeted floor, showing multiple visible sports drink bottles (roughly 3 to 6), no people, hands, text, watermark, cartoon, or advertisement; distractors include book and cup; lighting is even overhead; avoid basket, tray, box, bag, shopping bag, carrying container",
+  "negative_prompt": "Do not show basket, tray, box, bag, shopping bag, carrying container. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 100005,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "agg_o0_000006",
+    "spec_type": "aggregate_transport_o0_target_visible_helper_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

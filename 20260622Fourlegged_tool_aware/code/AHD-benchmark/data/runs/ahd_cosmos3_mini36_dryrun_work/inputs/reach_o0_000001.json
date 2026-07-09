@@ -1,0 +1,22 @@
+{
+  "name": "reach_o0_000001",
+  "model_mode": "text2image",
+  "prompt": "robot first-person view of a robotics lab lounge with mixed window and ceiling light, showing a carpeted floor. A low couch is centered in the frame, partially obscuring a small toy that is partly visible underneath it. The scene includes two distractors: a toy block and a cloth, both placed on the floor near the couch. No people, hands, text, watermarks, cartoons, or advertisements are present.",
+  "negative_prompt": "Do not show broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 120000,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "reach_o0_000001",
+    "spec_type": "extend_reach_o0_target_under_furniture",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

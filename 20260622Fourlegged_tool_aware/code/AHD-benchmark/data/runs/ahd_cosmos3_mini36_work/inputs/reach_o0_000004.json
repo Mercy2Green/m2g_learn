@@ -1,0 +1,22 @@
+{
+  "name": "reach_o0_000004",
+  "model_mode": "text2image",
+  "prompt": "A slightly wide robot view of a small apartment living room with soft daylight lighting. A sofa is positioned on a tile floor, and under it, a dropped key ring is partially visible. The scene includes distractors: an empty mug, a notebook, a cloth, and a small towel. No people, hands, text, watermarks, cartoons, or advertisements are present. The target object, the dropped key ring, is clearly identifiable as the only item under the sofa.",
+  "negative_prompt": "Do not show broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 120003,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "reach_o0_000004",
+    "spec_type": "extend_reach_o0_target_under_furniture",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

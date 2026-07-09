@@ -1,0 +1,22 @@
+{
+  "name": "container_o1_000006",
+  "model_mode": "text2image",
+  "prompt": "low quadruped camera view of a realistic home kitchen with warm indoor lighting, tile floor, and visible objects including a tote bag, book, empty mug, and cloth; avoid people, hands, text, watermark, cartoon, advertisement",
+  "negative_prompt": "Do not show water bottle, drink can, remote control, small ball, broom, stick, rod, hanger. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 200005,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "container_o1_000006",
+    "spec_type": "container_helper_o1_target_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

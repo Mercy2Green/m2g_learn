@@ -1,0 +1,22 @@
+{
+  "name": "direct_o0_000003",
+  "model_mode": "text2image",
+  "prompt": "A slightly wide robot view of a small apartment living room with warm indoor lighting. A single reachable sports drink bottle is placed on a low table, surrounded by distractors including a notebook, small towel, and phone charger. The scene includes no people, hands, text, watermarks, cartoons, or advertisements. No basket, tray, box, bag, broom, stick, rod, or hanger are present.",
+  "negative_prompt": "Do not show basket, tray, box, bag, broom, stick, rod, hanger. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 140002,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "direct_o0_000003",
+    "spec_type": "direct_is_enough_o0_single_target",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

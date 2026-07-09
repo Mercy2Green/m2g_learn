@@ -1,0 +1,22 @@
+{
+  "name": "reach_o0_000002",
+  "model_mode": "text2image",
+  "prompt": "low quadruped camera view of a bedroom corner with warm indoor lighting, showing a bed on a tile floor; the remote control is partly visible under the bed, partially obscured by the bed frame, with cloth and book as distractors in the scene",
+  "negative_prompt": "Do not show broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 120001,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "reach_o0_000002",
+    "spec_type": "extend_reach_o0_target_under_furniture",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

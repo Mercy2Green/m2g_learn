@@ -1,0 +1,22 @@
+{
+  "name": "direct_o0_000001",
+  "model_mode": "text2image",
+  "prompt": "near floor mobile robot view of an office kitchenette with warm indoor lighting, showing a carpeted floor with a single reachable water bottle, no people, hands, text, watermark, cartoon, or advertisement visible, excluding basket, tray, box, bag, broom, stick, rod, and hanger",
+  "negative_prompt": "Do not show basket, tray, box, bag, broom, stick, rod, hanger. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 140000,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "direct_o0_000001",
+    "spec_type": "direct_is_enough_o0_single_target",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "reach_o0_000005",
+  "model_mode": "text2image",
+  "prompt": "robot first-person view of a robotics lab lounge with even overhead lighting, showing a low table and a sofa; a small toy is partially visible under the sofa",
+  "negative_prompt": "Do not show broom, stick, long stick, rod, hanger, long tool. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 120004,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "reach_o0_000005",
+    "spec_type": "extend_reach_o0_target_under_furniture",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}

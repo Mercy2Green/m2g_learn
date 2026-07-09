@@ -1,0 +1,22 @@
+{
+  "name": "agg_o0_000005",
+  "model_mode": "text2image",
+  "prompt": "robot first-person view of a student dorm room with even overhead lighting, showing a kitchen counter that contains multiple visible drink cans (roughly 3 to 6), along with distractors including a toy block, notebook, cup, and phone charger; no people, hands, text, watermark, cartoon, or advertisement are present; the scene includes only the specified objects on the surface without any carrying containers such as basket, tray, box, bag, or shopping bag.",
+  "negative_prompt": "Do not show basket, tray, box, bag, shopping bag, carrying container. Avoid people, hands, text, watermark, cartoon, advertisement.",
+  "seed": 100004,
+  "resolution": "720",
+  "aspect_ratio": "1,1",
+  "num_frames": 1,
+  "num_steps": 35,
+  "guidance": 6.0,
+  "extra": {
+    "spec_id": "agg_o0_000005",
+    "spec_type": "aggregate_transport_o0_target_visible_helper_absent",
+    "prompt_source": "llm_enriched",
+    "target_output_size": "960x960",
+    "expected_width": 960,
+    "expected_height": 960,
+    "cosmos_resolution": "720",
+    "cosmos_aspect_ratio": "1,1"
+  }
+}
