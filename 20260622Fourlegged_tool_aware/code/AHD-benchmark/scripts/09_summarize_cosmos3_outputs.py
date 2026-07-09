@@ -57,7 +57,7 @@ def main() -> None:
         for row in failures:
             lines.append(f"- {row.get('spec_id')}: {row.get('error')}")
 
-    output_path = _resolve_path(args.output) if args.output else results_path.with_name(results_path.name.replace("_results.jsonl", "_summary.md"))
+    output_path = _resolve_path(args.output) if args.output else _default_output_path(results_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Wrote summary: {output_path}")
@@ -66,6 +66,14 @@ def main() -> None:
 def _resolve_path(path_text: str) -> Path:
     path = Path(path_text)
     return path if path.is_absolute() else ROOT / path
+
+
+def _default_output_path(results_path: Path) -> Path:
+    if results_path.name == "results.jsonl":
+        return results_path.with_name("summary.md")
+    if results_path.name.endswith("_results.jsonl"):
+        return results_path.with_name(results_path.name.replace("_results.jsonl", "_summary.md"))
+    return results_path.with_suffix(".summary.md")
 
 
 if __name__ == "__main__":

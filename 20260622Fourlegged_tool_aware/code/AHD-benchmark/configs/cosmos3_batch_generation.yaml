@@ -6,6 +6,12 @@ default_output_root: data/images
 manifest_dir: prompts/manifests
 run_log_dir: data/runs
 cuda_visible_devices: auto
+storage:
+  raw_runs_root: data/generated_runs
+  curated_pools_root: data/curated_pools
+  paired_datasets_root: data/paired_datasets
+  write_legacy_data_images: false
+  curated_copy_mode: copy
 target_output_size: 960x960
 cosmos_input:
   resolution: "720"

@@ -84,6 +84,14 @@ The optional Stage 0.5 enrichment script calls only a local Ollama endpoint when
 
 Stage 1 builds small deterministic manifests that connect AHD prompt artifacts to the local Cosmos3-Nano setup under `../cosmos3`. It is intentionally lightweight: build manifests, dry-run commands, then manually launch small batches after inspection.
 
+Generated images now follow a three-layer lifecycle:
+
+- `data/generated_runs/<run_name>/`: raw run outputs, including all generated successes before semantic filtering.
+- `data/curated_pools/<pool_name>/`: materialized image pool containing only `semantic_keep` images from a judge run.
+- `data/paired_datasets/`: reserved for later paired exports; pair construction is not part of image judging.
+
+`data/images/` is no longer the canonical raw generation directory. Historical results may still point there, but new generation runs should write under `data/generated_runs/`, and curated candidates should be read from `data/curated_pools/`.
+
 Build a `smoke12` manifest with the recommended enrichment source:
 
 ```bash
@@ -117,7 +125,7 @@ Summarize the one-image test:
 
 ```bash
 python scripts/09_summarize_cosmos3_outputs.py \
-  --results data/runs/ahd_cosmos3_one_image_test_results.jsonl
+  --results data/generated_runs/ahd_cosmos3_one_image_test/results.jsonl
 ```
 
 AHD `target_output_size` is the desired final image size. Cosmos3 `cosmos_input.resolution` is an internal preset/bucket, not the final pixel width or height. The current verified mapping is:
@@ -135,7 +143,7 @@ Smoke generation success is only an engineering check. Before scaling past `smok
 
 ```bash
 python scripts/10_create_visual_audit_sheet.py \
-  --results data/runs/ahd_cosmos3_smoke12_results.jsonl
+  --results data/generated_runs/ahd_cosmos3_smoke12/results.jsonl
 ```
 
 For `aggregate_transport` O0 images, exact object count mismatch is a warning, not an automatic failure. The formal visual filter should require a reasonable group of target drinks with count `>= 3`, target visibility, and container/helper absence.
@@ -144,11 +152,11 @@ For `aggregate_transport` O0 images, exact object count mismatch is a warning, n
 
 Use the local Ollama VLM judge as a triage tool before scaling generated images. It checks image quality and AHD O0/O1 semantics; it is not ground truth and must not modify labels.
 
-The judge separates `generation_failed` and `missing_or_invalid_image` from true `semantic_reject` rows. Missing files and CUDA/OOM generation failures are engineering issues, not prompt-quality failures. Prompt fixes and semantic keep rate should be read from valid images that were actually judged.
+The judge separates `generation_failed` and `missing_or_invalid_image` from true `semantic_reject` rows. Missing files and CUDA/OOM generation failures are engineering issues, not prompt-quality failures. Prompt fixes and semantic keep rate should be read from valid images that were actually judged. The image judge is image-level triage only: it does not delete an O0/O1 pair together, does not infer pair validity, and does not remove raw images. Pair filtering happens later during paired dataset export, where one O1 image may be reused across multiple O0 memories.
 
 ```bash
 python scripts/11_vlm_judge_generated_images.py \
-  --results data/runs/ahd_cosmos3_smoke12_results.jsonl \
+  --results data/generated_runs/ahd_cosmos3_smoke12/results.jsonl \
   --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl \
   --output_dir data/judges/ahd_cosmos3_smoke12_qwen32 \
   --judge_model qwen3-vl:32b-instruct-q4_K_M \
@@ -157,6 +165,12 @@ python scripts/11_vlm_judge_generated_images.py \
 
 python scripts/12_summarize_vlm_image_judge.py \
   --input_dir data/judges/ahd_cosmos3_smoke12_qwen32
+
+python scripts/13_materialize_curated_pool.py \
+  --results data/generated_runs/ahd_cosmos3_smoke12/results.jsonl \
+  --judge_dir data/judges/ahd_cosmos3_smoke12_qwen32 \
+  --pool_name ahd_cosmos3_smoke12_qwen32 \
+  --overwrite
 ```
 
 Do not scale to `mini36` or larger until VLM judge plus human audit show that generated images satisfy AHD O0/O1 semantics.

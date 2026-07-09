@@ -17,6 +17,7 @@ from src.cosmos3_runner import (  # noqa: E402
     run_cosmos3_one,
 )
 from src.load_config import load_yaml  # noqa: E402
+from src.storage_layout import raw_run_dir, raw_run_image_path, relative_to_root  # noqa: E402
 
 
 def main() -> None:
@@ -45,9 +46,10 @@ def main() -> None:
             raise SystemExit("Refusing to run more than 12 images without --yes.")
 
     run_name = args.run_name or f"{manifest_path.stem}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-    run_log_dir = ROOT / str(config["run_log_dir"])
-    run_log_dir.mkdir(parents=True, exist_ok=True)
-    work_dir = run_log_dir / f"{run_name}_work"
+    run_dir = raw_run_dir(run_name, config, ROOT)
+    run_dir.mkdir(parents=True, exist_ok=True)
+    work_dir = run_dir / "work"
+    selected = materialize_run_output_paths(selected, run_name, config)
     cosmos_input = config["cosmos_input"]
     runtime = Cosmos3Runtime(
         ahd_root=ROOT,
@@ -90,7 +92,7 @@ def main() -> None:
         print(plan["command"])
 
     if is_dry_mode:
-        plan_path = run_log_dir / f"{run_name}_plan.jsonl"
+        plan_path = run_dir / "plan.jsonl"
         save_manifest(plan_path, plan_rows)
         print(f"Wrote dry-run plan: {plan_path}")
         return
@@ -103,14 +105,36 @@ def main() -> None:
         results.append(result)
         print(f"  {result['status']}: {result['output_image_path']}")
 
-    results_path = run_log_dir / f"{run_name}_results.jsonl"
+    results_path = run_dir / "results.jsonl"
     save_manifest(results_path, results)
+    save_manifest(run_dir / "manifest_snapshot.jsonl", selected)
     print(f"Wrote results: {results_path}")
 
 
 def _resolve_path(path_text: str) -> Path:
     path = Path(path_text)
     return path if path.is_absolute() else ROOT / path
+
+
+def materialize_run_output_paths(
+    rows: list[dict[str, object]],
+    run_name: str,
+    config: dict[str, object],
+) -> list[dict[str, object]]:
+    updated: list[dict[str, object]] = []
+    for row in rows:
+        item = dict(row)
+        target = raw_run_image_path(
+            run_name,
+            str(item["spec_id"]),
+            str(item.get("view_stage", "")),
+            config,
+            ROOT,
+        )
+        item["legacy_output_image_path"] = item.get("output_image_path")
+        item["output_image_path"] = relative_to_root(target, ROOT)
+        updated.append(item)
+    return updated
 
 
 if __name__ == "__main__":

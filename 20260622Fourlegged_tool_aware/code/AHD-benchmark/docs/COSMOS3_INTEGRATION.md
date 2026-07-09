@@ -23,6 +23,31 @@ The recommended enrichment source for early runs is:
 qwen3-vl:30b-a3b-instruct-q4_K_M
 ```
 
+## Storage Lifecycle
+
+Cosmos3 generation, image judging, and final paired export use separate directories:
+
+```text
+data/generated_runs/<run_name>/
+  images/o0/
+  images/o1/
+  results.jsonl
+  summary.md
+  manifest_snapshot.jsonl
+
+data/curated_pools/<pool_name>/
+  images/o0/
+  images/o1/
+  curated_index.jsonl
+  curated_summary.md
+
+data/paired_datasets/
+```
+
+`data/generated_runs/<run_name>/` is the raw experiment record and may contain images that later receive `semantic_reject`. `data/curated_pools/<pool_name>/` contains only images materialized from `semantic_keep` judge rows. `data/paired_datasets/` is reserved for later pair construction/export.
+
+`data/images/` is deprecated as the canonical generated-image location. Some historical manifests or result files may still reference it for compatibility, but new Cosmos3 batch runs should write raw images under `data/generated_runs/<run_name>/images/`.
+
 ## Workflow
 
 Build a smoke manifest:
@@ -58,7 +83,7 @@ Summarize the one-image test:
 
 ```bash
 python scripts/09_summarize_cosmos3_outputs.py \
-  --results data/runs/ahd_cosmos3_one_image_test_results.jsonl
+  --results data/generated_runs/ahd_cosmos3_one_image_test/results.jsonl
 ```
 
 Only after the one-image output is successful and manually inspected should you run the full `smoke12` manifest:
@@ -74,7 +99,7 @@ Create a manual audit sheet before deciding whether to scale beyond `smoke12`:
 
 ```bash
 python scripts/10_create_visual_audit_sheet.py \
-  --results data/runs/ahd_cosmos3_smoke12_results.jsonl
+  --results data/generated_runs/ahd_cosmos3_smoke12/results.jsonl
 ```
 
 ## Notes
@@ -83,6 +108,7 @@ python scripts/10_create_visual_audit_sheet.py \
 - A 12/12 `smoke12` engineering success only proves the local generation pipeline works; it does not prove semantic AHD usability.
 - For `aggregate_transport` O0, exact count mismatch is a warning rather than an automatic failure. The formal visual filter should use count `>= 3`, target visibility, and container/helper absence.
 - Actual generation refuses batches larger than 12 images unless `--yes` is provided.
+- New actual generation runs write raw images and results under `data/generated_runs/<run_name>/`; dry-run plans are written as `data/generated_runs/<run_name>/plan.jsonl`.
 - `configs/cosmos3_batch_generation.yaml` uses `cuda_visible_devices: auto` by default. The batch runner selects the least-used GPU from `nvidia-smi` before generation; set a specific GPU id to override this.
 - The runner wraps the local Cosmos3 workflow documented in `../cosmos3/README.md`.
 - AHD `target_output_size` is the desired final image size.
@@ -96,4 +122,4 @@ python scripts/10_create_visual_audit_sheet.py \
   - env: `/data0/yurunze/conda_envs/codex_cosmos`
   - checkpoint: `/data0/yurunze/models/Cosmos3-Nano`
   - HF auxiliary cache: `/data0/yurunze/models/hf-cache`
-- Generated manifests, run plans, result logs, and images are local artifacts and are gitignored.
+- Generated manifests, run plans, result logs, raw images, curated pools, and future paired datasets are local artifacts and are gitignored.
