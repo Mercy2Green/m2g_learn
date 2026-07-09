@@ -92,6 +92,8 @@ Generated images now follow a three-layer lifecycle:
 
 `data/images/` is no longer the canonical raw generation directory. Historical results may still point there, but new generation runs should write under `data/generated_runs/`, and curated candidates should be read from `data/curated_pools/`.
 
+Manifest rows keep `output_image_path` for backward compatibility with older prompt artifacts. For new runs this path is a placeholder marked by `output_image_path_is_placeholder: true`; `scripts/08_run_cosmos3_batch.py` overrides it at runtime and writes the actual raw image to `data/generated_runs/<run_name>/images/<o0_or_o1>/<spec_id>.jpg`.
+
 Build a `smoke12` manifest with the recommended enrichment source:
 
 ```bash

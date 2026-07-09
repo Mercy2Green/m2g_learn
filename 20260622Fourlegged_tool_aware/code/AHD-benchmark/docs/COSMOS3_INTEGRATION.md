@@ -48,6 +48,8 @@ data/paired_datasets/
 
 `data/images/` is deprecated as the canonical generated-image location. Some historical manifests or result files may still reference it for compatibility, but new Cosmos3 batch runs should write raw images under `data/generated_runs/<run_name>/images/`.
 
+Manifest rows may still contain `output_image_path` values under `data/images/` because older tools and artifacts expect that field. New manifests mark this as `output_image_path_is_placeholder: true` and include `runtime_output_layout`. During dry-run or generation, `scripts/08_run_cosmos3_batch.py` rewrites `output_image_path` to the actual by-run path, sets `output_image_path_is_placeholder: false`, and keeps the original value in `legacy_output_image_path`.
+
 ## Workflow
 
 Build a smoke manifest:

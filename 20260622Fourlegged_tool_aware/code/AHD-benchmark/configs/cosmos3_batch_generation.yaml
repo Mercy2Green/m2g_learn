@@ -33,3 +33,6 @@ smoke12_plan:
 
 mini36_plan:
   each_spec_type: 6
+
+raw240_plan:
+  each_spec_type: 40

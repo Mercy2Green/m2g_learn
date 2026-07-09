@@ -72,6 +72,9 @@ def main() -> None:
             "spec_id": row["spec_id"],
             "spec_type": row["spec_type"],
             "output_image_path": row["output_image_path"],
+            "output_image_path_is_placeholder": row.get("output_image_path_is_placeholder"),
+            "legacy_output_image_path": row.get("legacy_output_image_path"),
+            "runtime_output_layout": row.get("runtime_output_layout"),
             "seed": row["seed"],
             "generator": str(config["generator_name"]),
             "dry_run": is_dry_mode,
@@ -133,6 +136,7 @@ def materialize_run_output_paths(
         )
         item["legacy_output_image_path"] = item.get("output_image_path")
         item["output_image_path"] = relative_to_root(target, ROOT)
+        item["output_image_path_is_placeholder"] = False
         updated.append(item)
     return updated
 

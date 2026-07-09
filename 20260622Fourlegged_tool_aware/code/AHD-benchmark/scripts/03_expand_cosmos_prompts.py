@@ -26,6 +26,8 @@ def main() -> None:
             "prompt": prompt,
             "negative_prompt": negative_prompt,
             "output_image_path": f"data/images/{stage_dir}/{spec['spec_id']}.png",
+            "output_image_path_is_placeholder": True,
+            "runtime_output_layout": "data/generated_runs/<run_name>/images/<o0_or_o1>/<spec_id>.jpg",
             "source_spec": spec,
         })
     write_jsonl(ROOT / "prompts" / "cosmos3_prompts_raw.jsonl", entries)

@@ -16,6 +16,7 @@ from src.cosmos3_manifest import (  # noqa: E402
 )
 from src.jsonl_utils import read_jsonl  # noqa: E402
 from src.load_config import load_yaml  # noqa: E402
+from src.storage_layout import view_stage_dir  # noqa: E402
 
 
 def parse_bool(value: str) -> bool:
@@ -29,7 +30,7 @@ def parse_bool(value: str) -> bool:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Build a deterministic Cosmos3 generation manifest.")
-    parser.add_argument("--plan", choices=["smoke12", "mini36"], default="smoke12")
+    parser.add_argument("--plan", choices=["smoke12", "mini36", "raw240"], default="smoke12")
     parser.add_argument("--enrichment_file", default=None)
     parser.add_argument("--use_enrichment", type=parse_bool, default=True)
     parser.add_argument("--output_manifest", default=None)
@@ -48,9 +49,12 @@ def main() -> None:
     if args.plan == "smoke12":
         selected_specs = build_smoke12_selection(specs, config["smoke12_plan"])
         default_name = "cosmos3_smoke12_manifest.jsonl"
-    else:
+    elif args.plan == "mini36":
         selected_specs = build_mini36_selection(specs, int(config["mini36_plan"]["each_spec_type"]))
         default_name = "cosmos3_mini36_manifest.jsonl"
+    else:
+        selected_specs = build_mini36_selection(specs, int(config["raw240_plan"]["each_spec_type"]))
+        default_name = "cosmos3_raw240_manifest.jsonl"
 
     prompt_by_spec_id = {str(row["spec_id"]): row for row in prompts}
     enriched_by_spec_id: dict[str, dict[str, Any]] = {}
@@ -60,6 +64,20 @@ def main() -> None:
             raise SystemExit("--enrichment_file is required when --use_enrichment true")
         enrichment_path = _resolve_path(args.enrichment_file)
         enriched_by_spec_id = {str(row["spec_id"]): row for row in read_jsonl(enrichment_path)}
+        if args.plan == "raw240":
+            missing_enrichment = [
+                str(spec["spec_id"])
+                for spec in selected_specs
+                if str(spec["spec_id"]) not in enriched_by_spec_id
+            ]
+            if missing_enrichment:
+                raise SystemExit(
+                    "raw240 requires enrichment coverage for all selected rows. "
+                    "Run: python scripts/05_ollama_enrich_scene_specs.py "
+                    "--model qwen3-vl:30b-a3b-instruct-q4_K_M --stratified_per_type 40. "
+                    f"Missing {len(missing_enrichment)} spec_ids; first missing: "
+                    f"{', '.join(missing_enrichment[:10])}"
+                )
 
     rows: list[dict[str, Any]] = []
     for spec in selected_specs:
@@ -73,7 +91,7 @@ def main() -> None:
             use_enrichment=args.use_enrichment,
             default_enrichment_model=str(config["default_enrichment_model"]),
         )
-        stage_dir = "o0" if str(spec["view_stage"]).upper() == "O0" else "o1"
+        stage_dir = view_stage_dir(str(spec["view_stage"]))
         rows.append({
             "spec_id": spec_id,
             "view_stage": spec["view_stage"],
@@ -84,6 +102,8 @@ def main() -> None:
             "negative_prompt": prompt_fields["negative_prompt"],
             "seed": int(spec["seed"]),
             "output_image_path": f"{config['default_output_root']}/{stage_dir}/{spec_id}.jpg",
+            "output_image_path_is_placeholder": True,
+            "runtime_output_layout": "data/generated_runs/<run_name>/images/<o0_or_o1>/<spec_id>.jpg",
             "source_spec_path": str(specs_path.relative_to(ROOT)),
             "source_prompt_path": str(
                 enrichment_path.relative_to(ROOT)
@@ -117,12 +137,20 @@ def _resolve_path(path_text: str | None) -> Path:
 def _write_manifest_report(path: Path, rows: list[dict[str, Any]]) -> None:
     enriched = [row for row in rows if row["prompt_source"] == "llm_enriched"]
     fallback = [row for row in rows if row["prompt_source"] == "deterministic"]
+    by_type: dict[str, int] = {}
+    for row in rows:
+        spec_type = str(row["spec_type"])
+        by_type[spec_type] = by_type.get(spec_type, 0) + 1
     lines = [
         f"# Cosmos3 Manifest Report: {path.stem.removesuffix('_report')}",
         "",
         f"- total rows: {len(rows)}",
         f"- llm_enriched rows: {len(enriched)}",
         f"- deterministic fallback rows: {len(fallback)}",
+        "",
+        "## Counts By Spec Type",
+        "",
+        *[f"- {spec_type}: {count}" for spec_type, count in sorted(by_type.items())],
         "",
         "## Fallback Spec IDs",
         "",
