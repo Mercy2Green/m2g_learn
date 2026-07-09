@@ -1,0 +1,16 @@
+default_judge:
+  judge_id: qwen3_vl_32b_primary
+  provider: ollama
+  model: qwen3-vl:32b-instruct-q4_K_M
+  temperature: 0
+  max_retries: 2
+  use_image: true
+  ollama_url: ${OLLAMA_BASE_URL:-http://localhost:11434}
+
+secondary_judges:
+  - judge_id: qwen3_vl_30b_cross_check
+    provider: ollama
+    model: qwen3-vl:30b-a3b-instruct-q4_K_M
+    temperature: 0
+    max_retries: 2
+    use_image: true

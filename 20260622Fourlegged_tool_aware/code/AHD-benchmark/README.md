@@ -139,3 +139,22 @@ python scripts/10_create_visual_audit_sheet.py \
 ```
 
 For `aggregate_transport` O0 images, exact object count mismatch is a warning, not an automatic failure. The formal visual filter should require a reasonable group of target drinks with count `>= 3`, target visibility, and container/helper absence.
+
+## Stage 1.5: Local VLM Image Judge
+
+Use the local Ollama VLM judge as a triage tool before scaling generated images. It checks image quality and AHD O0/O1 semantics; it is not ground truth and must not modify labels.
+
+```bash
+python scripts/11_vlm_judge_generated_images.py \
+  --results data/runs/ahd_cosmos3_smoke12_results.jsonl \
+  --manifest prompts/manifests/cosmos3_smoke12_manifest.jsonl \
+  --output_dir data/judges/ahd_cosmos3_smoke12_qwen32 \
+  --judge_model qwen3-vl:32b-instruct-q4_K_M \
+  --overwrite \
+  --progress_every 1
+
+python scripts/12_summarize_vlm_image_judge.py \
+  --input_dir data/judges/ahd_cosmos3_smoke12_qwen32
+```
+
+Do not scale to `mini36` or larger until VLM judge plus human audit show that generated images satisfy AHD O0/O1 semantics.

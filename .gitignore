@@ -5,6 +5,9 @@
 20260622Fourlegged_tool_aware/code/cosmos3/weights/
 20260622Fourlegged_tool_aware/code/cosmos3/.cache/
 
+20260622Fourlegged_tool_aware/code/AHD-benchmark/data/judges/
+20260622Fourlegged_tool_aware/code/AHD-benchmark/data/audits/
+
 20260622Fourlegged_tool_aware/code/outputs
 *.lock
 
@@ -19,4 +22,3 @@
 20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/.env
 20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/image_metadata/*
 !20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/image_metadata/.gitkeep
-
