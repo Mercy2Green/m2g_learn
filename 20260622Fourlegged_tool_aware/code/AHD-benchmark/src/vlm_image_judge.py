@@ -33,8 +33,12 @@ CSV_FIELDS = [
     "spec_type",
     "view_stage",
     "image_path",
+    "image_judge_status",
     "keep",
     "confidence",
+    "field_consistency_warning",
+    "generation_status",
+    "generation_error_short",
     "target_visible_ok",
     "helper_absent_ok",
     "helper_visible_ok",
@@ -278,11 +282,15 @@ def normalize_judge_output(
     spec_type = str(result_row.get("spec_type") or manifest_row.get("spec_type") or "")
     base = {
         "keep": False,
+        "image_judge_status": "judge_parse_error" if parse_error else "semantic_reject",
         "confidence": "low",
         "spec_id": spec_id,
         "spec_type": spec_type,
         "view_stage": str(result_row.get("view_stage") or manifest_row.get("view_stage") or ""),
         "image_path": str(image_path or result_row.get("output_image_path", "")),
+        "generation_status": str(result_row.get("status", "")),
+        "generation_error_short": compact_generation_error(str(result_row.get("error", "") or ""), 300),
+        "field_consistency_warning": False,
         "target_visible_ok": "uncertain",
         "helper_absent_ok": "uncertain",
         "helper_visible_ok": "uncertain",
@@ -300,6 +308,7 @@ def normalize_judge_output(
         "judge_raw_response_short": compact_text(raw_response, 500),
     }
     if parsed is None:
+        base = apply_spec_type_consistency(base)
         return base
 
     base["keep"] = bool(parsed.get("keep", False))
@@ -311,10 +320,87 @@ def normalize_judge_output(
     fix = str(parsed.get("one_prompt_fix", "")).strip()
     if base["keep"]:
         fix = ""
+        base["main_failure_reason"] = ""
+        base["image_judge_status"] = "semantic_keep"
     elif not fix:
         fix = "Revise the prompt to make the required AHD visual condition more explicit."
+        base["image_judge_status"] = "semantic_reject"
+    else:
+        base["image_judge_status"] = "semantic_reject"
     base["one_prompt_fix"] = one_sentence(fix)
+    base = apply_spec_type_consistency(base)
     return base
+
+
+def non_vlm_status_row(
+    *,
+    result_row: dict[str, Any],
+    manifest_row: dict[str, Any],
+    judge_model: str,
+    image_path: str | Path,
+    image_judge_status: str,
+    main_failure_reason: str,
+    one_prompt_fix: str,
+) -> dict[str, Any]:
+    row = normalize_judge_output(
+        None,
+        result_row,
+        manifest_row,
+        "",
+        judge_model,
+        image_path=image_path,
+    )
+    row["image_judge_status"] = image_judge_status
+    row["keep"] = False
+    row["main_failure_reason"] = compact_text(main_failure_reason, 300)
+    row["one_prompt_fix"] = one_sentence(one_prompt_fix)
+    row["judge_parse_error"] = ""
+    return row
+
+
+def apply_spec_type_consistency(row: dict[str, Any]) -> dict[str, Any]:
+    spec_type = str(row.get("spec_type", ""))
+    warning = False
+    original = {
+        "target_absent_ok": row.get("target_absent_ok"),
+        "helper_visible_ok": row.get("helper_visible_ok"),
+        "helper_absent_ok": row.get("helper_absent_ok"),
+    }
+    if spec_type in {
+        "aggregate_transport_o0_target_visible_helper_absent",
+        "direct_is_enough_o0_single_target",
+        "extend_reach_o0_target_under_furniture",
+    }:
+        row["target_absent_ok"] = "not_applicable"
+        row["helper_visible_ok"] = "not_applicable"
+    if spec_type == "aggregate_transport_o0_target_visible_helper_absent":
+        if original["target_absent_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+        if original["helper_visible_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+    if spec_type == "direct_is_enough_o0_single_target":
+        if original["target_absent_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+        if original["helper_visible_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+    if spec_type == "extend_reach_o0_target_under_furniture":
+        if original["target_absent_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+        if original["helper_visible_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+    if spec_type in {"container_helper_o1_target_absent", "long_tool_helper_o1_target_absent"}:
+        row["helper_absent_ok"] = "not_applicable"
+        if original["helper_absent_ok"] not in {"not_applicable", None, "", "uncertain"}:
+            warning = True
+    if row.get("keep") is True:
+        row["main_failure_reason"] = ""
+        row["one_prompt_fix"] = ""
+        if row.get("image_judge_status") not in {"generation_failed", "missing_or_invalid_image", "judge_parse_error"}:
+            row["image_judge_status"] = "semantic_keep"
+    elif row.get("image_judge_status") not in {"generation_failed", "missing_or_invalid_image", "judge_parse_error"}:
+        row["image_judge_status"] = "semantic_reject"
+    row["field_consistency_warning"] = bool(row.get("field_consistency_warning")) or warning
+    return row
 
 
 def expected_core_condition(spec_type: str) -> str:
@@ -385,6 +471,15 @@ def compact_text(text: str, limit: int) -> str:
     if len(normalized) <= limit:
         return normalized
     return normalized[: max(0, limit - 3)] + "..."
+
+
+def compact_generation_error(text: str, limit: int) -> str:
+    lines = [line.strip() for line in str(text).splitlines() if line.strip()]
+    for line in lines:
+        lowered = line.lower()
+        if "outofmemoryerror" in lowered or "cuda out of memory" in lowered or "out of memory" in lowered:
+            return compact_text(line, limit)
+    return compact_text(text, limit)
 
 
 def one_sentence(text: str) -> str:

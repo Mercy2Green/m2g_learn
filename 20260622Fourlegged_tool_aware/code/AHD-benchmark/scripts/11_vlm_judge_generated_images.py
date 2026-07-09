@@ -15,6 +15,7 @@ from src.vlm_image_judge import (  # noqa: E402
     CSV_FIELDS,
     build_ahd_image_quality_prompt,
     image_to_base64,
+    non_vlm_status_row,
     normalize_judge_output,
     probe_image,
     resolve_image_path,
@@ -111,19 +112,29 @@ def judge_one_row(
     spec_id = str(result_row.get("spec_id", ""))
     manifest_row = manifest_by_spec_id.get(spec_id, {"spec_id": spec_id})
     image_path = resolve_image_path(result_row, ROOT)
+    generation_status = str(result_row.get("status", ""))
+    if generation_status != "success":
+        return non_vlm_status_row(
+            result_row=result_row,
+            manifest_row=manifest_row,
+            judge_model=judge_model,
+            image_path=image_path,
+            image_judge_status="generation_failed",
+            main_failure_reason=str(result_row.get("error", "") or "generation_failed"),
+            one_prompt_fix="Rerun this generation row after freeing GPU memory or moving Cosmos3 to an available GPU.",
+        )
+
     probe = probe_image(image_path)
     if not probe["exists"] or not probe["valid_image"]:
-        row = normalize_judge_output(
-            None,
-            result_row,
-            manifest_row,
-            "",
-            judge_model,
+        return non_vlm_status_row(
+            result_row=result_row,
+            manifest_row=manifest_row,
+            judge_model=judge_model,
             image_path=image_path,
+            image_judge_status="missing_or_invalid_image",
+            main_failure_reason=str(probe.get("error") or "invalid_image"),
+            one_prompt_fix="Regenerate or copy this image to the expected output path before judging.",
         )
-        row["main_failure_reason"] = str(probe.get("error") or "invalid_image")
-        row["one_prompt_fix"] = "Regenerate this image after confirming the expected output path exists."
-        return row
 
     prompt = build_ahd_image_quality_prompt(result_row, manifest_row)
     parsed, raw_response, parse_error = run_judge_with_retries(
@@ -155,7 +166,7 @@ def progress_message(index: int, total: int, started_at: float, row: dict[str, A
     avg = elapsed / index if index else 0.0
     remaining = max(0, total - index) * avg
     return (
-        f"[PROGRESS] {index}/{total} keep={row.get('keep')} "
+        f"[PROGRESS] {index}/{total} status={row.get('image_judge_status')} keep={row.get('keep')} "
         f"spec_id={row.get('spec_id')} spec_type={row.get('spec_type')} "
         f"reason={row.get('main_failure_reason')} elapsed={_format_seconds(elapsed)} "
         f"eta={_format_seconds(remaining)}"

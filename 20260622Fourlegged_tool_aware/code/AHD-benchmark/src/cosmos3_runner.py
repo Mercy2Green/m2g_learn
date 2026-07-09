@@ -39,6 +39,47 @@ def ensure_output_parent(path: str | Path) -> None:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
 
 
+def select_cuda_visible_device_auto() -> str:
+    """Return the least-used GPU index from nvidia-smi, or '0' if probing fails."""
+    command = [
+        "nvidia-smi",
+        "--query-gpu=index,memory.used,memory.total",
+        "--format=csv,noheader,nounits",
+    ]
+    try:
+        completed = subprocess.run(command, text=True, capture_output=True, check=False, timeout=10)
+    except Exception:
+        return "0"
+    if completed.returncode != 0:
+        return "0"
+    candidates: list[tuple[float, int, int]] = []
+    for line in completed.stdout.splitlines():
+        parts = [part.strip() for part in line.split(",")]
+        if len(parts) != 3:
+            continue
+        try:
+            index = int(parts[0])
+            used = int(parts[1])
+            total = int(parts[2])
+        except ValueError:
+            continue
+        if total <= 0:
+            continue
+        used_ratio = used / total
+        free = total - used
+        candidates.append((used_ratio, -free, index))
+    if not candidates:
+        return "0"
+    return str(sorted(candidates)[0][2])
+
+
+def resolve_cuda_visible_devices(value: str) -> str:
+    normalized = str(value).strip().lower()
+    if normalized == "auto":
+        return select_cuda_visible_device_auto()
+    return str(value)
+
+
 def build_cosmos3_command(
     row: dict[str, Any],
     runtime: Cosmos3Runtime,

@@ -83,6 +83,7 @@ python scripts/10_create_visual_audit_sheet.py \
 - A 12/12 `smoke12` engineering success only proves the local generation pipeline works; it does not prove semantic AHD usability.
 - For `aggregate_transport` O0, exact count mismatch is a warning rather than an automatic failure. The formal visual filter should use count `>= 3`, target visibility, and container/helper absence.
 - Actual generation refuses batches larger than 12 images unless `--yes` is provided.
+- `configs/cosmos3_batch_generation.yaml` uses `cuda_visible_devices: auto` by default. The batch runner selects the least-used GPU from `nvidia-smi` before generation; set a specific GPU id to override this.
 - The runner wraps the local Cosmos3 workflow documented in `../cosmos3/README.md`.
 - AHD `target_output_size` is the desired final image size.
 - Cosmos3 `cosmos_input.resolution` is an internal preset/bucket, not the final pixel width or height.

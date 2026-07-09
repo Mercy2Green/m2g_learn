@@ -13,6 +13,7 @@ from src.cosmos3_runner import (  # noqa: E402
     Cosmos3Runtime,
     build_cosmos3_command,
     command_preview,
+    resolve_cuda_visible_devices,
     run_cosmos3_one,
 )
 from src.load_config import load_yaml  # noqa: E402
@@ -51,6 +52,7 @@ def main() -> None:
     runtime = Cosmos3Runtime(
         ahd_root=ROOT,
         cosmos_root=(ROOT / str(config["cosmos_root"])).resolve(),
+        cuda_visible_devices=resolve_cuda_visible_devices(str(config.get("cuda_visible_devices", "1"))),
         target_output_size=str(config["target_output_size"]),
         cosmos_resolution=str(cosmos_input["resolution"]),
         cosmos_aspect_ratio=str(cosmos_input["aspect_ratio"]),
@@ -78,6 +80,7 @@ def main() -> None:
             "cosmos_aspect_ratio": runtime.cosmos_aspect_ratio,
             "expected_width": runtime.expected_width,
             "expected_height": runtime.expected_height,
+            "cuda_visible_devices": runtime.cuda_visible_devices,
             "expected_primary_generated_path": str(output_dir / "t2i" / "vision.jpg"),
             "final_output_image_path": row["output_image_path"],
             "command": command_preview(command, runtime),

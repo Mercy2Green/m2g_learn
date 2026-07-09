@@ -5,6 +5,7 @@ smoke_script_path: ../cosmos3/setup/run_t2i_smoke.sh
 default_output_root: data/images
 manifest_dir: prompts/manifests
 run_log_dir: data/runs
+cuda_visible_devices: auto
 target_output_size: 960x960
 cosmos_input:
   resolution: "720"

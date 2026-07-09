@@ -32,52 +32,62 @@ def parse_args() -> argparse.Namespace:
 
 
 def write_summary(path: Path, rows: list[dict[str, Any]]) -> None:
-    total = len(rows)
-    keep_count = sum(1 for row in rows if row.get("keep") is True)
-    reject_count = total - keep_count
-    keep_rate = keep_count / total * 100 if total else 0.0
+    stats = _status_counts(rows)
     by_type: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         by_type[str(row.get("spec_type", ""))].append(row)
-    reject_reasons = Counter(str(row.get("main_failure_reason", "")) for row in rows if row.get("keep") is False)
-    fixes = Counter(str(row.get("one_prompt_fix", "")) for row in rows if row.get("keep") is False)
-    parse_errors = [row for row in rows if row.get("judge_parse_error")]
+    generation_failures = _rows_with_status(rows, "generation_failed")
+    missing_invalid = _rows_with_status(rows, "missing_or_invalid_image")
+    semantic_rejects = _rows_with_status(rows, "semantic_reject")
+    parse_errors = _rows_with_status(rows, "judge_parse_error")
+    semantic_reasons = Counter(str(row.get("main_failure_reason", "")) for row in semantic_rejects)
+    semantic_fixes = Counter(str(row.get("one_prompt_fix", "")) for row in semantic_rejects)
 
     lines = [
         "# AHD VLM Image Judge Summary",
         "",
-        f"- total: {total}",
-        f"- keep_count: {keep_count}",
-        f"- reject_count: {reject_count}",
-        f"- keep_rate: {keep_rate:.1f}%",
+        f"- total_rows: {stats['total_rows']}",
+        f"- generation_failed_count: {stats['generation_failed_count']}",
+        f"- missing_or_invalid_image_count: {stats['missing_or_invalid_image_count']}",
+        f"- judge_parse_error_count: {stats['judge_parse_error_count']}",
+        f"- valid_images_judged_count: {stats['valid_images_judged_count']}",
+        f"- semantic_keep_count: {stats['semantic_keep_count']}",
+        f"- semantic_reject_count: {stats['semantic_reject_count']}",
+        f"- semantic_keep_rate_among_valid_images: {stats['semantic_keep_rate_among_valid_images']:.1f}%",
+        f"- overall_keep_rate_over_total_rows: {stats['overall_keep_rate_over_total_rows']:.1f}%",
         "",
-        "## Keep/Reject By Spec Type",
+        "## Status By Spec Type",
         "",
     ]
     for spec_type in sorted(by_type):
-        group = by_type[spec_type]
-        group_keep = sum(1 for row in group if row.get("keep") is True)
-        group_reject = len(group) - group_keep
-        lines.append(f"- {spec_type}: keep={group_keep}, reject={group_reject}, total={len(group)}")
+        group_stats = _status_counts(by_type[spec_type])
+        lines.append(
+            f"- {spec_type}: total={group_stats['total_rows']}, "
+            f"generation_failed={group_stats['generation_failed_count']}, "
+            f"missing_or_invalid_image={group_stats['missing_or_invalid_image_count']}, "
+            f"semantic_keep={group_stats['semantic_keep_count']}, "
+            f"semantic_reject={group_stats['semantic_reject_count']}, "
+            f"valid_images_judged={group_stats['valid_images_judged_count']}, "
+            f"semantic_keep_rate_valid_only={group_stats['semantic_keep_rate_among_valid_images']:.1f}%"
+        )
 
-    lines.extend(["", "## Reject Reasons", ""])
-    if reject_reasons:
-        for reason, count in reject_reasons.most_common():
-            lines.append(f"- {reason or '(empty)'}: {count}")
+    lines.extend(["", "## A. Generation Failures", ""])
+    if generation_failures:
+        for row in generation_failures:
+            lines.append(f"- {row.get('spec_id')}: {row.get('generation_error_short') or row.get('main_failure_reason')}")
     else:
         lines.append("- none")
 
-    lines.extend(["", "## One Prompt Fix Frequency", ""])
-    if fixes:
-        for fix, count in fixes.most_common():
-            lines.append(f"- {fix or '(empty)'}: {count}")
+    lines.extend(["", "## B. Missing/Invalid Image Failures", ""])
+    if missing_invalid:
+        for row in missing_invalid:
+            lines.append(f"- {row.get('spec_id')}: {row.get('main_failure_reason')}")
     else:
         lines.append("- none")
 
-    lines.extend(["", "## Rejected Spec IDs", ""])
-    rejected = [row for row in rows if row.get("keep") is False]
-    if rejected:
-        for row in rejected:
+    lines.extend(["", "## C. Semantic Rejects", ""])
+    if semantic_rejects:
+        for row in semantic_rejects:
             lines.append(
                 f"- {row.get('spec_id')} ({row.get('spec_type')}): "
                 f"{row.get('main_failure_reason')}; fix: {row.get('one_prompt_fix')}"
@@ -85,10 +95,24 @@ def write_summary(path: Path, rows: list[dict[str, Any]]) -> None:
     else:
         lines.append("- none")
 
-    lines.extend(["", "## Judge Parse Errors", ""])
+    lines.extend(["", "## D. Judge Parse Errors", ""])
     if parse_errors:
         for row in parse_errors:
             lines.append(f"- {row.get('spec_id')}: {row.get('judge_parse_error')}")
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Semantic Reject Reasons", ""])
+    if semantic_reasons:
+        for reason, count in semantic_reasons.most_common():
+            lines.append(f"- {reason or '(empty)'}: {count}")
+    else:
+        lines.append("- none")
+
+    lines.extend(["", "## Semantic One Prompt Fix Frequency", ""])
+    if semantic_fixes:
+        for fix, count in semantic_fixes.most_common():
+            lines.append(f"- {fix or '(empty)'}: {count}")
     else:
         lines.append("- none")
 
@@ -101,19 +125,54 @@ def write_spec_type_summary(path: Path, rows: list[dict[str, Any]]) -> None:
         by_type[str(row.get("spec_type", ""))].append(row)
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["spec_type", "total", "keep", "reject", "keep_rate"])
+        writer = csv.DictWriter(handle, fieldnames=[
+            "spec_type",
+            "total",
+            "generation_failed",
+            "missing_or_invalid_image",
+            "semantic_keep",
+            "semantic_reject",
+            "valid_images_judged",
+            "semantic_keep_rate_valid_only",
+        ])
         writer.writeheader()
         for spec_type in sorted(by_type):
-            group = by_type[spec_type]
-            keep = sum(1 for row in group if row.get("keep") is True)
-            total = len(group)
+            stats = _status_counts(by_type[spec_type])
             writer.writerow({
                 "spec_type": spec_type,
-                "total": total,
-                "keep": keep,
-                "reject": total - keep,
-                "keep_rate": f"{(keep / total * 100 if total else 0):.1f}",
+                "total": stats["total_rows"],
+                "generation_failed": stats["generation_failed_count"],
+                "missing_or_invalid_image": stats["missing_or_invalid_image_count"],
+                "semantic_keep": stats["semantic_keep_count"],
+                "semantic_reject": stats["semantic_reject_count"],
+                "valid_images_judged": stats["valid_images_judged_count"],
+                "semantic_keep_rate_valid_only": f"{stats['semantic_keep_rate_among_valid_images']:.1f}",
             })
+
+
+def _status_counts(rows: list[dict[str, Any]]) -> dict[str, float]:
+    total = len(rows)
+    generation_failed = len(_rows_with_status(rows, "generation_failed"))
+    missing_invalid = len(_rows_with_status(rows, "missing_or_invalid_image"))
+    parse_errors = len(_rows_with_status(rows, "judge_parse_error"))
+    semantic_keep = len(_rows_with_status(rows, "semantic_keep"))
+    semantic_reject = len(_rows_with_status(rows, "semantic_reject"))
+    valid_judged = semantic_keep + semantic_reject
+    return {
+        "total_rows": total,
+        "generation_failed_count": generation_failed,
+        "missing_or_invalid_image_count": missing_invalid,
+        "judge_parse_error_count": parse_errors,
+        "valid_images_judged_count": valid_judged,
+        "semantic_keep_count": semantic_keep,
+        "semantic_reject_count": semantic_reject,
+        "semantic_keep_rate_among_valid_images": (semantic_keep / valid_judged * 100) if valid_judged else 0.0,
+        "overall_keep_rate_over_total_rows": (semantic_keep / total * 100) if total else 0.0,
+    }
+
+
+def _rows_with_status(rows: list[dict[str, Any]], status: str) -> list[dict[str, Any]]:
+    return [row for row in rows if row.get("image_judge_status") == status]
 
 
 def _resolve_path(path_text: str) -> Path:

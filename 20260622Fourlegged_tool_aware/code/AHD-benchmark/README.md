@@ -144,6 +144,8 @@ For `aggregate_transport` O0 images, exact object count mismatch is a warning, n
 
 Use the local Ollama VLM judge as a triage tool before scaling generated images. It checks image quality and AHD O0/O1 semantics; it is not ground truth and must not modify labels.
 
+The judge separates `generation_failed` and `missing_or_invalid_image` from true `semantic_reject` rows. Missing files and CUDA/OOM generation failures are engineering issues, not prompt-quality failures. Prompt fixes and semantic keep rate should be read from valid images that were actually judged.
+
 ```bash
 python scripts/11_vlm_judge_generated_images.py \
   --results data/runs/ahd_cosmos3_smoke12_results.jsonl \

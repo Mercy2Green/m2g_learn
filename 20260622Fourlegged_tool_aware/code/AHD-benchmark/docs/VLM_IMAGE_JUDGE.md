@@ -12,6 +12,16 @@ qwen3-vl:32b-instruct-q4_K_M
 The judge uses local Ollama only. It should not modify labels, gold logic, prompts, or generated images.
 For rejected images, it suggests exactly one prompt/spec adjustment in `one_prompt_fix`.
 
+Judge rows use `image_judge_status` to separate engineering failures from semantic image-quality decisions:
+
+- `generation_failed`: Cosmos3 did not produce a successful row. This is not a semantic reject.
+- `missing_or_invalid_image`: the final image path is missing or unreadable. This is not a prompt-quality failure.
+- `judge_parse_error`: the local VLM did not return valid JSON.
+- `semantic_keep`: a valid image was judged usable for the AHD condition.
+- `semantic_reject`: a valid image was judged unusable for the AHD condition.
+
+Prompt-fix frequencies should be aggregated only from `semantic_reject` rows. Semantic keep rate should be computed only over valid images actually judged by the VLM.
+
 Run the judge on smoke12:
 
 ```bash
