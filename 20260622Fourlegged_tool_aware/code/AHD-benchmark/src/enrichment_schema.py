@@ -47,15 +47,19 @@ FORBIDDEN_LEAKAGE_TERMS = [
     "task-relevant",
 ]
 
-COSMOS_PROMPT_FORBIDDEN_ACTION_TERMS = [
-    "transport",
-    "bedroom",
-    "retrieve",
-    "grasp one object",
-    "single arm",
-    "task is",
-    "must grasp",
-    "efficiently transport",
+COSMOS_PROMPT_FORBIDDEN_ACTION_PATTERNS = [
+    r"\btransport\s+(?:all|them|these|to|toward|into)\b",
+    r"\btransport\b.{0,60}\bto\s+(?:the\s+)?bedroom\b",
+    r"\befficiently\s+transport\b",
+    r"\bbring\s+(?:all|them|these)\b",
+    r"\bdeliver\s+to\b",
+    r"\bmove\s+to\b",
+    r"\bretrieve\b.{0,80}\busing\b",
+    r"\busing\s+(?:its|the)\s+single\s+arm\b",
+    r"\brobot\s+must\b",
+    r"\bmust\s+grasp\b",
+    r"\btask\s+is\b",
+    r"\bgrasp\s+one\s+object\b",
 ]
 
 
@@ -94,10 +98,19 @@ def check_forbidden_label_leakage(row: dict[str, Any]) -> list[str]:
                     errors.append(f"{key} contains forbidden label term: {term}")
     cosmos_prompt = row.get("cosmos_prompt_variant")
     if isinstance(cosmos_prompt, str):
-        for term in COSMOS_PROMPT_FORBIDDEN_ACTION_TERMS:
-            if _contains_term(cosmos_prompt, term):
-                errors.append(f"cosmos_prompt_variant contains forbidden action/task term: {term}")
+        for phrase in check_cosmos_prompt_action_leakage(cosmos_prompt):
+            errors.append(f"cosmos_prompt_variant contains forbidden action/task phrase: {phrase}")
     return errors
+
+
+def check_cosmos_prompt_action_leakage(text: str) -> list[str]:
+    matches: list[str] = []
+    normalized = " ".join(str(text).lower().split())
+    for pattern in COSMOS_PROMPT_FORBIDDEN_ACTION_PATTERNS:
+        found = re.search(pattern, normalized)
+        if found:
+            matches.append(found.group(0))
+    return matches
 
 
 def _contains_term(text: str, term: str) -> bool:

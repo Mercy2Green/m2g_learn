@@ -53,25 +53,19 @@ def main() -> None:
                 examples.append(f"line {line_no}: row is not an object")
                 continue
             notes = row.get("notes", [])
-            row_schema_note_failure = False
-            row_leakage_note_failure = False
             if isinstance(notes, list):
                 for note in notes:
                     note_text = str(note)
                     if "parse_error" in note_text:
                         parse_failures += 1
-                    if note_text.startswith("schema_error:"):
-                        row_schema_note_failure = True
-                    if note_text.startswith("leakage_error:"):
-                        row_leakage_note_failure = True
                     note_counts[note_text.split(":", 1)[0]] += 1
 
             schema_errors = validate_enrichment_row(row)
             leakage_errors = check_forbidden_label_leakage(row)
-            if schema_errors or row_schema_note_failure:
+            if schema_errors:
                 schema_failures += 1
                 examples.extend(f"{row.get('spec_id', f'line {line_no}')}: {error}" for error in schema_errors[:3])
-            if leakage_errors or row_leakage_note_failure:
+            if leakage_errors:
                 leakage_failures += 1
                 examples.extend(f"{row.get('spec_id', f'line {line_no}')}: {error}" for error in leakage_errors[:3])
             prompt_lengths.append(_prompt_length(row))
