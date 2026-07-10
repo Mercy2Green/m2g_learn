@@ -411,6 +411,14 @@ def write_summary(path: Path, rows: list[dict[str, Any]]) -> None:
     lines.extend(f"| {status} | {count} |" for status, count in sorted(response_counts.items()))
     lines.extend([
         "",
+        "## By Model",
+        "",
+        "| model | pass | fail | needs_review | parse_error | not_evaluated |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
+    ])
+    lines.extend(status_lines(rows, "model_id"))
+    lines.extend([
+        "",
         "## By Protocol",
         "",
         "| protocol | pass | fail | needs_review | parse_error | not_evaluated |",

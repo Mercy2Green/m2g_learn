@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import shutil
+import threading
 from pathlib import Path
 import sys
 from typing import Any
@@ -31,7 +33,7 @@ def main() -> None:
     output_dir = root_path(args.output_dir)
     prepare_output(output_dir, args.overwrite)
 
-    samples = read_jsonl(samples_path)
+    samples = select_items(read_jsonl(samples_path), "sample_id", args.sample_ids, enabled_only=False)
     model_config = load_yaml(models_path)
     override_config = load_yaml(overrides_path)
     prompt_config = load_yaml(prompts_path)
@@ -39,7 +41,7 @@ def main() -> None:
     model_rows = apply_model_overrides(
         model_config.get("models", []), override_config.get("model_overrides", [])
     )
-    models = select_items(model_rows, "model_id", args.model_ids, enabled_only=True)
+    models = select_items(model_rows, "model_id", args.model_ids, enabled_only=not bool(args.model_ids))
     prompts = select_items(prompt_config.get("prompts", []), "prompt_id", args.prompt_ids, enabled_only=False)
     if not samples or not models or not prompts:
         raise SystemExit("Samples, selected models, and selected prompts must all be non-empty.")
@@ -60,22 +62,48 @@ def main() -> None:
     raw_path = output_dir / "raw_responses.jsonl"
     processed = 0
     with raw_path.open("w", encoding="utf-8") as handle:
-        for sample in samples:
-            for prompt in prompts:
-                for model in models:
+        if args.parallel_models > 1:
+            if args.limit is not None:
+                raise ValueError("--parallel_models > 1 cannot be combined with --limit")
+            write_lock = threading.Lock()
+            progress = {"count": 0}
+
+            def run_model(model: dict[str, Any]) -> None:
+                for sample in samples:
+                    for prompt in prompts:
+                        raw = run_one(sample, prompt, model, providers, provider_errors, args.dry_run)
+                        with write_lock:
+                            progress["count"] += 1
+                            handle.write(json.dumps(raw, ensure_ascii=False, sort_keys=True) + "\n")
+                            handle.flush()
+                            print(
+                                f"[{progress['count']}] {sample['sample_id']} / {prompt['prompt_id']} / "
+                                f"{model['model_id']} error={bool(raw['error'])}"
+                            )
+
+            with ThreadPoolExecutor(max_workers=min(args.parallel_models, len(models))) as executor:
+                futures = [executor.submit(run_model, model) for model in models]
+                for future in futures:
+                    future.result()
+            processed = progress["count"]
+        else:
+            for model in models:
+                for sample in samples:
+                    for prompt in prompts:
+                        if args.limit is not None and processed >= args.limit:
+                            break
+                        processed += 1
+                        raw = run_one(sample, prompt, model, providers, provider_errors, args.dry_run)
+                        handle.write(json.dumps(raw, ensure_ascii=False, sort_keys=True) + "\n")
+                        handle.flush()
+                        print(
+                            f"[{processed}] {sample['sample_id']} / {prompt['prompt_id']} / "
+                            f"{model['model_id']} error={bool(raw['error'])}"
+                        )
                     if args.limit is not None and processed >= args.limit:
                         break
-                    processed += 1
-                    raw = run_one(sample, prompt, model, providers, provider_errors, args.dry_run)
-                    handle.write(json.dumps(raw, ensure_ascii=False, sort_keys=True) + "\n")
-                    print(
-                        f"[{processed}] {sample['sample_id']} / {prompt['prompt_id']} / "
-                        f"{model['model_id']} error={bool(raw['error'])}"
-                    )
                 if args.limit is not None and processed >= args.limit:
                     break
-            if args.limit is not None and processed >= args.limit:
-                break
 
     snapshot_configs(
         [
@@ -104,7 +132,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output_dir", default="outputs/sequential_o0_o1_smoke")
     parser.add_argument("--model_ids", nargs="*", default=None)
     parser.add_argument("--prompt_ids", nargs="*", default=None)
+    parser.add_argument("--sample_ids", nargs="*", default=None)
     parser.add_argument("--limit", type=int, default=None)
+    parser.add_argument("--parallel_models", type=int, default=1)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--dry_run", action="store_true")
     return parser.parse_args()
@@ -206,7 +236,8 @@ def validate_prompt_inheritance(
 
 def validate_clean_prompts(prompts: list[dict[str, Any]]) -> None:
     for prompt in prompts:
-        if prompt.get("prompt_category") != "sequential_clean":
+        category = str(prompt.get("prompt_category", ""))
+        if category != "sequential_clean" and not category.endswith("_clean"):
             continue
         user_text = " ".join(
             str(prompt.get(key, ""))

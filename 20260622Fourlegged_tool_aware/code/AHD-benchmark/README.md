@@ -176,3 +176,43 @@ python scripts/13_materialize_curated_pool.py \
 ```
 
 Do not scale to `mini36` or larger until VLM judge plus human audit show that generated images satisfy AHD O0/O1 semantics.
+
+## Sequential O0/O1 Baseline Evaluation
+
+The isolated sequential baseline lives under `../test_current_vlm/tool_counterexample_benchmark/sequential_o0_o1/`.
+It evaluates curated O0/O1 pairs without changing the old single-image tasks, prompts, or runner. This is evaluation only;
+it does not train or fine-tune a model.
+
+Run the controlled 8-row core set with 12 clean sequential prompts and four local models, including `qwen3.5:35b`:
+
+```bash
+scripts/bash/prepare_sequential_eval.sh
+scripts/bash/run_sequential_core_eval.sh
+```
+
+`prepare_sequential_eval.sh` is lightweight: it regenerates and validates the prompt/data artifacts, compiles the
+extension, and performs the complete 384-row dry-run without model inference. Run it before starting the long job.
+
+The core script regenerates the 18-to-36 prompt mapping and core dataset, then runs `qwen3-vl:8b`, Qwen3-VL 32B,
+Qwen3-VL 30B-A3B, and Qwen3.5 35B. By default it also runs the response-level Qwen3-VL 32B judge on rows
+that reached `response_status=ok_eval`. Disable the secondary judge with `RUN_JUDGE=0`. The script defaults to
+four concurrent model streams when Ollama has enough GPU capacity; set `PARALLEL_MODELS=1` for serial execution.
+
+Run all 36 sequential prompts on the five critical prompt-sensitivity cases:
+
+```bash
+scripts/bash/run_sequential_prompt_sensitivity.sh
+```
+
+The sensitivity script defaults to Qwen3-VL 32B, Qwen3-VL 30B-A3B, and Qwen3.5 35B because this run is
+substantially larger. Include Qwen3-VL 8B with `INCLUDE_QWEN8=1`. Override output locations with `OUTPUT_DIR=...`.
+Generated results remain under the old benchmark's `outputs/` directory and do not overwrite single-image runs.
+
+Rerun only the secondary response judge after a completed core run:
+
+```bash
+scripts/bash/run_sequential_response_judge.sh
+```
+
+Use `INPUT_DIR=...`, `OUTPUT_DIR=...`, or `JUDGE_MODEL=...` to select another completed run or judge. Extra command-line
+arguments such as `--limit 5 --progress_every 1` are passed to the judge script.
