@@ -27,14 +27,19 @@ def main() -> None:
     samples_path = root_path(args.samples)
     models_path = root_path(args.models)
     prompts_path = root_path(args.sequential_prompts)
+    overrides_path = root_path(args.model_overrides)
     output_dir = root_path(args.output_dir)
     prepare_output(output_dir, args.overwrite)
 
     samples = read_jsonl(samples_path)
     model_config = load_yaml(models_path)
+    override_config = load_yaml(overrides_path)
     prompt_config = load_yaml(prompts_path)
     old_prompt_config = load_yaml(ROOT / "config" / "prompt_sets.yaml")
-    models = select_items(model_config.get("models", []), "model_id", args.model_ids, enabled_only=True)
+    model_rows = apply_model_overrides(
+        model_config.get("models", []), override_config.get("model_overrides", [])
+    )
+    models = select_items(model_rows, "model_id", args.model_ids, enabled_only=True)
     prompts = select_items(prompt_config.get("prompts", []), "prompt_id", args.prompt_ids, enabled_only=False)
     if not samples or not models or not prompts:
         raise SystemExit("Samples, selected models, and selected prompts must all be non-empty.")
@@ -78,6 +83,7 @@ def main() -> None:
             prompts_path,
             samples_path,
             ROOT / "sequential_o0_o1" / "config" / "sequential_eval_config.yaml",
+            overrides_path,
             ROOT / "config" / "prompt_sets.yaml",
         ],
         output_dir,
@@ -91,6 +97,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--samples", default="sequential_o0_o1/data/sequential_smoke_samples.jsonl")
     parser.add_argument("--models", default="config/models.yaml")
     parser.add_argument("--sequential_prompts", default="sequential_o0_o1/prompts/sequential_prompt_sets.yaml")
+    parser.add_argument(
+        "--model_overrides",
+        default="sequential_o0_o1/config/sequential_model_overrides.yaml",
+    )
     parser.add_argument("--output_dir", default="outputs/sequential_o0_o1_smoke")
     parser.add_argument("--model_ids", nargs="*", default=None)
     parser.add_argument("--prompt_ids", nargs="*", default=None)
@@ -146,6 +156,34 @@ def select_items(
     if enabled_only:
         result = [item for item in result if item.get("enabled", True)]
     return result
+
+
+def apply_model_overrides(models: Any, overrides: Any) -> list[dict[str, Any]]:
+    if not isinstance(models, list) or not isinstance(overrides, list):
+        raise ValueError("models and model_overrides must be lists")
+    allowed = {"max_tokens", "num_ctx", "format_json", "timeout_seconds", "retries"}
+    override_by_id: dict[str, dict[str, Any]] = {}
+    for row in overrides:
+        if not isinstance(row, dict) or not row.get("model_id"):
+            raise ValueError("Each sequential model override must have model_id")
+        unexpected = set(row) - allowed - {"model_id", "reason"}
+        if unexpected:
+            raise ValueError(f"Unsupported sequential override fields for {row['model_id']}: {sorted(unexpected)}")
+        override_by_id[str(row["model_id"])] = {key: row[key] for key in allowed if key in row}
+
+    known_ids = {str(row.get("model_id", "")) for row in models if isinstance(row, dict)}
+    unknown = sorted(set(override_by_id) - known_ids)
+    if unknown:
+        raise ValueError(f"Sequential overrides reference unknown models: {unknown}")
+
+    output: list[dict[str, Any]] = []
+    for model in models:
+        copied = dict(model)
+        override = override_by_id.get(str(copied.get("model_id", "")), {})
+        copied.update(override)
+        copied["sequential_model_override"] = override
+        output.append(copied)
+    return output
 
 
 def validate_prompt_inheritance(
@@ -224,6 +262,10 @@ def run_one(
         "provider": model.get("provider", ""),
         "provider_label": model.get("provider_label", model.get("provider", "")),
         "model_name": model.get("model_name", ""),
+        "configured_max_tokens": model.get("max_tokens", ""),
+        "configured_num_ctx": model.get("num_ctx", ""),
+        "configured_format_json": model.get("format_json", ""),
+        "sequential_model_override": model.get("sequential_model_override", {}),
         "system_prompt": system_prompt,
         "user_prompt_turn1": user_prompt_turn1,
         "user_prompt_turn2": user_prompt_turn2,

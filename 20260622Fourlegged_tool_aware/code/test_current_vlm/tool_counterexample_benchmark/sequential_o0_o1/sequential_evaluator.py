@@ -50,7 +50,7 @@ USE_ACTION_TERMS = AGGREGATE_ACTION_TERMS + REACH_ACTION_TERMS + ["使用", "利
 
 EVALUATION_FIELDS = [
     "sample_id", "sample_type", "group_id", "protocol", "prompt_id", "model_id", "o0_spec_id",
-    "o1_spec_id", "parse_status", "inferred_helper_mentioned", "inferred_valid_helper_action_chain",
+    "o1_spec_id", "response_status", "parse_status", "inferred_helper_mentioned", "inferred_valid_helper_action_chain",
     "inferred_searches_helper", "inferred_selected_helper", "decision_pred", "relation_pred", "pass_fail",
     "failure_reason", "same_o1_different_o0_consistency",
 ]
@@ -65,18 +65,10 @@ def summarize_raw_file(input_dir: str | Path) -> dict[str, Any]:
     parsed_rows: list[dict[str, Any]] = []
     evaluations: list[dict[str, Any]] = []
     for raw in raw_rows:
-        if raw.get("dry_run") is True:
-            parsed_result = {"parse_status": "skipped", "parsed": {}, "parse_error": "dry_run"}
-        elif raw.get("error"):
-            parsed_result = {
-                "parse_status": "parse_error",
-                "parsed": {},
-                "parse_error": str(raw.get("error")),
-            }
-        else:
-            parsed_result = parse_model_response(str(raw.get("raw_response_final", "")))
+        parsed_result = classify_and_parse_response(raw)
         parsed_row = {
             **raw_identity(raw),
+            "response_status": parsed_result["response_status"],
             "parse_status": parsed_result["parse_status"],
             "parse_error": parsed_result["parse_error"],
             "parsed": parsed_result["parsed"],
@@ -94,14 +86,83 @@ def summarize_raw_file(input_dir: str | Path) -> dict[str, Any]:
     write_failed_cases(output_dir / "failed_cases.md", evaluations, parsed_rows)
     return {
         "raw_rows": len(raw_rows),
-        "parse_success": sum(row["parse_status"] == "ok" for row in evaluations),
+        "parse_success": sum(row["response_status"] == "ok_eval" for row in evaluations),
+        "response_status_counts": dict(Counter(row["response_status"] for row in evaluations)),
         "status_counts": dict(Counter(row["pass_fail"] for row in evaluations)),
     }
+
+
+def classify_and_parse_response(raw: dict[str, Any]) -> dict[str, Any]:
+    if raw.get("dry_run") is True:
+        return {
+            "response_status": "dry_run",
+            "parse_status": "skipped",
+            "parsed": {},
+            "parse_error": "dry_run",
+        }
+    if raw.get("error"):
+        return {
+            "response_status": "provider_error",
+            "parse_status": "provider_error",
+            "parsed": {},
+            "parse_error": str(raw.get("error")),
+        }
+
+    final = str(raw.get("raw_response_final", ""))
+    if not final.strip():
+        if is_generation_budget_exhausted(raw):
+            return {
+                "response_status": "generation_budget_exhausted",
+                "parse_status": "generation_budget_exhausted",
+                "parsed": {},
+                "parse_error": "Model exhausted its generation budget before producing final content.",
+            }
+        return {
+            "response_status": "parse_error_empty",
+            "parse_status": "parse_error_empty",
+            "parsed": {},
+            "parse_error": "Model returned empty final content without confirmed budget exhaustion.",
+        }
+
+    parsed_result = parse_model_response(final)
+    if parsed_result["parse_status"] != "ok":
+        return {
+            **parsed_result,
+            "response_status": "parse_error_nonempty",
+            "parse_status": "parse_error_nonempty",
+        }
+    if is_schema_echo(parsed_result["parsed"]):
+        return {
+            **parsed_result,
+            "response_status": "schema_echo",
+            "parse_status": "schema_echo",
+            "parse_error": "Model echoed the response schema instead of producing a task-grounded plan.",
+        }
+    return {**parsed_result, "response_status": "ok_eval"}
+
+
+def is_generation_budget_exhausted(raw: dict[str, Any]) -> bool:
+    metadata = raw.get("metadata_final")
+    if not isinstance(metadata, dict) or metadata.get("ollama_done") is not True:
+        return False
+    eval_count = optional_int(metadata.get("eval_count"))
+    configured_max = optional_int(
+        metadata.get("configured_max_tokens", raw.get("configured_max_tokens"))
+    )
+    return eval_count is not None and configured_max is not None and eval_count >= configured_max
+
+
+def optional_int(value: Any) -> int | None:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
 
 
 def evaluate_one(raw: dict[str, Any], parsed_result: dict[str, Any]) -> dict[str, Any]:
     row = {
         **raw_identity(raw),
+        "response_status": parsed_result.get("response_status", "parse_error_nonempty"),
         "parse_status": parsed_result.get("parse_status", "parse_error"),
         "inferred_helper_mentioned": "no",
         "inferred_valid_helper_action_chain": "no",
@@ -113,15 +174,22 @@ def evaluate_one(raw: dict[str, Any], parsed_result: dict[str, Any]) -> dict[str
         "failure_reason": "",
         "same_o1_different_o0_consistency": "not_available",
     }
-    if parsed_result.get("parse_status") == "skipped":
+    response_status = str(parsed_result.get("response_status", ""))
+    if response_status == "dry_run":
         row.update({"pass_fail": "needs_review", "failure_reason": "dry_run"})
         return row
-    if parsed_result.get("parse_status") != "ok":
+    if response_status in {"generation_budget_exhausted", "provider_error"}:
+        row.update(
+            {
+                "pass_fail": "not_evaluated",
+                "failure_reason": parsed_result.get("parse_error", response_status),
+            }
+        )
+        return row
+    if response_status in {"parse_error_empty", "parse_error_nonempty"}:
         row.update({"pass_fail": "parse_error", "failure_reason": parsed_result.get("parse_error", "parse_error")})
         return row
-
-    parsed = parsed_result.get("parsed", {})
-    if is_schema_echo(parsed):
+    if response_status == "schema_echo":
         row.update(
             {
                 "pass_fail": "needs_review",
@@ -129,6 +197,8 @@ def evaluate_one(raw: dict[str, Any], parsed_result: dict[str, Any]) -> dict[str
             }
         )
         return row
+
+    parsed = parsed_result.get("parsed", {})
     text = combined_text(parsed)
     container = first_term(text, CONTAINER_TERMS)
     long_rigid = first_term(text, LONG_RIGID_TERMS)
@@ -231,7 +301,7 @@ def annotate_group_consistency(rows: list[dict[str, Any]]) -> None:
         if row.get("sample_type") == "same_o1_different_o0" and row.get("group_id"):
             grouped[(str(row["model_id"]), str(row["prompt_id"]), str(row["group_id"]))].append(row)
     for group_rows in grouped.values():
-        if len(group_rows) != 3:
+        if len(group_rows) != 3 or any(row.get("response_status") != "ok_eval" for row in group_rows):
             result = "not_available"
         else:
             by_source = {str(row["old_task_id_source"]): row["decision_pred"] for row in group_rows}
@@ -320,23 +390,36 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None
 
 
 def write_summary(path: Path, rows: list[dict[str, Any]]) -> None:
+    response_counts = Counter(row["response_status"] for row in rows)
     lines = [
         "# Sequential O0/O1 Evaluation Summary",
         "",
         f"- evaluated rows: {len(rows)}",
-        f"- parse success: {sum(row['parse_status'] == 'ok' for row in rows)}",
-        f"- parse errors: {sum(row['parse_status'] == 'parse_error' for row in rows)}",
+        f"- ok evaluations: {response_counts['ok_eval']}",
+        f"- generation budget exhausted: {response_counts['generation_budget_exhausted']}",
+        f"- schema echoes: {response_counts['schema_echo']}",
+        f"- non-empty parse errors: {response_counts['parse_error_nonempty']}",
+        f"- provider errors: {response_counts['provider_error']}",
         "- clean protocols do not explicitly name task-specific helper types.",
+        "- generation/provider failures are not counted as task-capability failures.",
+        "",
+        "## Response Execution Status",
+        "",
+        "| response_status | count |",
+        "| --- | ---: |",
+    ]
+    lines.extend(f"| {status} | {count} |" for status, count in sorted(response_counts.items()))
+    lines.extend([
         "",
         "## By Protocol",
         "",
-        "| protocol | pass | fail | needs_review | parse_error |",
-        "| --- | ---: | ---: | ---: | ---: |",
-    ]
+        "| protocol | pass | fail | needs_review | parse_error | not_evaluated |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
+    ])
     lines.extend(status_lines(rows, "protocol"))
     lines.extend([
-        "", "## By Sample Type", "", "| sample_type | pass | fail | needs_review | parse_error |",
-        "| --- | ---: | ---: | ---: | ---: |",
+        "", "## By Sample Type", "", "| sample_type | pass | fail | needs_review | parse_error | not_evaluated |",
+        "| --- | ---: | ---: | ---: | ---: | ---: |",
     ])
     lines.extend(status_lines(rows, "sample_type"))
     lines.extend([
@@ -361,7 +444,8 @@ def status_lines(rows: list[dict[str, Any]], key: str) -> list[str]:
     for row in rows:
         grouped[str(row.get(key, ""))][str(row.get("pass_fail", ""))] += 1
     return [
-        f"| {name} | {counts['pass']} | {counts['fail']} | {counts['needs_review']} | {counts['parse_error']} |"
+        f"| {name} | {counts['pass']} | {counts['fail']} | {counts['needs_review']} | "
+        f"{counts['parse_error']} | {counts['not_evaluated']} |"
         for name, counts in sorted(grouped.items())
     ]
 

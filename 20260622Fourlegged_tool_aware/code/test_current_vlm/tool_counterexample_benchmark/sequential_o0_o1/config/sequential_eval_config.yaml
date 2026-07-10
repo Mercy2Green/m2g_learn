@@ -3,6 +3,7 @@ curated_index_path: ../../AHD-benchmark/data/curated_pools/ahd_cosmos3_raw240_qw
 old_tasks_path: config/tasks.yaml
 old_prompts_path: config/prompt_sets.yaml
 models_path: config/models.yaml
+model_overrides_path: sequential_o0_o1/config/sequential_model_overrides.yaml
 output_root: outputs/sequential_o0_o1_smoke
 deterministic_sort_key: spec_id
 smoke_sample_counts:
