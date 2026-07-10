@@ -1,0 +1,7 @@
+spec_type,total,generation_failed,missing_or_invalid_image,semantic_keep,semantic_reject,valid_images_judged,semantic_keep_rate_valid_only
+aggregate_transport_o0_target_visible_helper_absent,40,1,0,38,1,39,97.4
+container_helper_o1_target_absent,40,1,0,34,5,39,87.2
+direct_is_enough_o0_single_target,40,2,0,31,7,38,81.6
+extend_reach_o0_target_under_furniture,40,1,0,32,7,39,82.1
+long_tool_helper_o1_target_absent,40,1,0,32,7,39,82.1
+wrong_helper_o1_target_absent,40,2,0,33,5,38,86.8
