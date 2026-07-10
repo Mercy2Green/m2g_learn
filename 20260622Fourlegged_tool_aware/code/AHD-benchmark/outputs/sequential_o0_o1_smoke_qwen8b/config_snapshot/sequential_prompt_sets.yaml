@@ -1,0 +1,112 @@
+prompts:
+  - prompt_id: multi_image_clean_natural
+    protocol: single_turn_multi_image
+    base_prompt_id: natural_free_plan
+    prompt_category: sequential_clean
+    primary_for_sequential: true
+    system_prompt: |
+      你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
+      不要输出低层关节动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    user_prompt_template: |
+      任务：{instruction}
+
+      观察 O0 是机器人最初看到的场景。
+      观察 O1 是机器人短程环视后看到的新场景。
+      请基于两个观察为同一个原始任务更新高层计划。
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: multi_image_clean_efficient
+    protocol: single_turn_multi_image
+    base_prompt_id: efficient_safe_free_plan
+    prompt_category: sequential_clean
+    primary_for_sequential: true
+    system_prompt: |
+      你是一个家庭移动机器人。请根据图像和任务，给出尽量高效、安全、减少往返次数的高层计划。
+      不要输出低层关节动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    user_prompt_template: |
+      任务：{instruction}
+
+      观察 O0 是机器人最初看到的场景。
+      观察 O1 是机器人短程环视后看到的新场景。
+      请基于两个观察为同一个原始任务更新高层计划。
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: two_turn_clean_natural
+    protocol: two_turn_sequential
+    turn1_base_prompt_id: natural_free_plan
+    prompt_category: sequential_clean
+    primary_for_sequential: true
+    system_prompt: |
+      你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
+      不要输出低层关节动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    turn1_user_prompt_template: |
+      任务：{instruction}
+    turn2_user_prompt: |
+      机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
+
+  - prompt_id: two_turn_clean_efficient
+    protocol: two_turn_sequential
+    turn1_base_prompt_id: efficient_safe_free_plan
+    prompt_category: sequential_clean
+    primary_for_sequential: true
+    system_prompt: |
+      你是一个家庭移动机器人。请根据图像和任务，给出尽量高效、安全、减少往返次数的高层计划。
+      不要输出低层关节动作。
+      如果需要先检查附近区域，请明确说明。
+      输出必须是单个合法 JSON 对象。
+      不要输出 markdown、解释、评论或代码块。
+    turn1_user_prompt_template: |
+      任务：{instruction}
+    turn2_user_prompt: |
+      机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。
+    response_schema_text: |
+      JSON schema:
+      {
+        "task_understanding": "string",
+        "plan": ["step1", "step2", "step3"],
+        "estimated_number_of_trips": "single/few/multiple/unknown",
+        "efficiency_consideration": "string",
+        "safety_or_stability_consideration": "string",
+        "uncertainty_or_missing_information": "string",
+        "reason": "string"
+      }
