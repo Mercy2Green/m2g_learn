@@ -31,7 +31,17 @@ class OllamaProvider(VLMProvider):
         user_prompt: str,
         response_schema: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        base64_image = image_to_base64(image_path)
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt, "images": [image_path]},
+        ]
+        return self.run_chat(messages, response_schema)
+
+    def run_chat(
+        self,
+        messages: list[dict[str, Any]],
+        response_schema: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
         options: dict[str, Any] = {
             "temperature": self.temperature,
             "num_predict": self.max_tokens,
@@ -41,14 +51,7 @@ class OllamaProvider(VLMProvider):
 
         payload: dict[str, Any] = {
             "model": self.model_name,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {
-                    "role": "user",
-                    "content": user_prompt,
-                    "images": [base64_image],
-                },
-            ],
+            "messages": _ollama_messages(messages),
             "stream": False,
             "options": options,
         }
@@ -109,6 +112,24 @@ def _optional_int(value: Any) -> int | None:
     if value in (None, ""):
         return None
     return int(value)
+
+
+def _ollama_messages(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    converted: list[dict[str, Any]] = []
+    for index, message in enumerate(messages):
+        role = str(message.get("role", ""))
+        if role not in {"system", "user", "assistant"}:
+            raise ProviderError(f"Unsupported chat role at message {index}: {role!r}")
+        output: dict[str, Any] = {"role": role, "content": str(message.get("content", ""))}
+        image_paths = message.get("images", []) or []
+        if not isinstance(image_paths, list):
+            raise ProviderError(f"Message {index} images must be a list of paths.")
+        if image_paths:
+            if role != "user":
+                raise ProviderError(f"Only user chat messages may contain images (message {index}).")
+            output["images"] = [image_to_base64(str(path)) for path in image_paths]
+        converted.append(output)
+    return converted
 
 
 def context_metadata(prompt_eval_count: Any, num_ctx: int | None, max_tokens: int | None) -> dict[str, Any]:

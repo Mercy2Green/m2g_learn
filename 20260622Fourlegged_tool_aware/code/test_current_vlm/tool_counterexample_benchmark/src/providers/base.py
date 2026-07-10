@@ -39,6 +39,31 @@ class VLMProvider(ABC):
                 time.sleep(min(2**attempt, 8))
         raise ProviderError(f"{self.model_id} failed after {self.retries + 1} attempt(s): {last_error}") from last_error
 
+    def run_chat_with_retry(
+        self,
+        messages: list[dict[str, Any]],
+        response_schema: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        last_error: Exception | None = None
+        for attempt in range(self.retries + 1):
+            try:
+                return self.run_chat(messages, response_schema)
+            except Exception as exc:  # noqa: BLE001
+                last_error = exc
+                if attempt >= self.retries:
+                    break
+                time.sleep(min(2**attempt, 8))
+        raise ProviderError(f"{self.model_id} failed after {self.retries + 1} attempt(s): {last_error}") from last_error
+
+    def run_chat(
+        self,
+        messages: list[dict[str, Any]],
+        response_schema: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        raise ProviderError(
+            f"{self.model_id}: provider '{self.name}' does not support sequential/multi-image chat yet."
+        )
+
     @abstractmethod
     def run(
         self,
