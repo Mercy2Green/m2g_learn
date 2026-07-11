@@ -1,0 +1,15 @@
+Task image audit plus strict VLM judge v3 only; candidate VLM evaluations will not be rerun.
+Audit model: qwen3-vl:32b-instruct-q4_K_M
+Judge model: qwen3-vl:32b-instruct-q4_K_M
+Limit: 5
+audited 1/5: no_tool_control_001 status=error
+audited 2/5: positive_aggregate_001 status=error
+audited 3/5: positive_reach_001 status=ok
+audited 4/5: same_o1_aggregate_001 status=error
+audited 5/5: same_o1_direct_001 status=error
+Wrote task image audit: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/test_o0o1_v2/sequential_o0_o1_core_clean_4models_v2/task_image_audit_qwen32
+judged 5/5: ('positive_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__efficient_safe_free_plan') status=ok
+eligible ok_eval rows: 5
+judge output rows: 5
+Wrote: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/test_o0o1_v2/sequential_o0_o1_core_clean_4models_v2/response_judge_qwen32_strict_v3_image_audit
+Wrote completion report: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/logs/sequential_vlm_judge_strict_v3_image_audit_completion_report.md

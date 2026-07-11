@@ -1,0 +1,10 @@
+Task image audit plus strict VLM judge v3 only; candidate VLM evaluations will not be rerun.
+Audit model: qwen3-vl:32b-instruct-q4_K_M
+Judge model: qwen3-vl:32b-instruct-q4_K_M
+Limit: none
+audited 1/8: no_tool_control_001 status=ok
+audited 2/8: positive_aggregate_001 status=ok
+audited 3/8: positive_reach_001 status=ok
+audited 4/8: same_o1_aggregate_001 status=ok
+audited 5/8: same_o1_direct_001 status=ok
+audited 6/8: same_o1_reach_001 status=ok

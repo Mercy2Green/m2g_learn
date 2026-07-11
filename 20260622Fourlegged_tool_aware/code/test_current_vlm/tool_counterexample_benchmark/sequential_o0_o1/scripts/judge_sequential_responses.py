@@ -47,6 +47,24 @@ ALLOWED_STRICT_V2 = {
     "hallucinated_helper": {"yes", "no", "unclear"},
     "judge_confidence": {"high", "medium", "low"},
 }
+ALLOWED_STRICT_V3 = {
+    **ALLOWED_STRICT_V2,
+    "judge_version": {"strict_vlm_judge_v3_image_audit"},
+    "image_audit_available": {"yes", "no"},
+    "image_audit_overridden": {"yes", "no"},
+    "audited_o1_contains_candidate_helper": {"yes", "no", "unclear"},
+    "audited_o1_helper_type": {
+        "tray", "baking_tray", "basket", "box", "bag", "pan", "long_rigid", "pencil", "lamp",
+        "wrong_object", "none", "unclear",
+    },
+    "audited_o1_helper_visibility": {"clear", "partial", "ambiguous", "not_visible"},
+    "audited_o1_helper_affordance": {
+        "container_for_multiple_objects", "long_rigid_reach_extension", "not_suitable", "none", "unclear",
+    },
+    "judge_audit_agreement": {"yes", "no", "unclear"},
+    "visual_conflict": {"yes", "no", "unclear"},
+    "final_visual_grounding_source": {"image_audit", "judge_vision", "both", "manual_override", "unclear"},
+}
 
 SYSTEM_PROMPT_LEGACY = """You are a response-level judge for an O0/O1 sequential robot planning benchmark.
 Judge the candidate model response against the supplied task and gold expectation.
@@ -131,6 +149,52 @@ Required JSON schema:
   "reason": "brief explanation"
 }"""
 
+SYSTEM_PROMPT_STRICT_V3 = SYSTEM_PROMPT_STRICT_V2.split("Required JSON schema:", 1)[0] + """Image-audit-aware rules:
+You are judging the candidate response using both the attached images and a precomputed task image audit.
+The image audit describes visible objects in O0/O1 and may include manual overrides.
+If the image audit says a helper is clearly visible in O1 with high confidence or manual override, do not mark the candidate's use of that helper as hallucinated merely because you personally fail to see it.
+Instead, judge whether the candidate correctly links that audited O1 helper to the remembered O0 target/task.
+If your own visual reading conflicts with the image audit, set judge_audit_agreement="no", visual_conflict="yes", and judge_confidence="low" or "medium".
+Use needs_review only if the candidate's action chain is unclear, not merely because the O1 target is absent.
+
+For aggregate_transport, if the audit says O1 contains a clear tray, baking_tray, basket, box, bag, or pan with affordance container_for_multiple_objects, a candidate using it to carry multiple O0 bottles is physical_o1_helper_chain, not hallucinated_helper.
+For reach_extension, if the audit says O1 contains a clear long_rigid helper, a candidate using it to reach, pull, or push the remembered O0 target is physical_o1_helper_chain.
+Still fail embodiment batching only, direct multi-trip only, robot hand/arm carrying only, use of an audited not_suitable object, and ignoring an audited suitable helper in favor of repeated manual transport when gold expects helper_found.
+
+Return strict JSON only.
+Required JSON schema:
+{
+  "judge_version": "strict_vlm_judge_v3_image_audit",
+  "judge_decision": "pass/fail/needs_review",
+  "decision_pred": "helper_found/direct_is_enough/continue_search/unclear",
+  "relation_pred": "aggregate_transport/reach_extension/none/unclear",
+  "action_mode_pred": "physical_o1_helper_chain/embodiment_batching/direct_multi_trip/direct_single/continue_search/wrong_helper_use/hallucinated_helper/unclear",
+  "uses_physical_o1_helper": "yes/no/unclear",
+  "physical_helper_type": "tray/baking_tray/basket/box/bag/pan/long_rigid/wrong_object/none/unclear",
+  "helper_visual_grounding": "visible_in_o1/not_visible/unclear",
+  "uses_o1_object_for_o0_target": "yes/no/unclear",
+  "links_o1_helper_to_o0_target": "yes/no/unclear",
+  "target_required_in_o1": "no",
+  "target_absence_handled_correctly": "yes/no/unclear",
+  "uses_embodiment_batching": "yes/no/unclear",
+  "uses_direct_multi_trip": "yes/no/unclear",
+  "hallucinated_helper": "yes/no/unclear",
+  "uses_wrong_helper": "yes/no/unclear",
+  "overuses_helper": "yes/no/unclear",
+  "judge_confidence": "high/medium/low",
+  "evidence_quote": "short quote from candidate response",
+  "image_audit_available": "yes/no",
+  "image_audit_overridden": "yes/no",
+  "audited_o1_contains_candidate_helper": "yes/no/unclear",
+  "audited_o1_helper_type": "tray/baking_tray/basket/box/bag/pan/long_rigid/pencil/lamp/wrong_object/none/unclear",
+  "audited_o1_helper_visibility": "clear/partial/ambiguous/not_visible",
+  "audited_o1_helper_affordance": "container_for_multiple_objects/long_rigid_reach_extension/not_suitable/none/unclear",
+  "judge_audit_agreement": "yes/no/unclear",
+  "visual_conflict": "yes/no/unclear",
+  "final_visual_grounding_source": "image_audit/judge_vision/both/manual_override/unclear",
+  "reason": "brief explanation"
+}"""
+
 
 def main() -> None:
     args = parse_args()
@@ -144,9 +208,15 @@ def main() -> None:
     eval_rows = read_csv(input_dir / "sequential_evaluation.csv")
     v2_path = input_dir / "analysis_v2" / "sequential_evaluation_v2.csv"
     v2_rows = read_csv(v2_path) if v2_path.is_file() else []
+    image_audit_rows = read_jsonl(root_path(args.image_audit_path)) if args.image_audit_path else []
+    strict_v2_path = input_dir / "response_judge_qwen32_strict_v2" / "response_vlm_judge_strict_v2.jsonl"
+    strict_v2_rows = read_jsonl(strict_v2_path) if strict_v2_path.is_file() else []
     raw_by_key = {row_key(row): row for row in raw_rows}
     parsed_by_key = {row_key(row): row for row in parsed_rows}
     v2_by_key = {row_key(row): row for row in v2_rows}
+    strict_v2_by_key = {row_key(row): row for row in strict_v2_rows}
+    audit_by_pair = {audit_pair_key(row): row for row in image_audit_rows}
+    audit_by_sample = {str(row.get("sample_id", "")): row for row in image_audit_rows}
     eligible_all = [row for row in eval_rows if row.get("response_status") == "ok_eval"]
     eligible = eligible_all[: args.limit] if args.limit is not None else eligible_all
 
@@ -165,13 +235,23 @@ def main() -> None:
         raw = raw_by_key.get(key)
         if raw is None or key not in parsed_by_key:
             raise ValueError(f"Missing raw/parsed row for evaluation key: {key}")
-        judged_row = judge_one(provider, raw, evaluation, v2_by_key.get(key), args.judge_model, args.judge_version)
+        audit = audit_by_pair.get(audit_pair_key(raw)) or audit_by_sample.get(str(raw.get("sample_id", "")))
+        judged_row = judge_one(
+            provider, raw, evaluation, v2_by_key.get(key), args.judge_model, args.judge_version,
+            image_audit=audit, strict_v2_row=strict_v2_by_key.get(key),
+        )
         judged.append(judged_row)
         if index % max(1, args.progress_every) == 0 or index == len(eligible):
             print(f"judged {index}/{len(eligible)}: {key} status={judged_row['judge_status']}", flush=True)
 
     if args.judge_version == "legacy":
         write_legacy_outputs(output_dir, judged, args.judge_model, len(eval_rows), len(eligible_all), len(eligible))
+    elif args.judge_version == "strict_v3_image_audit":
+        annotate_same_o1_consistency(judged)
+        write_v3_outputs(
+            output_dir, judged, raw_by_key, args.judge_model, len(eval_rows), len(eligible_all), len(eligible),
+            strict_v2_rows,
+        )
     else:
         annotate_same_o1_consistency(judged)
         write_strict_outputs(
@@ -188,7 +268,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--input_dir", required=True)
     parser.add_argument("--judge_model", default="qwen3-vl:32b-instruct-q4_K_M")
     parser.add_argument("--output_dir", required=True)
-    parser.add_argument("--judge_version", choices=["strict_v2", "legacy"], default="strict_v2")
+    parser.add_argument("--judge_version", choices=["strict_v3_image_audit", "strict_v2", "legacy"], default="strict_v2")
+    parser.add_argument("--image_audit_path")
     parser.add_argument("--max_tokens", type=int, default=1536)
     parser.add_argument("--num_ctx", type=int, default=8192)
     parser.add_argument("--timeout_seconds", type=int, default=420)
@@ -220,6 +301,9 @@ def judge_one(
     v2: dict[str, str] | None,
     judge_model: str,
     judge_version: str,
+    *,
+    image_audit: dict[str, Any] | None = None,
+    strict_v2_row: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     v2 = v2 or {}
     v2_metadata = {
@@ -232,6 +316,8 @@ def judge_one(
         "v2_links_o1_helper_to_o0_target": v2.get("links_o1_helper_to_o0_target", ""),
         "v2_failure_reason": v2.get("failure_reason", ""),
     }
+    audit_metadata = image_audit_metadata(image_audit)
+    strict_v2_metadata = strict_v2_comparison_metadata(strict_v2_row)
     payload = {
         "sample_id": raw.get("sample_id"), "sample_type": raw.get("sample_type"),
         "group_id": raw.get("group_id"), "old_task_id_source": raw.get("old_task_id_source"),
@@ -241,6 +327,7 @@ def judge_one(
         "o0_spec_id": raw.get("o0_spec_id"), "o1_spec_id": raw.get("o1_spec_id"),
         "o0_image_path": raw.get("o0_image_path"), "o1_image_path": raw.get("o1_image_path"),
         **v2_metadata,
+        "task_image_audit_metadata": image_audit or {},
     }
     base: dict[str, Any] = {
         "sample_id": raw.get("sample_id", ""), "sample_type": raw.get("sample_type", ""),
@@ -254,15 +341,17 @@ def judge_one(
         "heuristic_pass_fail": evaluation.get("pass_fail", ""),
         "heuristic_decision_pred": evaluation.get("decision_pred", ""),
         "heuristic_relation_pred": evaluation.get("relation_pred", ""),
-        **v2_metadata, "judge_status": "error", "judge_error": "", "judge_raw_response": "",
+        **v2_metadata, **strict_v2_metadata, "judge_status": "error", "judge_error": "", "judge_raw_response": "",
         "judge_decision": "needs_review", "decision_pred": "unclear", "relation_pred": "unclear",
         "same_o1_consistency": "not_available", "heuristic_judge_agreement": False,
     }
     if judge_version == "strict_v2":
         base.update(strict_defaults())
+    elif judge_version == "strict_v3_image_audit":
+        base.update(strict_v3_defaults(audit_metadata))
     try:
         result = provider.run_chat_with_retry([
-            {"role": "system", "content": SYSTEM_PROMPT_STRICT_V2 if judge_version == "strict_v2" else SYSTEM_PROMPT_LEGACY},
+            {"role": "system", "content": system_prompt_for(judge_version)},
             {"role": "user", "content": "Judge the candidate using the ordered O0 and O1 images:\n" + json.dumps(payload, ensure_ascii=False, indent=2),
              "images": [str(root_path(raw["o0_image_path"])), str(root_path(raw["o1_image_path"]))]},
         ])
@@ -271,6 +360,10 @@ def judge_one(
         if parsed["parse_status"] != "ok":
             raise ValueError(parsed["parse_error"])
         base.update(validate_judge_fields(parsed["parsed"], judge_version))
+        if judge_version == "strict_v3_image_audit":
+            base.update(audit_metadata)
+            if audit_metadata["image_audit_overridden"] == "yes":
+                base["final_visual_grounding_source"] = "manual_override"
         base["judge_status"] = "ok"
         base["heuristic_judge_agreement"] = (
             base["heuristic_pass_fail"] == base["judge_decision"]
@@ -295,20 +388,80 @@ def strict_defaults() -> dict[str, str]:
     }
 
 
+def strict_v3_defaults(audit: dict[str, str]) -> dict[str, str]:
+    return {
+        **strict_defaults(),
+        "judge_version": "strict_vlm_judge_v3_image_audit",
+        **audit,
+        "judge_audit_agreement": "unclear",
+        "visual_conflict": "unclear",
+        "final_visual_grounding_source": (
+            "manual_override" if audit["image_audit_overridden"] == "yes" else
+            "image_audit" if audit["image_audit_available"] == "yes" else "judge_vision"
+        ),
+    }
+
+
+def image_audit_metadata(audit: dict[str, Any] | None) -> dict[str, str]:
+    if not audit:
+        return {
+            "image_audit_available": "no", "image_audit_overridden": "no",
+            "audited_o1_contains_candidate_helper": "unclear", "audited_o1_helper_type": "unclear",
+            "audited_o1_helper_visibility": "ambiguous", "audited_o1_helper_affordance": "unclear",
+        }
+    return {
+        "image_audit_available": "yes",
+        "image_audit_overridden": "yes" if audit.get("audit_overridden") else "no",
+        "audited_o1_contains_candidate_helper": str(audit.get("o1_contains_candidate_helper", "unclear")),
+        "audited_o1_helper_type": str(audit.get("o1_helper_type", "unclear")),
+        "audited_o1_helper_visibility": str(audit.get("o1_helper_visibility", "ambiguous")),
+        "audited_o1_helper_affordance": str(audit.get("o1_helper_affordance", "unclear")),
+    }
+
+
+def strict_v2_comparison_metadata(row: dict[str, Any] | None) -> dict[str, str]:
+    row = row or {}
+    fields = [
+        "judge_status", "judge_decision", "decision_pred", "relation_pred", "action_mode_pred",
+        "uses_physical_o1_helper", "physical_helper_type", "helper_visual_grounding", "hallucinated_helper",
+        "same_o1_consistency", "reason",
+    ]
+    return {f"strict_v2_{key}": str(row.get(key, "")) for key in fields}
+
+
+def system_prompt_for(judge_version: str) -> str:
+    if judge_version == "strict_v3_image_audit":
+        return SYSTEM_PROMPT_STRICT_V3
+    if judge_version == "strict_v2":
+        return SYSTEM_PROMPT_STRICT_V2
+    return SYSTEM_PROMPT_LEGACY
+
+
 def validate_judge_fields(parsed: dict[str, Any], judge_version: str) -> dict[str, str]:
-    allowed_fields = ALLOWED_STRICT_V2 if judge_version == "strict_v2" else ALLOWED_LEGACY
+    if judge_version == "strict_v3_image_audit":
+        allowed_fields = ALLOWED_STRICT_V3
+    elif judge_version == "strict_v2":
+        allowed_fields = ALLOWED_STRICT_V2
+    else:
+        allowed_fields = ALLOWED_LEGACY
     output: dict[str, str] = {}
     for key, allowed in allowed_fields.items():
         value = str(parsed.get(key, "")).strip().lower()
         if value not in allowed:
             raise ValueError(f"Invalid judge field {key}={value!r}")
         output[key] = value
-    for key in (["reason", "evidence_quote"] if judge_version == "strict_v2" else ["reason"]):
+    for key in (["reason", "evidence_quote"] if judge_version != "legacy" else ["reason"]):
         value = str(parsed.get(key, "")).strip()
         if not value:
             raise ValueError(f"Judge {key} is empty")
         output[key] = value
     return output
+
+
+def audit_pair_key(row: dict[str, Any]) -> tuple[str, str, str]:
+    return (
+        str(row.get("sample_id", "")), str(row.get("o0_image_path", "")), str(row.get("o1_image_path", "")),
+    )
 
 
 def write_legacy_outputs(path: Path, rows: list[dict[str, Any]], model: str, total: int, eligible: int, selected: int) -> None:
@@ -334,6 +487,190 @@ def write_strict_outputs(
     (path / "manual_review_pack_vlm_strict_v2.md").write_text(
         build_manual_review(rows, raw_by_key), encoding="utf-8"
     )
+
+
+def write_v3_outputs(
+    path: Path,
+    rows: list[dict[str, Any]],
+    raw_by_key: dict[tuple[str, str, str], dict[str, Any]],
+    model: str,
+    total: int,
+    eligible: int,
+    selected: int,
+    strict_v2_rows: list[dict[str, Any]],
+) -> None:
+    write_jsonl(path / "response_vlm_judge_strict_v3_image_audit.jsonl", rows)
+    summary = build_v3_summary(rows, strict_v2_rows, model, total, eligible, selected)
+    (path / "response_vlm_judge_summary_strict_v3_image_audit.md").write_text(summary, encoding="utf-8")
+    crosstab = build_crosstab_rows(rows)
+    write_csv(path / "vlm_v3_vs_v2_crosstab.csv", crosstab, CROSSTAB_FIELDS)
+    (path / "vlm_v3_vs_v2_summary.md").write_text(
+        build_v3_crosstab_summary(crosstab), encoding="utf-8"
+    )
+    (path / "manual_review_pack_vlm_strict_v3_image_audit.md").write_text(
+        build_v3_manual_review(rows, raw_by_key), encoding="utf-8"
+    )
+    (path / "disagreement_cases_strict_v3_image_audit.md").write_text(
+        build_v3_disagreements(rows), encoding="utf-8"
+    )
+    (path / "image_audit_judge_conflicts.md").write_text(build_audit_conflicts(rows), encoding="utf-8")
+
+
+def build_v3_summary(
+    rows: list[dict[str, Any]], strict_v2_rows: list[dict[str, Any]], model: str,
+    total: int, eligible: int, selected: int,
+) -> str:
+    successful = [row for row in rows if row["judge_status"] == "ok"]
+    decisions = Counter(row["judge_decision"] for row in successful)
+    modes = Counter(row["action_mode_pred"] for row in successful)
+    lines = [
+        "# Strict VLM Judge V3 Image-Audit-Aware Summary", "", "## Overall", "",
+        f"- judge model: {model}", f"- source rows: {total}", f"- eligible rows: {eligible}",
+        f"- selected rows: {selected}", f"- judged rows: {len(successful)}",
+        f"- judge errors: {len(rows) - len(successful)}", f"- pass/fail/needs_review: {decisions['pass']}/{decisions['fail']}/{decisions['needs_review']}",
+        f"- physical_o1_helper_chain: {modes['physical_o1_helper_chain']} ({rate(modes['physical_o1_helper_chain'], len(successful))})",
+        f"- embodiment_batching: {modes['embodiment_batching']} ({rate(modes['embodiment_batching'], len(successful))})",
+        f"- direct_multi_trip: {modes['direct_multi_trip']} ({rate(modes['direct_multi_trip'], len(successful))})",
+        f"- hallucinated_helper: {sum(row['hallucinated_helper'] == 'yes' for row in successful)} ({rate(sum(row['hallucinated_helper'] == 'yes' for row in successful), len(successful))})",
+        f"- visual_conflict: {sum(row['visual_conflict'] == 'yes' for row in successful)} ({rate(sum(row['visual_conflict'] == 'yes' for row in successful), len(successful))})",
+        f"- image_audit_overridden rows: {sum(row['image_audit_overridden'] == 'yes' for row in successful)}", "",
+    ]
+    for title, key in (("By Model", "model_id"), ("By Protocol", "protocol"), ("By Sample Type", "sample_type")):
+        lines.extend([f"## {title}", "", *v3_metric_table(successful, key), ""])
+    lines.extend(["## Critical Strict V2 vs Strict V3", "", *critical_comparison_table(successful, strict_v2_rows), ""])
+    group_values = same_o1_group_values(rows)
+    group_counts = Counter(group_values.values())
+    available = group_counts["pass"] + group_counts["fail"]
+    lines.extend([
+        "## Same-O1 Consistency V3", "", f"- groups evaluated: {available}",
+        f"- consistency pass: {group_counts['pass']}", f"- consistency fail: {group_counts['fail']}",
+        f"- not available: {group_counts['not_available']}", f"- consistency pass rate: {rate(group_counts['pass'], available)}", "",
+        "| model | prompt | group | consistency |", "| --- | --- | --- | --- |",
+    ])
+    lines.extend(f"| {m} | {p} | {g} | {value} |" for (m, p, g), value in sorted(group_values.items()))
+    return "\n".join(lines) + "\n"
+
+
+def v3_metric_table(rows: list[dict[str, Any]], key: str) -> list[str]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        grouped[str(row[key])].append(row)
+    lines = [
+        f"| {key} | judged | pass | fail | review | physical chain | physical rate | embodiment | embodiment rate | multi-trip | multi-trip rate | hallucinated | hallucinated rate | visual conflict | conflict rate | overridden |",
+        "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for name, subset in sorted(grouped.items()):
+        decisions = Counter(row["judge_decision"] for row in subset)
+        modes = Counter(row["action_mode_pred"] for row in subset)
+        hallucinated = sum(row["hallucinated_helper"] == "yes" for row in subset)
+        conflicts = sum(row["visual_conflict"] == "yes" for row in subset)
+        lines.append(
+            f"| {name} | {len(subset)} | {decisions['pass']} | {decisions['fail']} | {decisions['needs_review']} | "
+            f"{modes['physical_o1_helper_chain']} | {rate(modes['physical_o1_helper_chain'], len(subset))} | "
+            f"{modes['embodiment_batching']} | {rate(modes['embodiment_batching'], len(subset))} | "
+            f"{modes['direct_multi_trip']} | {rate(modes['direct_multi_trip'], len(subset))} | "
+            f"{hallucinated} | {rate(hallucinated, len(subset))} | {conflicts} | {rate(conflicts, len(subset))} | "
+            f"{sum(row['image_audit_overridden'] == 'yes' for row in subset)} |"
+        )
+    return lines
+
+
+def critical_comparison_table(v3_rows: list[dict[str, Any]], v2_rows: list[dict[str, Any]]) -> list[str]:
+    v2_by_key = {row_key(row): row for row in v2_rows if row.get("judge_status") == "ok"}
+    dimensions = [("overall", "all")]
+    for key in ("model_id", "protocol", "sample_type"):
+        dimensions.extend((key, value) for value in sorted({str(row[key]) for row in v3_rows}))
+    lines = [
+        "| group by | value | comparable | physical v2 | physical v3 | hallucinated v2 | hallucinated v3 | review v2 | review v3 | same-O1 pass v2 | same-O1 pass v3 |",
+        "| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    ]
+    for key, value in dimensions:
+        subset = [row for row in v3_rows if key == "overall" or str(row[key]) == value]
+        pairs = [(v2_by_key[row_key(row)], row) for row in subset if row_key(row) in v2_by_key]
+        v2_subset, v3_subset = [pair[0] for pair in pairs], [pair[1] for pair in pairs]
+        v2_groups = same_o1_group_values(v2_subset)
+        v3_groups = same_o1_group_values(v3_subset)
+        lines.append(
+            f"| {key} | {value} | {len(pairs)} | "
+            f"{sum(row.get('action_mode_pred') == 'physical_o1_helper_chain' for row in v2_subset)} | "
+            f"{sum(row.get('action_mode_pred') == 'physical_o1_helper_chain' for row in v3_subset)} | "
+            f"{sum(row.get('hallucinated_helper') == 'yes' for row in v2_subset)} | "
+            f"{sum(row.get('hallucinated_helper') == 'yes' for row in v3_subset)} | "
+            f"{sum(row.get('judge_decision') == 'needs_review' for row in v2_subset)} | "
+            f"{sum(row.get('judge_decision') == 'needs_review' for row in v3_subset)} | "
+            f"{sum(result == 'pass' for result in v2_groups.values())} | {sum(result == 'pass' for result in v3_groups.values())} |"
+        )
+    return lines
+
+
+def same_o1_group_values(rows: list[dict[str, Any]]) -> dict[tuple[str, str, str], str]:
+    return {
+        (str(row.get("model_id", "")), str(row.get("prompt_id", "")), str(row.get("group_id", ""))): str(row.get("same_o1_consistency", "not_available"))
+        for row in rows if row.get("sample_type") == "same_o1_different_o0"
+    }
+
+
+def build_v3_crosstab_summary(rows: list[dict[str, Any]]) -> str:
+    lines = ["# Strict VLM Judge V3 vs Heuristic V2", "", *build_crosstab_summary(rows, True).splitlines()[2:]]
+    return "\n".join(lines) + "\n"
+
+
+def build_v3_manual_review(rows: list[dict[str, Any]], raw_by_key: dict[tuple[str, str, str], dict[str, Any]]) -> str:
+    selected: dict[tuple[str, str, str], tuple[dict[str, Any], list[str]]] = {}
+    for row in rows:
+        reasons: list[str] = []
+        container = Path(str(row.get("o1_image_path", ""))).name == "container_o1_000001.jpg"
+        model_id = str(row["model_id"])
+        if container and "qwen3_5" in model_id and row["sample_type"] == "positive_aggregate": reasons.append("priority_1_qwen35_positive_aggregate_container")
+        if container and "qwen3_5" in model_id and row["sample_id"] == "same_o1_aggregate_001": reasons.append("priority_2_qwen35_same_o1_aggregate_container")
+        if container and "qwen3_vl_32b" in model_id and row["sample_type"] == "positive_aggregate": reasons.append("priority_3_qwen32_positive_aggregate_container")
+        if container and "qwen3_vl_30b" in model_id and row["sample_type"] == "positive_aggregate": reasons.append("priority_4_qwen30_positive_aggregate_container")
+        if row["strict_v2_action_mode_pred"] == "hallucinated_helper" and row["action_mode_pred"] == "physical_o1_helper_chain": reasons.append("priority_5_v2_hallucinated_v3_physical")
+        if row["hallucinated_helper"] == "yes" and row["audited_o1_contains_candidate_helper"] == "yes": reasons.append("priority_6_v3_hallucinated_despite_visible_audit")
+        if row["visual_conflict"] == "yes": reasons.append("priority_7_visual_conflict")
+        if row["sample_type"] == "wrong_helper_negative": reasons.append("priority_8_wrong_helper_examples")
+        if row["action_mode_pred"] in {"embodiment_batching", "direct_multi_trip"}: reasons.append("priority_9_non_helper_action_examples")
+        if reasons:
+            selected[row_key(row)] = (row, reasons)
+    ordered = sorted(selected.values(), key=lambda item: (min(item[1]), item[0]["sample_id"], item[0]["model_id"], item[0]["prompt_id"]))
+    lines = ["# Strict VLM Judge V3 Image-Audit Manual Review Pack", ""]
+    for row, reasons in ordered:
+        raw = raw_by_key.get(row_key(row), {})
+        lines.extend([
+            f"## {row['sample_id']} | {row['model_id']} | {row['prompt_id']}", "",
+            f"- priorities: {', '.join(reasons)}", f"- sample_type: {row['sample_type']}", f"- protocol: {row['protocol']}",
+            f"- O0 image: `{row['o0_image_path']}`", f"- O1 image: `{row['o1_image_path']}`",
+            f"- audit: helper={row['audited_o1_helper_type']} visibility={row['audited_o1_helper_visibility']} affordance={row['audited_o1_helper_affordance']} overridden={row['image_audit_overridden']}",
+            f"- v3: {row['judge_decision']} / {row['decision_pred']} / {row['relation_pred']} / {row['action_mode_pred']}",
+            f"- v3 grounding: {row['helper_visual_grounding']} source={row['final_visual_grounding_source']} conflict={row['visual_conflict']}",
+            f"- strict v2: {row['strict_v2_judge_decision']} / {row['strict_v2_decision_pred']} / {row['strict_v2_relation_pred']} / {row['strict_v2_action_mode_pred']}",
+            f"- v3 reason: {row['reason']}", "", "Candidate final response:", "", excerpt(str(raw.get("raw_response_final", "")), 2200), "",
+        ])
+    return "\n".join(lines) + "\n"
+
+
+def build_v3_disagreements(rows: list[dict[str, Any]]) -> str:
+    selected = [row for row in rows if row["judge_status"] != "ok" or (row["strict_v2_judge_decision"] and row["judge_decision"] != row["strict_v2_judge_decision"])]
+    lines = ["# Strict V2 / Strict V3 Image-Audit Disagreements", ""]
+    for row in selected:
+        lines.append(
+            f"- {row['sample_id']} / {row['model_id']} / {row['prompt_id']}: v2={row['strict_v2_judge_decision']}/{row['strict_v2_action_mode_pred']} "
+            f"v3={row['judge_decision']}/{row['action_mode_pred']} audit={row['audited_o1_helper_type']}/{row['audited_o1_helper_visibility']} "
+            f"reason={row['reason'] or row['judge_error']}"
+        )
+    return "\n".join(lines) + "\n"
+
+
+def build_audit_conflicts(rows: list[dict[str, Any]]) -> str:
+    selected = [row for row in rows if row["visual_conflict"] == "yes" or row["judge_audit_agreement"] == "no"]
+    lines = ["# Image Audit / Response Judge Visual Conflicts", "", f"- conflict rows: {len(selected)}", ""]
+    for row in selected:
+        lines.append(
+            f"- {row['sample_id']} / {row['model_id']} / {row['prompt_id']}: audited={row['audited_o1_helper_type']} "
+            f"visibility={row['audited_o1_helper_visibility']} judge_grounding={row['helper_visual_grounding']} "
+            f"source={row['final_visual_grounding_source']} reason={row['reason']}"
+        )
+    return "\n".join(lines) + "\n"
 
 
 def annotate_same_o1_consistency(rows: list[dict[str, Any]]) -> None:
