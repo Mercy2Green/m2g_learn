@@ -1,0 +1,4730 @@
+# Sequential V2 Manual Review Pack
+
+Cases are ordered by the requested review priorities. All experiment sample images are copied once per sample.
+
+## positive_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_1_v1_fail_v2_pass, priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认烤盘是否干净且无破损，适合承载液体瓶子。; 将七瓶饮料分批放置于烤盘上（每趟最多放4-5瓶，视稳定性而定），利用烤盘提升搬运效率和安全性。; 第一次搬运：用双手稳定托住装有3-4瓶饮料的烤盘，平稳移动至卧室并放置在安全桌面。; 第二次搬运：将剩余瓶子放入烤盘，再次运送至卧室。; 确保每次搬运时烤盘边缘不悬空，避免倾倒。
+
+## positive_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_1_v1_fail_v2_pass, priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认原位置（O0）的饮料是否已被移除或已送达目标地点；若未完成任务，则检查附近区域是否有遗漏的瓶子。; 若发现烤盘可稳定承载多个瓶子且路径允许，尝试将瓶子放置于烤盘上并用机械臂整体搬运至卧室以提高效率。; 若无可用瓶子或无法使用烤盘安全运输，则返回原位置继续搜索或确认任务已完成。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_1_v1_fail_v2_pass, priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认原位置（O0）的饮料是否已被移除或已送达目标地点；若未完成任务，则检查附近区域是否有遗漏的瓶子。; 若发现烤盘可稳定承载多个瓶子且路径允许，尝试将瓶子放置于烤盘上并用机械臂整体搬运至卧室以提高效率。; 若无可用瓶子或无法使用烤盘安全运输，则返回原位置继续搜索或确认任务已完成。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_1_v1_fail_v2_pass
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The unsuitable O1 object is rejected or the plan continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前观察到的桌子和铅笔位于卧室区域，且该桌子是可用于放置饮料的理想位置。; 检查卧室内的其他潜在放置点（如床头柜或椅子），但鉴于现有桌面空间充足且靠近光源，决定优先使用此桌。; 返回厨房，用右手拿起最左边的一瓶红色饮料，同时用左手拿起中间偏左的蓝色饮料。; 将两瓶饮料从厨房运送到卧室，并将其放在桌上。; 返回厨房，用右手拿起橙色饮料，用左手拿起另一瓶蓝色饮料。; 将这两瓶饮料运送到卧室并放置在桌上。; 再次返回厨房，用右手拿起红色盖子的饮料，用左手拿起绿色盖子的饮料。; 将最后两瓶饮料运送到卧室，并与之前送达的饮料放在一起。; 确认所有七瓶饮料均已安全送达卧室。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_1_v1_fail_v2_pass
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The unsuitable O1 object is rejected or the plan continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前观察到的环境为室内空间，可能为卧室或相邻房间，需检查附近区域以确定是否接近目标地点; 在当前位置周围进行扫描，寻找通往卧室的路径或标志性物体（如门、灯光等）; 若发现与之前任务相关的线索（如饮料瓶位置、家具布局），则继续执行原计划；否则继续探索; 一旦确认路径清晰且安全，返回厨房取走第一瓶饮料，并在移动过程中保持身体平衡; 将饮料运送至卧室并放置在合适位置，重复此过程直至所有饮料送达; 确认所有饮料已安全送达卧室
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_1_v1_fail_v2_pass
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The unsuitable O1 object is rejected or the plan continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前观察到的环境为室内房间（可能是卧室），桌面上有一支铅笔，未见饮料或相关物品。; 根据上一轮任务，已知饮料在厨房台面，需返回厨房取物。; 检查附近区域以确认是否遗漏了部分饮料或路径障碍，但当前区域内无可用物体支持任务目标。; 执行返回厨房的移动动作，继续完成剩余饮料的搬运任务。
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_2_v1_pass_v2_fail, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到台面区域并评估抓取策略，确认能否一次性抓起多个瓶子或使用托盘辅助。; 抓取第一批尽可能多的饮料（例如4-5瓶），平稳移动至卧室放置好。; 返回厨房，抓取剩余的饮料。; 将第二批饮料运送至卧室并与之前的放在一起完成交付。
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_2_v1_pass_v2_fail, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前台面无适合批量搬运的容器或装置; 继续检查周围区域寻找可优化运输效率的物品（如托盘、收纳盒）; 若未发现合适工具则维持原分批单瓶搬运计划
+
+## positive_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_2_v1_pass_v2_fail
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前观察到的托盘可以用于一次性承载所有饮料，提高运输效率。; 返回厨房，使用托盘收集所有七瓶饮料。; 从厨房出发，沿最短路径前往卧室。; 将装有饮料的托盘平稳地放在卧室的桌子上或指定位置。
+
+## positive_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_2_v1_pass_v2_fail
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前区域（包括台面、橱柜下方及附近）是否仍有未被发现的饮料瓶。; 若未找到饮料瓶，则返回上一轮观察位置或搜索厨房其他区域（如冰箱、储物柜等）以定位目标物品。; 一旦确认饮料瓶的位置，使用双手同时抓取最多四瓶进行搬运，剩余三瓶分次运送至卧室。; 在搬运过程中保持稳定，避免液体泄漏，并确保路径畅通无阻。
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_2_v1_pass_v2_fail, priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查从当前区域到目标区域的移动路径是否畅通并确认无障碍物或危险区域; 使用托盘装载3-4瓶饮料前往卧室放置于桌面，返回后重复操作完成剩余运输
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_2_v1_pass_v2_fail, priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前路径无新增障碍物后继续执行原搬运计划; 评估是否可利用空托盘辅助运输（需验证夹爪能否稳定抓取托盘边缘）; 若无法利用托盘则维持单次单瓶搬运模式
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_2_v1_pass_v2_fail, priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前观察区域（O1）中未发现任何可用于运输或辅助任务的物体，如托盘或容器。; 检查厨房台面，确认所有七瓶饮料的位置和状态，并评估是否可以一次性抓取。; 使用两只手同时抓取三到四瓶饮料，确保抓握稳定且不倾倒。; 从厨房出发，沿最短路径前往卧室，避免碰撞家具或障碍物。; 将第一批次的饮料放置在卧室内的安全位置（如床头柜或桌子）。; 返回厨房，重复上述步骤，运送剩余的饮料。; 确认所有饮料均已送达，并检查是否有遗漏或损坏。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_2_v1_pass_v2_fail, priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前观察到的托盘可以用于一次性承载所有饮料，提高运输效率。; 返回厨房，使用托盘收集所有七瓶饮料。; 从厨房出发，沿最短路径前往卧室。; 将装有饮料的托盘平稳地放在卧室的桌子上或指定位置。
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_3_positive_aggregate_tray_or_pan, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+将相邻同色饮料集中放置于烤盘中形成稳定组合; 双手托举烤盘边缘进行整体搬运（每次可运送3-4瓶）; 剩余单瓶用常规方式补充运输
+
+## positive_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查烤盘是否稳固、无变形且尺寸足够容纳多个瓶子（如并排或堆叠）。; 若烤盘适合用作托盘，则尝试将饮料瓶逐个放置于其上，确保排列稳定、不倾倒；一次最多携带一个装有瓶子的烤盘前往卧室。; 若烤盘不适合承载（如过小、不稳定或无法安全抓取），则继续执行原计划：每次仅搬运一瓶饮料。; 在确认使用烤盘后，优先将所有七瓶饮料整齐放置于烤盘上，然后一次性运送至卧室；否则分次搬运直至完成。
+
+## positive_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查附近区域（如橱柜、冰箱、其他台面）以确认饮料是否被移动或存放于别处。; 若在附近找到饮料，则使用烤盘作为临时托盘一次性搬运多瓶饮料至卧室，提高效率并减少洒漏风险。; 若未找到饮料，则返回原位置或询问人类用户饮料当前所在位置。; 一旦定位到饮料，执行搬运任务至卧室。
+
+## positive_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查厨房台面确认六瓶饮料位置和数量（基于O0）; 检查当前区域障碍物（如烤盘、台灯）并规划避开路径至卧室; 每次用双手各持一瓶，分三次运送至卧室
+
+## positive_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至厨房台面位置，检查每瓶饮料的稳定性和可携带性; 依次用夹爪抓取单瓶饮料（因物体松散分离无法组合），搬运至卧室; 在移动过程中避开烤盘等障碍物，规划绕行路径以确保安全
+
+## positive_aggregate_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_3_positive_aggregate_tray_or_pan
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查厨房台面及周边区域（含新观察到的烤盘等物品），确认饮料位置与移动路径; 依次用夹爪抓取单瓶饮料，确保稳定后移动到卧室; 将每瓶饮料放置在卧室指定位置
+
+## positive_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+检查沙发底部空间及障碍物位置（积木玩具、布团）; 移开阻碍物以暴露遥控器所在区域; 使用夹爪抓取遥控器并移至安全平面
+
+## positive_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动至沙发正前方稳定底盘后展开机械臂进行近距离扫描定位遥控器; 评估夹爪抓取可行性，若空间受限则先移除彩色积木等障碍物; 使用夹爪精准抓取遥控器并平稳移出沙发下方区域
+
+## positive_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方并扫描下方区域确认障碍物位置; 使用机械臂伸入沙发底部尝试抓取物体; 若未找到则检查桌面杂物区是否存在误放情况
+
+## positive_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+1. 扫描地板障碍物（积木/布团）并评估移动路径可行性; 2. 使用夹爪清理地面障碍确保接近通道畅通; 3. 尝试用单臂伸入沙发底进行抓取操作
+
+## positive_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+检查沙发下区域是否存在遥控器（可能需机械臂探查）; 移动底盘至可触及沙发的位置并保持平衡; 使用夹爪抓取遥控器并移出
+
+## positive_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+确认当前位置(O1)与任务所需场景(含沙发的房间)不符; 离开狭窄的书桌通道并导航回 O0 所示的有窗户和绿色沙发的区域; 在沙发周围重新扫描寻找遥控器
+
+## positive_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+1. 确认当前观察O1场景与原始目标无关（书桌区域无遥控设备）; 2. 返回原任务区域重新扫描沙发底部及周边地面; 3. 使用双臂协同抓取策略执行物体提取
+
+## positive_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+确认当前书桌环境无遥控器后返回沙发区域复测; 若仍无法定位则扩大搜索范围至周边家具表面/抽屉
+
+## positive_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到沙发下方区域进行详细扫描以定位遥控器; 使用机械臂抓取并取出找到的遥控器; 将遥控器带回指定位置
+
+## positive_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+确认当前环境无遥控器后返回原场景检查; 重新扫描沙发周围区域及相邻空间; 若发现目标则执行抓取操作
+
+## positive_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure, priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到书桌前方进行视觉扫描确认目标位置; 检查桌面及抽屉等潜在存放点; 若未发现则继续探索相邻储物空间
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+Move towards the sofa to get a closer view of the area underneath it.; Check if the remote control is visible under the sofa and confirm its location.; Extend the robot's arm or use a grasping mechanism to pick up the remote control from under the sofa.; Retract the arm and move away from the sofa with the remote control.
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域，确认遥控器的位置和可接近性; 使用右手或左手（选择更方便的一侧）伸入沙发下方，尝试抓取遥控器; 如果遥控器被遮挡或难以直接抓取，轻微移动沙发以获得更好的操作空间; 成功抓取遥控器后，将其平稳移出沙发下方区域
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方，确保视野和机械臂可及范围覆盖沙发底部区域。; 检查沙发正下方的地面，确认遥控器的位置和周围是否有障碍物。; 使用机械臂伸入沙发下方，调整夹爪姿态以稳定抓取遥控器。; 缓慢将遥控器从沙发下取出，并保持身体平衡以防倾倒。; 移动到目标位置并放下遥控器。
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域以确认遥控器的位置; 使用机械臂或吸盘等工具接近并抓取遥控器; 平稳地将遥控器从沙发下抽出
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方，靠近遥控器所在位置。; 使用右手或左手伸入沙发底部，尝试抓取遥控器。; 确认遥控器被稳定夹持后，缓慢将手和遥控器拉出。; 将遥控器放置在附近可操作的平面上。
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方，确保视野和机械臂可及范围覆盖沙发底部区域。; 检查沙发下方空间，确认遥控器的位置和周围是否有障碍物。; 使用机械臂伸入沙发下方，调整夹爪姿态以稳定抓取遥控器。; 缓慢将遥控器从沙发下取出并移至安全位置。
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+Confirm that the current location does not contain the sofa or the remote control.; Move to an adjacent area to continue searching for the sofa.; Check under the sofa in the original observation area if it is accessible from the new position.; If the remote control is found, retrieve it; otherwise, expand the search to nearby regions.
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+Confirm that the current location does not contain the remote control or any relevant items related to the task.; Return to the original area where the sofa is located and re-examine the space under it for the remote control.; If the remote is still not visible, adjust the viewing angle or use both hands to reach more effectively under the sofa.
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+Confirm that the remote is not located in the current view (desk area).; Return to the original location of the sofa based on prior knowledge.; Reposition the robot near the sofa and extend the arm to retrieve the remote from under it.; If the remote is not found, perform a brief scan around the immediate vicinity of the sofa to confirm its absence or re-locate it.
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+The current observation (O1) does not show the sofa or the area where the remote control was previously seen. Therefore, it is necessary to return to the original location of the sofa to continue the search.; Move back towards the initial area where the sofa is located and check under the sofa again for the remote control.
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+Return to the original location near the sofa where the remote control was last seen.; Check the area under the sofa again to confirm the position of the remote control.; If the remote is not found, perform a systematic search around the immediate vicinity of the sofa.
+
+## positive_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+Confirm that the remote control is not present in the current vicinity of O1.; Check if any objects on the desk (e.g., books, toys) could obstruct movement or provide tools for retrieval.; If no relevant items are found, proceed to return to the sofa area and continue the original plan.; Ensure stability during repositioning by moving slowly and maintaining balance.
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到咖啡桌前方，确认遥控器在沙发下方的位置。; 伸展机械臂或使用抓取工具进入沙发与咖啡桌之间的空间，定位并拾取遥控器。; 将遥控器移出障碍物区域，并放置于安全可见位置（如咖啡桌上）
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+环视周围环境以定位遥控器的具体位置。; 若遥控器位于咖啡桌下方，则伸入手臂尝试抓取；若空间狭窄或视线受阻，先移开障碍物（如调整桌下物品）再进行抓取。; 成功取出后，将遥控器放置于安全可见的位置（如桌面）。
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动至咖啡桌前方，确认遥控器在沙发下方的具体位置。; 伸展机械臂尝试够到遥控器；若空间狭窄或视线受阻，则调整姿态以获得更佳操作角度。; 夹取遥控器并稳定携带返回指定地点。
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+移动到咖啡桌前方，确认遥控器的位置。; 伸入咖啡桌下方，抓取遥控器。; 将遥控器移出并放置在安全可见位置（如桌面或沙发旁）
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+检查咖啡桌下方区域以确认是否有遥控器或相关物品; 若未找到，则扩展搜索范围至沙发底部两侧及前方空间; 使用手臂伸入沙发下方尝试抓取遥控器（如空间允许）; 若仍无法触及，考虑移动家具或请求人类协助
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+环视周围环境以确认遥控器的位置; 检查咖啡桌下方区域是否包含遥控器（当前可见积木玩具）; 若遥控器不在咖啡桌下，则移动至沙发另一侧或后方进行搜索; 一旦定位到遥控器，使用机械臂夹爪将其取出并放置于安全位置
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+返回至原始观察O0中的沙发区域; 检查沙发下方以定位遥控器; 若找到遥控器，则将其取出并放置于安全可见位置
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+确认当前环境是否包含原始任务中提到的沙发区域（如咖啡桌或类似家具下方）。; 若未发现沙发，则在当前环境中搜索可能存放遥控器的位置，例如书桌抽屉、显示器后方或桌面物品附近。; 若仍无发现，则返回至先前观察O0中的场景（含沙发和咖啡桌），并执行从咖啡桌下方取出遥控器的操作。
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+确认当前场景中不存在原始任务目标（即沙发及遥控器）。; 回退至上一轮观察区域（O0），重新定位沙发下方的位置。; 移动至咖啡桌前方，伸展机械臂尝试够到遥控器；若空间狭窄或视线受阻，则调整姿态以获得更好的操作角度。; 使用夹爪抓取遥控器并将其安全提升至桌面高度或便于交接的位置。
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+返回上一轮观察中包含沙发的区域; 检查沙发下方以定位遥控器; 若找到遥控器，则将其取出并放置在安全可见位置
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+回顾原始场景O0，确认咖啡桌下存在一个彩色积木状物体，但不确定其是否为遥控器。; 在当前观察O1中，场景已切换至书桌区域，未显示沙发或其下方空间，因此无法直接访问目标位置。; 返回至原始场景（包含沙发的区域），重新检查沙发下方以确认遥控器的存在和可及性。; 若遥控器可见且可触及，则使用一只手将其取出；否则尝试调整视角或移动障碍物获取访问权限。; 将遥控器安全放置在咖啡桌上或其他指定位置。
+
+## positive_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+回顾上一轮观察O0：在沙发下方可见一个彩色积木玩具，但未明确看到遥控器；当前观察O1显示的是一个书桌区域，无沙发或其下方空间的视图。; 确认当前环境为书桌区域，与原始任务目标位置（沙发）不一致，因此需重新定位至沙发所在区域。; 移动回沙发前方，并再次检查沙发下方是否有遥控器；若可见则尝试夹取，否则评估是否需要辅助工具或调整姿态以触及。; 成功取出后放置于安全位置并完成任务。
+
+## positive_reach_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+1. 环视沙发下方确认遥控器位置; 2. 若存在则执行拾取动作; 3. 否则在附近区域搜索
+
+## positive_reach_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+返回到沙发下方区域再次检查是否存在遥控器; 若存在则取出并返回; 若不存在则报告未找到
+
+## positive_reach_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## positive_reach_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+1. 移动至沙发下方区域重新探查深而狭窄的空间; 2. 使用机械臂谨慎检查可能隐藏的角落，避免假设物体紧密成组; 3. 若找到遥控器则用夹爪抓取；若未找到则报告任务无法完成
+
+## positive_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+1. 重新检查沙发下方区域（基于O0），确认无遥控器; 2. 检查其他附近区域（如O1中的书桌）; 3. 若未找到则报告任务失败
+
+## positive_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: wrong_object
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit long-rigid O1 helper chain reaches, pulls, pushes, or sweeps out the remembered target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+1. 确认当前环境是否为任务目标区域；2. 若不在目标区域，移动至沙发所在位置；3. 检查沙发下方空间是否存在遥控器
+
+## positive_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_4_positive_reach_failure
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_reach_001__O1__longtool_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查台面周围路径及障碍物（如遥控器、杯子）确保移动安全; 双手各抓取相邻两瓶饮料，沿最短路径移至卧室桌面放置; 重复步骤2三次完成剩余四瓶运输
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至台面边缘并确认路径无障碍物; 依次抓取单瓶饮料（每次1瓶）运送到卧室桌面指定区域; 重复搬运直至所有瓶子送达
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认台面周围无移动障碍物后开始搬运; 分批次抓取并运送所有瓶子至卧室桌面; 确保放置时不干扰同学活动
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到台面确认所有饮料位置并规划抓取顺序; 每次用双手各稳定抓握1-2瓶饮料（避免松散物体同时拿取）; 分3次往返运输：前两次各搬运2瓶，最后一次搬运剩余3瓶（需确保物理稳定性）
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动底盘靠近台面并调整夹爪位置对准第一瓶饮料; 使用机械臂稳定抓取单瓶饮料并保持平衡运输至卧室门口; 重复执行搬运动作直至所有饮料送达
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至台面取用金属托盘并确认其稳定性; 将7瓶饮料按大小顺序整齐排列在托盘中（确保重心稳定）; 携带装满饮料的托盘前往卧室并放置在同学可及位置
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+将剩余3瓶饮料集中放置于烤盘中作为临时载具; 单手托举烤盘边缘确保稳定性同时携带全部剩余饮料; 完成最后一次往返运送并确认所有物品安全送达
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前台面是否有可组合携带的饮料组合物体（如密集排列在烤盘中）; 若发现稳定成组的多个瓶子则尝试批量搬运；否则继续单瓶逐次运送策略; 确认周围区域是否存在其他潜在目标物体存放位置
+
+## same_o1_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前台面是否有可用作载体的稳定平面（如烤盘）以集中运输多瓶饮料; 若可用，将七瓶饮料分批放置于托盘后整体搬运；否则继续分批次每次两瓶直接抓取运送
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+拿起最左边的黄色瓶子; 离开厨房，前往卧室; 在卧室放下黄色瓶子; 返回厨房，拿起蓝色瓶子; 前往卧室，放下蓝色瓶子; 返回厨房，拿起橙色瓶子; 前往卧室，放下橙色瓶子; 返回厨房，拿起绿色瓶子; 前往卧室，放下绿色瓶子; 返回厨房，拿起透明瓶子; 前往卧室，放下透明瓶子; 返回厨房，拿起蓝色瓶子; 前往卧室，放下蓝色瓶子; 返回厨房，拿起橙色瓶子; 前往卧室，放下橙色瓶子
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前环境，确认所有七瓶饮料均在厨房台面上且状态稳定。; 使用右手抓取最左侧的黄色瓶子，同时用左手抓取其右侧的蓝色瓶子。; 将两瓶饮料移至中间位置，准备进行下一次抓取。; 重复上述动作，分批将剩余五瓶饮料从厨房台面运送到卧室。; 在运送过程中确保每只手所持物体稳定，避免掉落或碰撞。; 到达卧室后，将所有饮料放置于桌面或指定区域。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至厨房台面，确认所有七瓶饮料的位置和状态。; 使用夹爪逐一拾取每瓶饮料，确保每次只携带一瓶以保持稳定。; 从厨房出发，沿最短路径前往卧室，途中避免障碍物。; 在卧室门口或指定位置放下第一瓶饮料，返回厨房继续运送下一瓶。; 重复上述步骤，直至所有七瓶饮料全部送达卧室。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有七瓶饮料都在厨房的台面上。; 拿起最左边的第一瓶饮料（黄色）。; 离开厨房，前往卧室。; 在卧室内找到正在打牌的同学，并将第一瓶饮料递给他们。; 返回厨房，重复上述步骤，依次运送剩余六瓶饮料。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前环境，确认所有饮料瓶均在厨房台面上且未被移动。; 逐一拿起每瓶饮料，确保抓取稳定。; 从厨房出发，沿路径前往卧室。; 将每瓶饮料依次放置在卧室内的指定位置（如床头柜或桌边）。; 完成全部传递后返回初始位置。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至厨房台面，确认所有饮料瓶的位置和状态。; 逐一检查每瓶饮料是否可安全抓取，并评估携带的稳定性。; 使用机械臂和夹爪一次搬运一瓶饮料，确保在移动过程中保持身体平衡。; 将第一瓶饮料运送到卧室并放置在合适位置。; 返回厨房重复上述步骤，直到所有饮料全部送达。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前位置是否为卧室，若不确定则检查周围区域以确定位置。; 如果确认在卧室，则执行送水任务；否则返回厨房取饮料并前往卧室。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前观察中未发现任何可用于承载或运输饮料的辅助工具（如托盘），且原任务目标物体（饮料瓶）仍位于厨房台面。; 继续检查厨房区域以确保所有七瓶饮料均在可见范围内，并确认无遮挡或移动情况。; 若确认所有饮料瓶位置稳定，使用机械臂逐一抓取并搬运至卧室，每次仅携带一瓶以保证运输过程中的稳定性与安全性。; 沿最短路径从厨房前往卧室，途中保持身体平衡，避免碰撞家具或其他障碍物。; 将每瓶饮料依次放置于卧室指定位置（如床头柜或桌面），完成全部七瓶的送达任务。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前观察区域内无饮料瓶，该区域为另一个房间的桌面，可能为卧室或书房。; 检查附近区域以确定是否有遗漏的饮料瓶或通往卧室的路径。; 若未发现新线索，则返回厨房继续执行原任务计划。; 在运输过程中优先确保每只手负载稳定，避免洒出。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前所在位置为厨房台面附近，并识别出托盘、手机等物体的位置和状态。; 检查托盘是否可用于一次性携带多个饮料瓶以提高运输效率；若可行，则规划使用托盘进行批量搬运。; 若托盘不适合或无法稳定承载多瓶饮料，则继续逐个用夹爪拾取并运送每瓶饮料。; 沿最短路径前往卧室，途中注意避障并保持身体平衡。; 在卧室中将所有饮料放置于同学可轻松拿到的区域（如床边或桌面上）。; 确认所有饮料均已送达且无掉落或损坏。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有饮料瓶的位置和数量（当前可见7瓶）; 规划从厨房到卧室的最短安全路径; 分批携带饮料前往卧室，每次尽量多拿以减少往返次数; 到达卧室后将饮料放置在方便取用的位置; 返回厨房检查是否还有剩余饮料需要运送
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有七瓶饮料的位置并检查是否稳定放置在台面上。; 同时使用左右手各抓取一瓶饮料，优先选择两端或对称位置以保持平衡（例如左手最左黄瓶，右手最右橙瓶）。; 将剩余五瓶饮料分两次搬运：每次用双手各拿一瓶，共三次往返；若空间允许且稳定性可控，可尝试一次携带三瓶（如中间三瓶），但需评估抓握稳定性和路径障碍。; 在前往卧室的途中保持平稳移动，避免剧烈晃动导致瓶子掉落或液体洒出。; 到达卧室后，将所有饮料安全放置于桌面或其他指定位置，并确认同学可以方便取用。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有瓶子是否稳固放置在台面上，并检查是否有松动或易倾倒风险。; 逐个抓取并携带一瓶饮料前往卧室，每次仅携带一个瓶子以确保稳定性和安全性。; 抵达卧室后将瓶子放置于安全、易于拿取的位置（如桌面或茶几），然后返回厨房继续搬运下一个瓶子。; 重复上述步骤直至所有七瓶饮料均被送达卧室。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有饮料瓶的位置和数量，并检查是否适合搬运（如无破损、标签清晰）; 规划从厨房到卧室的安全路径，避开障碍物并确保稳定移动; 分批或一次性将饮料运送到卧室，优先保证效率与安全
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有七瓶饮料的位置并检查是否稳定放置在台面上。; 同时使用左右手各抓取一瓶饮料，优先选择最外侧或最容易拿取的瓶子以提高效率。; 将两瓶饮料安全运送到卧室，并放置在合适位置（如桌子或地面）。; 返回厨房，重复上述步骤，每次最多携带两瓶，直到所有七瓶送达。; 确认所有饮料已送达并摆放整齐后结束任务。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有七瓶饮料在台面上的位置和稳定性，确保无倾倒风险。; 逐个拾取每瓶饮料并运送到卧室，每次仅携带一瓶以保证稳定性和安全性。; 到达卧室后将瓶子放置于安全、易取用的桌面或地面区域，并确认同学可获取。; 返回厨房重复上述步骤直至所有瓶子送达。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认原始饮料是否被移动至其他位置（如冰箱、橱柜或其他台面区域）。; 若未找到饮料，则检查附近区域（如厨房其他台面、冰箱、储物柜等）以定位目标物品。; 一旦找到饮料，采用分批搬运策略运送至卧室。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: baking_tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认烤盘是否干净且无破损，适合承载液体瓶子。; 将七瓶饮料分批放置于烤盘上（每趟最多放4-5瓶，视稳定性而定），利用烤盘提升搬运效率和安全性。; 第一次搬运：用双手稳定托住装有3-4瓶的烤盘，平稳移动至卧室并放置在安全桌面。; 第二次搬运：将剩余瓶子放入烤盘，再次运送至卧室。; 确保每次搬运后烤盘内物品排列稳固，避免滑动或倾倒。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查烤盘是否足够大且稳定，可同时容纳多个饮料瓶而不倾倒或滑落。; 若烤盘适合，则将七瓶饮料依次放置于烤盘内，确保排列稳固、重心居中。; 使用机械臂抓取整个烤盘（通过其把手），携带至卧室并安全放置在指定位置。; 如烤盘不适合承载瓶子（例如尺寸不足或不稳定），则恢复为逐个搬运策略。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查附近区域（如橱柜、冰箱、其他台面）以确认饮料是否被移动或存放于别处。; 若在附近区域找到饮料，则按安全高效方式搬运至卧室。; 若未找到饮料，返回原始位置（O0图像所示区域）重新确认是否存在遗漏或误判。; 一旦定位到所有饮料，分批运送至卧室并确保放置稳妥。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查附近区域（如橱柜、冰箱、其他台面）是否仍有饮料瓶存在。; 若未找到饮料瓶，则向用户确认原始任务对象的位置或状态。; 若发现饮料瓶，使用双手同时抓取最多四瓶，分批搬运至卧室；若仅剩少量瓶子，一次性完成搬运。; 到达卧室后将饮料平稳放置于指定区域。
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认厨房台面饮料位置及数量; 规划并执行从厨房到卧室的最短路径; 一次性运送所有饮料至卧室
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认厨房台面所有饮料位置及数量; 检查从厨房到卧室的路径是否畅通无障碍; 依次使用机械臂夹爪搬运每个饮料至卧室
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查厨房台面区域，确认饮料瓶数量和状态; 短程环视确定通往卧室的可行路径; 沿规划路径将饮料瓶运至卧室
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model echoed the response schema instead of producing a task-grounded plan.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+step1; step2; step3
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查厨房冰箱及橱柜等区域是否有水瓶; 若找到水瓶，规划从厨房到卧室的最短路径并运送; 搬运时保持稳定避免洒漏
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查厨房冰箱及橱柜等区域是否存在可用饮用水; 规划避开台灯与烤盘的路径前往卧室; 搬运并放置饮料于卧室同学附近
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_aggregate_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到水槽左侧台面位置确认水瓶存在; 使用机械臂抓取水瓶并稳定持握; 沿最短路径返回用户所在位置递送
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+扫描台面区域定位水瓶及周围障碍物; 使用右手稳定抓取水瓶中部（避开标签易滑区）; 沿最短路径移动至用户前方交付
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认机械臂与底盘平衡状态后向水槽左侧移动至水瓶位置; 使用夹爪稳定抓取水瓶并调整姿态确保携带安全; 保持身体平稳返回原路径并将水瓶递送至用户指定位置
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: wrong_helper_use
+- physical_helper_type: wrong_object
+- decision_pred: helper_found
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 导航至水槽区域定位水瓶位置; 2. 使用机械臂安全抓取水瓶（避开周围杯子/容器）; 3. 平稳移动至用户指定位置完成递送
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到水槽左侧区域定位水瓶位置; 使用右手稳定抓取瓶身中部; 平稳移动至用户指定接收点
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+定位台面中央的透明塑料水瓶位置; 调整四足底盘至水槽左侧安全距离处保持平衡; 使用机械臂夹爪稳定抓取水瓶并携带移动
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野中无目标物品（水瓶）; 检查周围区域是否存在其他可能位置的水瓶; 若未找到则请求用户提供更精确的位置信息
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野无目标物后移动至相邻区域搜索; 扫描左侧抽屉及后方柜体寻找水瓶踪迹; 定位后立即执行抓取动作
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前台面未放置目标水瓶后检查周围区域; 若发现其他位置的水瓶则调整路径执行抓取任务
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+重新定位当前台面区域并扫描周围寻找水瓶; 若未找到则检查相邻台面或储物柜等潜在放置点; 确认目标位置后执行抓取与递送动作
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前环境中新出现的物体（如烤盘）是否阻挡通往水瓶的路径; 若路径受阻则调整抓取角度或顺序避开障碍物后执行原计划步骤
+
+## same_o1_direct_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动底盘至水槽左侧区域以接近目标位置; 调整机械臂姿态对准水瓶进行稳定夹取; 保持平衡将水瓶平稳递送至用户指定位置
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认水瓶在当前视野中，位于厨房台面左侧区域。; 从当前位置移动到水瓶正前方，确保能稳定抓取。; 使用机械臂抓取水瓶。; 沿安全路径将水瓶移至用户所在位置。
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认瓶子在当前视野内，位于台面中央偏左位置。; 使用右手平稳地抓取瓶身中部，确保握持稳定。; 缓慢抬起手臂，避免液体晃动或溢出。; 转身面向用户方向，保持瓶子在视线范围内。; 将水瓶递送到用户手中。
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到厨房台面前方，确保机械臂能稳定够到水瓶。; 确认水瓶位置和周围环境无遮挡后，使用夹爪抓取水瓶。; 平稳抬起水瓶，避免晃动或倾倒。; 转身并沿最短路径返回用户所在位置。; 将水瓶递交给用户。
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查厨房台面以确认水瓶的位置。; 从台面上拿起水瓶。; 转身并移动到用户所在的位置。; 将水瓶交给用户
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Move towards the kitchen counter where the water bottle is located.; Use the right hand to grasp the water bottle securely.; Lift the bottle from the counter surface.; Turn and move toward the user's location.; Place the water bottle in front of the user.
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认瓶子在当前视野中可见且未被遮挡; 移动至瓶子附近，确保机械臂可安全伸展到其位置; 使用夹爪抓取瓶子，保持稳定以避免倾倒或掉落; 抬升瓶子并沿路径返回用户所在位置
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前区域（O1）是否包含水瓶或其他相关物品，确认无水瓶后，继续前往原任务目标区域。; 返回厨房区域，再次定位并抓取水瓶。; 将水瓶运送至用户所在位置。
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前区域（O1）是否包含水瓶，若无则继续检查附近区域。; 检查台面左侧及后方区域，寻找可能被遮挡的水瓶。; 如仍未找到，则返回原位置（O0）重新评估水瓶的位置。
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前区域是否包含水瓶或其他相关物品; 若未找到水瓶，则沿路径返回并继续在厨房台面附近搜索; 确认原目标位置的水瓶是否已被移动或取走; 如仍无法确定，执行对周围区域的系统性扫描以定位水瓶
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+根据上一轮观察，水瓶位于厨房台面的另一侧，当前观察未显示水瓶。; 检查当前区域（如桌面）是否包含水瓶或其他相关物品。; 若未发现水瓶，则继续在附近区域搜索，特别是之前定位到的厨房台面区域。; 一旦找到水瓶，执行抓取并返回给用户。
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认水瓶是否在当前视野之外的其他位置; 检查厨房台面的其他区域以寻找水瓶; 若仍未找到，则询问用户水瓶的具体位置
+
+## same_o1_direct_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前区域是否包含水瓶；若未发现，则继续沿原路径返回至厨房台面进行搜索。; 确认机械臂状态与夹爪稳定性，准备执行抓取动作。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认水瓶位置在台面中央，靠近电源插座区域。; 移动至水瓶所在位置，确保路径无障碍物（如杯子、手机等）。; 抓取水瓶，保持稳定握持以防倾倒。; 转身并沿安全路径返回用户方向，避免碰撞橱柜或灯具。; 将水瓶递交给用户。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+使用左手稳定抓取水瓶，确保握持牢固且不挤压标签或瓶身。; 在保持水瓶稳定的前提下，将水瓶移至用户可接取的位置（如递向用户方向的台面边缘或直接递出）。; 若用户未在附近，则需确认用户位置后移动到其所在区域进行交接。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至厨房台面前方，定位水瓶位置。; 使用机械臂夹爪抓取水瓶，确保握持稳定。; 转身面向用户方向，保持身体平衡并携带水瓶移动至用户附近。; 将水瓶递交给用户。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认水瓶的位置和可抓取性; 移动到水瓶所在位置并拾取水瓶; 转身面向用户方向; 将水瓶递交给用户
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认水瓶位置并检查其是否可被安全抓取。; 使用一只手稳定地拿起水瓶。; 将水瓶移向用户方向（假设用户在机器人前方或附近），准备交付。; 在递送过程中保持瓶子稳定，避免倾倒。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认水瓶位置在台面且可被机械臂安全抓取。; 移动机械臂至水瓶上方，执行稳定抓取动作。; 将水瓶抬离台面并保持平衡移动至用户指定位置或交接点。; 释放水瓶并完成交付。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野内是否仍存在目标物体（水瓶）; 若未发现水瓶，则检查附近区域（如水槽、橱柜或相邻台面）是否存在水瓶; 在找到水瓶后，抓取并返回交付
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野内不存在目标物体（水瓶）。; 检查附近区域：包括左侧抽屉、下方橱柜或相邻台面区域是否存放有水瓶。; 若在附近区域找到水瓶，则抓取并递送；否则，提示用户水瓶不在可见范围内。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前环境（O1）中不存在目标水瓶。; 回溯至上一轮观察（O0）中的水瓶位置，判断其是否已被移除或放置于其他区域。; 检查附近区域（如橱柜、抽屉、水槽下方等）是否存在该水瓶的可能存放点。; 若在附近区域找到水瓶，则抓取并递交给用户；否则报告无法定位目标物体。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野内不存在目标水瓶。; 向周围区域扩展搜索范围（如检查附近橱柜、冰箱或另一侧台面）。; 若找到水瓶，则抓取并递送；否则，通知用户水瓶不在可见区域内。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野内是否仍存在水瓶（检查台面及附近区域）。; 若未发现水瓶，则扩展搜索范围至相邻橱柜或下方抽屉（如可访问）。; 在找到水瓶后，使用一只手稳定抓取并移至用户可接取位置。
+
+## same_o1_direct_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前视野内不存在目标水瓶。; 检查附近区域（如橱柜内部、其他台面或地面）是否可能存放该水瓶。; 若在附近区域找到水瓶，则抓取并递交给用户；否则，向用户报告未找到。
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查附近区域确认水瓶位置; 移动至水瓶所在位置; 抓取水瓶并返回
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查台面附近区域确认水瓶位置; 移动至水瓶所在位置; 拾取水瓶并返回
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The original single target is handled directly without O1 helper overuse.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查水瓶是否在可见范围内且可抓取; 用单手稳定拿住水瓶; 将水瓶递交给用户
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 移动至水瓶所在区域并确认其位置; 2. 使用夹爪抓取水瓶; 3. 将水瓶携带至目标位置
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查附近区域确认水瓶位置及周围环境安全; 若未找到则搜索周边可能位置（如橱柜下方）; 返回至用户所在位置交付
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查台面其他区域（如烤盘附近）; 若未找到则检查橱柜下方空间; 抓取并递送
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 检查烤盘周围及台面其他可见位置是否有水瓶；2. 若未找到，则移动至橱柜下方等区域检查（仅限可见范围）；3. 确认水瓶位置后抓取
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前观察中无水瓶存在; 继续检查附近区域（如橱柜、其他台面）; 定位后抓取并返回
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到台面位置; 检查附近区域（如柜子、角落）寻找水瓶; 如果找到水瓶，则用一只手抓取并递交给用户
+
+## same_o1_direct_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: Direct execution is not explicit or the response continues checking unnecessarily.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O0__direct_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_direct_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至厨房台面中央偏左位置检查水瓶；若未找到，则在台面其他区域搜索；定位后抓取并带回
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前并扫描下方区域确认遥控器位置与可及性; 使用单臂或双臂稳定抓取可见的遥控器（避免触碰周围杂物）; 将遥控器移至桌面等安全放置点
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发周围区域以定位遥控器的确切位置; 移动底盘至沙发侧边或前方，确保机械臂可达目标物; 使用夹爪抓取并移出遥控器
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认遥控器的具体位置（可能需调整摄像头角度或使用传感器扫描）; 规划安全路径至目标区域并移动机器人靠近沙发下方; 使用机械臂抓取遥控器后返回原位置
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发周围及底部空间确认目标位置; 使用夹爪探索沙发下狭窄区域定位物体; 安全抓取并移出遥控至桌面
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发周围地面及机械臂可达区域确认目标位置; 调整底盘姿态使夹爪对准沙发底部空隙; 尝试抓取并移出遥控器
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 扫描当前场景所有表面（烤盘/手机/书本周围）及相邻地面; 2. 若未发现目标则返回原区域重新检查沙发底部边缘缝隙; 3. 确认无目标后向用户报告位置信息
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前厨房台面环境无目标物后返回客厅区域; 重新扫描沙发底部及周围隐蔽位置（如靠垫缝隙、侧边角落）; 使用夹爪对可触及的潜在藏匿点进行系统性排查
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+返回客厅场景继续搜索沙发下方及周围区域; 使用视觉系统扫描地面和家具底部寻找遥控器的特征（如黑色矩形物体）; 若未找到则检查其他可能位置（茶几、抽屉等）
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+返回沙发周围继续扫描地面及缝隙寻找遥控器; 若仍无发现则报告目标物不存在于可见区域
+
+## same_o1_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all, priority_7_qwen35_same_o1
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认当前环境无可用工具后继续执行原搜索策略; 移动至沙发侧方扩大视觉扫描范围; 若仍无法定位则报告任务失败
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Move towards the sofa to inspect the area beneath it for the remote control.; Use a low-clearance reach or extendable tool to retrieve the remote from under the sofa.; Verify the object retrieved is the remote control before moving away.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域，确认遥控器的位置和可接近性; 使用右手或左手（选择更方便的一侧）伸入沙发下方，尝试抓取遥控器; 如果遥控器被遮挡或难以直接抓取，轻微移动沙发以获得更好的操作空间; 成功抓取遥控器后，将其平稳移出沙发下方区域
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方，确保机械臂可操作区域无障碍; 检查沙发下方空间，确认遥控器位置和周围环境; 使用机械臂伸入沙发下方，对准遥控器并夹取; 平稳抬起遥控器，避免碰撞或掉落; 将遥控器移出沙发下方区域
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方，靠近遥控器的位置。; 使用机械臂伸入沙发底部，小心地抓取遥控器。; 将遥控器平稳地从沙发下移出并收回。
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动到沙发前方，靠近遥控器所在位置。; 使用右手或左手伸入沙发底部，尝试抓取遥控器。; 确认遥控器被稳定夹持后，缓慢将手和遥控器拉出。; 将遥控器放置在附近平坦表面（如桌面）上。
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Move closer to the sofa to get a better view of the area underneath it.; Use the mechanical arm to reach under the sofa and grasp the remote control.; Lift the remote control out from under the sofa and move it to a safe location.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Continue searching for the sofa in the surrounding area as it was not found in the current view.; Check nearby regions to locate the sofa and confirm the position of the remote control under it.; Once the sofa is located, proceed with retrieving the remote control using the previously planned approach.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Confirm that the current location does not contain the remote control or any related objects.; Return to the area near the sofa to continue searching for the remote control under it.; Check if the cloth or other items near the sofa might be obstructing access and adjust position accordingly.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Since O1 does not provide any relevant information about the remote control or its location under the sofa, return to the area near the sofa.; Re-examine the space under the sofa to locate the remote control.; Use the mechanical arm to retrieve the remote if it is visible or accessible.; If the remote is not found after a thorough check, consider moving the sofa slightly or repositioning for better access.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+The current observation does not provide any useful information about the location of the remote control under the sofa.; Return to the area near the sofa to continue searching for the remote control.; Check the floor beneath and around the sofa for the remote control.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: baking_tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Continue searching for the remote control by checking areas near the sofa as previously planned.; If no progress is made in locating the remote control under the sofa, expand the search to nearby surfaces or objects that might be relevant, such as tables or shelves where a remote could have been placed.; Use visual confirmation and object recognition to identify the remote control if it appears in future observations.
+
+## same_o1_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: baking_tray
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+Confirm that the current location does not contain the remote control.; Return to the area near the sofa to continue searching for the remote under it.; If necessary, reposition the robot closer to the sofa to improve visibility and access to the space beneath.
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域以确认遥控器的位置和周围环境是否无障碍物。; 伸入机械臂或移动身体进入沙发下方空间，抓取遥控器。; 将遥控器移出并放置在安全、可见的表面上（如茶几或桌面）。; 确认任务完成，返回初始位置或待命状态。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域以确认遥控器的具体位置和可访问性。; 若遥控器可见且易于抓取，则使用一只手伸入并拾取遥控器；若空间狭窄或遥控器被遮挡，则尝试调整姿态或移动沙发边缘以便接触。; 将遥控器安全取出后，放置在附近稳定表面（如茶几）上。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+短程环视确认沙发下方是否有可见的遥控器或其他障碍物。; 若遥控器在视线范围内且可触及，则伸展机械臂并使用夹爪小心抓取；否则尝试调整位置以便更接近目标区域。; 成功拾取后，将遥控器移至安全高度，并返回指定放置点或交还给用户。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域以定位遥控器; 确认遥控器位置并规划抓取路径; 伸入或移动至沙发下方抓取遥控器; 将遥控器移出并放置在安全可见的位置
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发下方区域，确认遥控器的位置和可访问性。; 使用一只手或双手伸入沙发下方抓取遥控器（若空间允许）。; 将遥控器取出并放置在安全、可见的表面上。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+短程环视周围环境，确认遥控器是否在沙发下方可见区域。; 若遥控器不可见，则尝试靠近沙发底部并伸展机械臂探入下方空间进行搜索。; 一旦定位到遥控器，使用夹爪稳定抓取后将其取出并放置于安全位置。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+回顾上一轮观察（O0）：沙发下方存在积木和衣物，遥控器可能被遮挡。; 当前观察（O1）显示的是厨房台面区域，包含烤盘、手机、书籍和台灯，未见遥控器或沙发相关物体。; 确认当前视野中无目标物，需返回至沙发附近区域继续搜索。; 在沙发下方安全地拾取遥控器，并移出放置于茶几或其他可见表面。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: baking_tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+返回至沙发所在区域，重新定位并检查沙发下方以确认遥控器位置和可及性。; 使用一只手伸入沙发下方抓取遥控器，同时保持身体稳定以防碰撞或倾倒。; 将遥控器取出并放置在安全、可见的表面上（如茶几或沙发扶手）。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+返回至原沙发位置附近，重新检查沙发底部是否仍有遥控器或其可能被移动后的存放点。; 若仍不可见，则在沙发周围地面及低矮家具下进行搜索，确认遥控器是否存在。; 如找到遥控器，使用夹爪安全取出并放置于指定区域；若未找到，报告任务失败或建议人工检查。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+返回上一轮观察中的沙发区域; 靠近沙发并检查沙发下方的物体是否为遥控器; 如果确认是遥控器，则将其取出; 将遥控器放置在安全可见的位置
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+回顾上一轮观察（O0）中沙发下方存在一个彩色小方块物体，但未确认是否为遥控器。; 当前观察（O1）显示的是厨房台面区域，无沙发或其下方空间的可见信息。; 返回至沙发所在区域，重新检查沙发下方以定位遥控器。
+
+## same_o1_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+返回至沙发前方，确认遥控器在沙发下方的位置。; 伸展机械臂尝试够到遥控器；若空间狭窄或无法直接触及，则调整位置以获得更好的操作角度。; 夹取遥控器并将其安全移出至可见区域。
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查沙发底部区域是否存在遥控器; 若存在则移动至位置并拾取; 若不存在则继续搜索附近区域
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+环视沙发底部及周围区域以确认遥控器位置; 移动至沙发下方目标位置; 使用机械臂抓取遥控器
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: single_turn_multi_image
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 返回沙发下方区域重新检查; 2. 检查沙发侧面及周围家具表面; 3. 若仍未找到则确认任务状态
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: none
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 返回沙发附近区域，重新使用视觉传感器扫描下方空间确认遥控器位置；2. 若未发现，检查沙发周围可能的隐藏位置；3. 用单手稳定抓取并移出。
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: continue_search
+- physical_helper_type: tray
+- decision_pred: continue_search
+- relation_pred: none
+- failure_reason: The current O1 container is rejected or search continues for the remembered reach task.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+移动至沙发附近，使用机械臂检查沙发底部区域是否有遥控器; 若发现遥控器，调整机械臂角度以稳定抓取（避免因空间狭窄导致失稳）; 携带遥控器返回原位置
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前观察区域是否为任务目标区域; 若不在则移动回客厅区域; 重新检查沙发底部及周边是否存在遥控器
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: not_evaluated
+- action_mode_pred: unclear
+- physical_helper_type: unclear
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: Model exhausted its generation budget before producing final content.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+(no parsed plan)
+
+## same_o1_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_5_same_o1_all
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The response neither clearly rejects the shared O1 container nor continues searching.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O0__reach_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/same_o1_reach_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 移动至沙发附近并再次检查下方区域；2. 若未发现遥控器，调整机械臂角度尝试伸入取物；3. 确认夹爪能稳定抓取后取出
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查台面周围是否有移动障碍物（如手机）并确认路径畅通; 双手各抓取一瓶相邻的水瓶，沿最短路径运送至卧室桌面; 重复上述步骤直至所有水瓶送达
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+移动至台面边缘定位第一瓶（红色）; 抓取单瓶后沿最短路径前往卧室放置; 返回重复执行直至完成全部搬运
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查从厨房到卧室的路径是否畅通无阻; 使用托盘或双手分批次运送第一批3-4瓶水至卧室; 返回厨房继续运送剩余水瓶
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+1. 确认手机位置并移至台面边缘避免碰撞风险; 2. 检查走廊及卧室门是否畅通无阻; 3. 分四次搬运：前三次各取两瓶（左右手协同），最后一次单手持一瓶
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查台面周围是否有障碍物并规划移动路径; 依次抓取单瓶饮料并保持身体平衡后运往卧室; 重复搬运直至所有瓶子送达
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前环境是否为厨房（O1显示为书桌区域），若不在起点则返回厨房重新定位; 使用双臂交替抓取剩余未搬运的3-4瓶饮料，优先选择相邻同色组减少调整时间; 将已拿取的2瓶放置于卧室桌面后返回取下一批
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前环境是否为目标区域（卧室）并检查桌面是否有障碍物; 若不在卧室则导航至正确位置，若在则继续执行搬运任务; 分批抓取水瓶时注意避开铅笔等小物件并保持抓握稳定
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查当前桌面是否为卧室区域或必经通道; 若为其他房间则返回原台面继续搬运剩余饮料; 保持双手稳定抓取避免碰倒铅笔及台灯
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前桌面无目标物体后继续执行原搬运计划; 沿已规划路线前往卧室完成剩余瓶子运输
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+从厨房拿起所有饮料瓶; 转身离开厨房; 穿过走廊进入卧室; 将饮料瓶放在卧室内同学可及的位置
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查所有饮料瓶是否都已放置在台面中央，确保它们稳定且易于抓取。; 从台面左侧开始，用左手依次拿起红色和蓝色的瓶子，右手同时拿起橙色和深蓝色的瓶子，形成两个稳定的抓握组合。; 将两组瓶子一起移出厨房区域，进入走廊。; 在走廊中短暂停顿，确认路径无障碍后，继续向卧室方向前进。; 到达卧室门口时，先放下左手的瓶子，再放下右手的瓶子，确保放置平稳。; 检查所有七瓶饮料是否均已送达，并确认它们位于床边或桌面上方便取用的位置。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+移动到厨房台面附近，确认所有饮料瓶的位置和状态。; 使用机械臂逐一抓取饮料瓶，并确保每次只携带一个或物理上紧密成组且稳定的组合物体。; 将第一个饮料瓶运送到卧室并放置在合适位置。; 返回厨房，重复上述步骤，直到所有饮料瓶被运送完毕。; 检查卧室中是否已全部送达，并确认无遗漏。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+从厨房台面拿起一瓶饮料; 转身离开厨房，前往卧室方向; 进入卧室，找到正在打牌的同学; 将手中的饮料交给其中一位同学
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+从厨房台面逐个拾取饮料瓶，优先选择易抓握且稳定排列的瓶子。; 在移动过程中保持双臂平衡，避免晃动或掉落。; 进入卧室后，将所有饮料瓶放置在床边或桌面上便于拿取的位置。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+移动到厨房台面附近，确认所有饮料瓶的位置和状态。; 逐一检查每瓶饮料是否稳固，确保夹爪能稳定抓取单个瓶子。; 从左至右依次抓取每一瓶饮料，并在移动过程中保持身体平衡。; 将每瓶饮料运送到卧室，放置在靠近打牌区域的合适位置。; 重复上述步骤直至所有饮料送达。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前观察区域内无目标物体（饮料），且该区域为卧室内的桌面，非存放饮料的位置。; 返回厨房，再次检查台面以确保所有饮料均未被遗漏或移动。; 使用机械臂逐一抓取每瓶饮料，每次仅携带一瓶以保证稳定性。; 从厨房出发，沿最短路径移动至卧室，途中保持底盘平衡，避免碰撞家具或障碍物。; 在卧室门口附近停稳后，将饮料逐个放置于桌面或指定区域。; 重复上述步骤直至所有饮料送达。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认所有饮料瓶的位置和数量（当前可见7瓶）; 规划从厨房到卧室的最短安全路径，避免障碍物; 分批携带饮料前往卧室，每次尽量多拿以减少往返次数; 到达卧室后将饮料放置在方便取用的位置，并确认同学接收; 返回厨房检查是否还有剩余饮料需要运送
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认所有七瓶饮料的位置并检查是否稳定放置在台面上。; 同时使用左右手各抓取一瓶饮料，优先选择最外侧或最容易拿取的瓶子以提高效率。; 将两瓶饮料安全运送到卧室，放在指定位置（如桌子或地面）后返回厨房。; 重复上述步骤，每次携带最多两瓶，直至所有七瓶饮料送达卧室。; 在最后一次运送时，若剩余一瓶，则单手携带完成任务；若无剩余则确认全部送达。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查并确认所有七瓶饮料在台面上的位置和稳定性，确保无倾倒风险。; 评估单次携带能力：夹爪一次仅能稳定携带一瓶饮料；若需同时运送多瓶，必须物理捆绑或分批运输。; 规划从厨房到卧室的最短安全路径，避开障碍物并保持移动平衡。; 逐瓶抓取并运送到卧室，每次只携带一瓶以确保稳定性与安全性。; 在卧室将每瓶饮料放置于稳定表面（如桌子），避免碰撞或倾倒。; 完成所有七瓶运送后返回厨房确认任务结束。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认所有饮料瓶的位置和数量（当前可见7瓶）; 规划从厨房到卧室的最短安全路径; 逐次搬运饮料瓶至卧室，每次携带1-2瓶以确保稳定性和安全性; 将每瓶饮料放置在卧室指定位置（如桌子或地面）; 确认所有饮料已送达并返回厨房
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认所有七瓶饮料的位置并检查是否稳定放置在台面上。; 同时使用左右手各抓取一瓶饮料，开始向卧室移动；若无法一次拿稳多瓶，则优先分批搬运。; 到达卧室后，将饮料安全放置于桌面或指定区域，并返回厨房继续搬运剩余瓶子。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认所有饮料瓶的位置和可抓取性（检查是否稳定、无遮挡）; 逐个拾取饮料瓶并运送至卧室，每次仅携带一瓶以确保稳定性; 在卧室将每瓶饮料安全放置于桌面或指定区域; 返回厨房继续搬运剩余瓶子直至全部送达
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前观察位置为室内环境（可能为走廊、书房或卧室附近），但未发现目标物品（饮料）或相关路径线索。; 返回至厨房区域重新定位并检查饮料摆放情况。; 一次性携带尽可能多的瓶子前往卧室，避免多次往返。; 到达卧室后将瓶子安全放置在桌面或指定位置，并返回厨房取剩余瓶子。; 重复上述步骤直至所有饮料送达。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前桌面空间足够容纳所有7瓶饮料；若空间不足，则寻找附近其他平坦表面（如床头柜、书桌等）作为临时放置区。; 使用左手抓取3瓶饮料，右手抓取4瓶饮料（或根据稳定性调整为2+2+3分批搬运），沿最短路径从厨房前往卧室。; 到达后将所有瓶子平稳放置在当前桌面或其他可用平坦表面；若桌面空间有限，则优先摆放靠近边缘的区域，并确保不阻碍同学活动。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认当前所在位置是否为卧室：检查周围是否有床、桌椅、打牌相关物品等典型卧室特征。; 若当前位置非卧室，则继续沿路径向卧室方向移动并搜索目标区域；若已到达卧室，则准备接收饮料。; 返回厨房，按原计划分批搬运饮料至卧室。
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_8b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认厨房水瓶数量及位置（O0已知7瓶）; 通过短程环视确定卧室方向和入口（O1信息）; 规划从厨房到卧室的最短路径并运送
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_8b | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+确认厨房台面饮料瓶为待运送物品; 通过短程环视检查从厨房到卧室的路径是否畅通; 运送饮料瓶至卧室
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查厨房台面水瓶数量和位置确保安全抓取; 确认卧室路径是否畅通（如书桌位置）避免障碍物; 使用两只手臂同时搬运两瓶水至卧室，重复直至全部送达
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_8b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+1. 检查厨房台面确认饮料数量和位置（共7瓶）; 2. 分批搬运：每次携带最多两个紧密排列的瓶子以减少往返次数; 3. 移动至卧室并放置所有饮料在书桌表面，避免下方狭窄空间
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: wrong_helper_use
+- physical_helper_type: wrong_object
+- decision_pred: helper_found
+- relation_pred: none
+- failure_reason: The unsuitable O1 object is used as a helper.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+1. 检查当前观察到的书桌区域是否为卧室或通往卧室的路径；2. 若非卧室，继续搜索附近区域确认卧室位置；3. 装载所有饮料并导航至确定的卧室位置
+
+## wrong_helper_negative_aggregate_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O0__agg_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_aggregate_001__O1__wrong_o1_000001.jpg`
+
+Plan:
+
+检查厨房台面区域，确认所有饮料瓶的位置和稳定性; 使用双手分别抓取两个饮料瓶（若无法稳定同时抓取，则分批进行），每次最多携带两个瓶子; 移动至卧室并交付所有饮料瓶；根据新观察O1确认卧室路径无障碍物
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+导航至地板上的黑色遥控器位置附近; 确认周围环境安全并识别低处的目标物体; 调整机械臂姿态以抓取位于家具下方的遥控器; 将遥控器带回起始点或用户处
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: wrong_helper_use
+- physical_helper_type: wrong_object
+- decision_pred: helper_found
+- relation_pred: none
+- failure_reason: The unsuitable O1 object is used as a helper.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+1. 检查地板可见区域是否存在遥控器和书本等障碍物; 2. 使用夹爪移除遮挡物（如书本）并抓取遥控器; 3. 将遥控器移至安全位置
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+移动底盘至床边靠近遥控器的位置并稳定身体平衡; 调整机械臂角度尝试抓取地板上的遥控器; 携带遥控器返回起始区域
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+移动到床边区域确认目标物体位置; 使用机械臂抓取遥控器并移至安全高度; 将物品放置到指定收纳区
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认场景中是否存在沙发并检查其底部空间; 定位床下的遥控器和书本位置; 使用双臂协同抓取床下遥控器
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认床底空间深度及障碍物分布（如是否被衣物遮挡）; 移动底盘至床边保持平衡后展开机械臂尝试抓取遥控器; 若无法直接触及则调整夹爪角度或请求用户协助定位
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+扫描当前环境寻找沙发或类似家具结构; 若未发现则返回原始位置检查床底区域; 根据最新观察调整目标物体定位策略
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认当前环境是否存在其他潜在放置点（如桌底/床头柜）; 若未发现目标则返回原位置重新定位遥控器; 执行抓取操作并转移至指定区域
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+根据当前视角重新评估目标物体位置是否受遮挡或需调整路径; 若发现障碍物则绕行至床边地板区域保持底盘稳定; 执行夹爪抓取操作并返回原点
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+重新扫描当前环境确认目标物体位置变化; 检查床下区域是否仍存在遥控器; 若未找到则扩大搜索范围至桌面/地面
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+扫描房间地面及床铺周边区域定位遥控器的新位置; 确认目标物体后执行拾取操作; 将物品转移至指定接收点
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+验证床体与地面空间无障碍物后移动至遥控位置; 调整夹爪角度对准遥控器进行抓取操作
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+Move to the living area where the sofa is located.; Check under the sofa for the remote control.; Retrieve the remote control from under the sofa.
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+检查沙发下方区域以确认遥控器的位置和可接近性; 使用右手或左手（选择更方便的一侧）伸入沙发下方，抓取遥控器; 平稳地将遥控器从沙发下抽出; 确保在移动过程中不碰倒其他物品
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+移动到沙发附近，检查沙发下方空间是否可见且可接近; 如果可见且无障碍，使用机械臂伸入沙发下方，夹取遥控器并平稳取出; 确认遥控器已成功抓取后，将机器人移至目标位置
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+Move towards the sofa area.; Inspect the space underneath the sofa to locate the remote control.; Extend the robotic arm and grasp the remote control.; Lift the remote control out from under the sofa.
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+检查沙发下方区域以确认遥控器的位置和可接近性; 使用右手或左手（选择更合适的一侧）伸入沙发下方，抓取遥控器; 平稳地将遥控器从沙发下抽出并移至安全位置
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+移动到床边，检查床下空间以确认目标物体位置; 使用机械臂伸入床下，定位并夹取遥控器; 缓慢收回机械臂，确保携带稳定; 移动至指定放置区域，释放遥控器
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: none
+- decision_pred: unclear
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+Verify if the current room contains a sofa by scanning the area around the table and near the bed.; If a sofa is found, proceed to check under it for the remote control using the mechanical arm.; If no sofa is visible in the vicinity, continue searching nearby areas or re-evaluate the task location based on prior knowledge.
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+Continue searching for the sofa in the surrounding area since it is not visible in the current observation.; Check under furniture such as tables or beds if necessary, though these are less likely to have a remote control underneath.; Move to another section of the room to locate the sofa and retrieve the remote control.
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | two_turn__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+Confirm that the current location does not contain the sofa mentioned in the task.; Proceed to scan the surrounding area for the presence of a sofa.; If a sofa is found, approach it and check underneath for the remote control.; Use the mechanical arm to retrieve the remote control if visible or accessible.; Carry the remote control to the designated destination.
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: wrong_object
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认遥控器位于沙发下方，确保其可被安全拾取。; 伸入沙发下方拾取遥控器，避免碰撞周围物体（如书籍、杯子等）。; 将遥控器从沙发下取出并移动到安全区域或用户可达的位置。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认沙发下方的遥控器位置和周围环境，确保无遮挡或障碍物。; 使用一只手臂伸入沙发下方抓取遥控器，同时保持另一只手稳定以防止身体倾斜或碰撞。; 将遥控器取出并放置在附近的平坦表面（如茶几或床头柜）上，避免掉落或损坏。; 检查是否还有其他物品需要处理（如书籍、衣物等），若无则任务完成。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认遥控器位于沙发下方，检查其周围是否有障碍物影响机械臂操作。; 伸展机械臂至沙发下方，抓取遥控器（若空间狭窄则需调整姿态以确保稳定抓握）。; 将遥控器安全提升并移出沙发区域，保持身体平衡避免碰撞。; 携带遥控器返回指定位置或交还给用户。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认遥控器位于沙发下方的可见区域; 伸入沙发底部拾取遥控器; 将遥控器安全地移出沙发下方; 返回到初始位置或交付给用户
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认沙发下方的遥控器位置和周围环境，确保无障碍物阻挡抓取路径。; 伸展左臂或右臂进入沙发下方，稳定夹爪以拾取遥控器。; 将遥控器移出沙发下方并放置在附近的平坦表面（如茶几或床头柜）上。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: single_turn_multi_image
+- pass_fail: needs_review
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认遥控器位于沙发下方的可见区域，避免误判为其他物体。; 伸展机械臂至沙发下方，尝试抓取遥控器；若空间狭窄则调整姿态以确保夹爪稳定接触目标。; 成功抓取后，缓慢收回机械臂并保持平衡，将遥控器移出沙发下方区域。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+检查当前区域（包括桌子下方及周围地面）是否有遥控器或其他相关物体。; 若未发现遥控器，则向房间深处移动，重点搜索床边、地板角落等可能放置遥控器的位置。; 在找到遥控器后，使用单臂抓取并安全移至可及表面。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+移动至先前观察中遥控器所在区域（靠近床边的地板），确认该位置是否仍存在遥控器。; 若遥控器仍在原位，则使用机械臂伸入并抓取；若被遮挡或移除，检查周围地面及家具下方是否有其他可能存放位置。; 成功获取后，将遥控器放置于安全可见表面（如桌面），完成任务。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+根据上一轮观察O0，确认遥控器位于沙发下方地面区域，靠近桌腿和书本。; 在当前观察O1中，该区域已不可见（因光线暗、视角变化或遮挡），无法直接确认遥控器位置。; 移动至沙发附近，降低高度并使用传感器检查沙发下方空间，定位遥控器。; 伸出手臂或夹爪进入沙发下方抓取遥控器，并安全取出放置于桌面或其他稳定表面。
+
+## wrong_helper_negative_reach_001 | ollama_qwen3_vl_8b | two_turn__natural_free_plan
+
+- review reasons: priority_6_wrong_helper_fail_or_review
+- protocol: two_turn_sequential
+- pass_fail: needs_review
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: The wrong O1 object is not used, but it is not explicitly rejected and search does not continue.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O0__reach_o0_000002.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/wrong_helper_negative_reach_001__O1__wrong_o1_000004.jpg`
+
+Plan:
+
+确认当前区域无沙发; 定位桌子位置并移动至下方; 拾取遥控器
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_humanoid_dual_arm
+
+- review reasons: priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: embodiment_batching
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Embodiment batching is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查周围通道是否畅通并确认安全移动路线到卧室; 用双手各抓取一瓶饮料（共两瓶）运送至卧室放置妥当，重复此步骤三次每次运送两瓶最后一次运送剩余的一瓶
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | multi_image__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 移动至台面边缘保持身体稳定并扫描路径障碍物; 2. 依次抓取单瓶饮料（每次仅携带1个独立物体）; 3. 沿最短安全路线搬运至卧室后放置，返回重复步骤
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan
+
+- review reasons: priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_single
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认台面所有瓶子可安全抓取且无遮挡物; 规划最优路径至卧室并避开障碍物; 分批次搬运剩余6个瓶子（每次最多携带3-4瓶）
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: wrong_object
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+1. 确认桌面物品布局并规划抓取顺序（从左到右依次处理）; 2. 使用双夹爪同时稳定抓取相邻两瓶饮料，沿最短路径移动至卧室门口; 3. 重复搬运过程直至所有7瓶饮料送达，最后检查是否有遗漏
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | multi_image__natural_free_plan_quadruped_single_arm
+
+- review reasons: priority_8_qwen35_positive
+- protocol: single_turn_multi_image
+- pass_fail: fail
+- action_mode_pred: direct_multi_trip
+- physical_helper_type: none
+- decision_pred: direct_is_enough
+- relation_pred: none
+- failure_reason: Direct multi-trip transport is not a physical O1 helper chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查周围移动路径是否畅通且无障碍物; 依次抓取单瓶饮料并稳定携带至卧室放置点; 重复搬运直至所有瓶子送达
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan
+
+- review reasons: priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+使用托盘装载所有7个瓶子（确认托盘容量足够）; 平稳移动至卧室并放置于桌面
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | two_turn__efficient_safe_free_plan_quadruped_single_arm
+
+- review reasons: priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查当前区域是否遗漏目标饮料瓶或确认其已移至其他位置; 若发现多个瓶子可稳定放置于托盘中，尝试组合搬运以减少往返次数; 否则继续执行单瓶运送计划
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan
+
+- review reasons: priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: fail
+- action_mode_pred: unclear
+- physical_helper_type: tray
+- decision_pred: unclear
+- relation_pred: unclear
+- failure_reason: No explicit physical O1 container-to-O0 aggregate action chain.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+确认所有瓶子已稳定放置在机器人载物平台中央区域; 沿最短路径移动至卧室门口并调整位置对准入口; 平稳进入卧室后将全部饮料放置于桌面或地面安全区域
+
+## positive_aggregate_001 | ollama_qwen3_5_35b | two_turn__natural_free_plan_humanoid_dual_arm
+
+- review reasons: priority_8_qwen35_positive
+- protocol: two_turn_sequential
+- pass_fail: pass
+- action_mode_pred: physical_o1_helper_chain
+- physical_helper_type: tray
+- decision_pred: helper_found
+- relation_pred: aggregate_transport
+- failure_reason: Physical O1 container helper is linked to the remembered aggregate-transport target.
+- copied O0 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O0__agg_o0_000001.jpg`
+- copied O1 image: `/home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images/core_clean_4models/positive_aggregate_001__O1__container_o1_000001.jpg`
+
+Plan:
+
+检查O1中金属托盘是否可安全承载多瓶饮料（需确认尺寸适配性）; 使用双手协同抓取3-4瓶饮料放置于托盘中，保持重心稳定; 分2次完成全部运送：首次搬运4瓶至卧室桌面/地面临时存放点
+

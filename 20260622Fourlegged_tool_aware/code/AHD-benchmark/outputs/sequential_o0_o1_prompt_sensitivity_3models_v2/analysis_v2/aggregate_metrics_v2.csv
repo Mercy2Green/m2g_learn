@@ -1,0 +1,9 @@
+group_by,group_value,total,ok_eval,pass,fail,needs_review,parse_error,not_evaluated,physical_chain_success,embodiment_batching,direct_multi_trip,wrong_helper_use,no_tool_overuse
+model_id,ollama_qwen3_5_35b,180,166,47,43,76,0,14,27,30,32,6,0
+model_id,ollama_qwen3_vl_30b_a3b_instruct_q4_K_M,180,180,60,41,79,0,0,36,34,51,2,0
+model_id,ollama_qwen3_vl_32b_instruct_q4_K_M,180,180,70,40,70,0,0,42,28,40,4,0
+protocol,single_turn_multi_image,270,261,50,79,132,0,9,30,61,78,3,0
+protocol,two_turn_sequential,270,265,127,45,93,0,5,75,31,45,9,0
+sample_type,positive_aggregate,108,106,46,60,0,0,2,46,16,29,0,0
+sample_type,same_o1_different_o0,324,314,94,58,162,0,10,47,53,60,6,0
+sample_type,wrong_helper_negative,108,106,37,6,63,0,2,12,23,34,6,0
