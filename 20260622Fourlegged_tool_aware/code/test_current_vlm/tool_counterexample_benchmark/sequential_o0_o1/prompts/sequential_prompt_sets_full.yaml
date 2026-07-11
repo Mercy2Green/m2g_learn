@@ -55,7 +55,8 @@ prompts:
         "reason": "string"
       }
     clean_evidence: true
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__efficient_safe_free_plan"
     protocol: "single_turn_multi_image"
@@ -113,7 +114,8 @@ prompts:
         "reason": "string"
       }
     clean_evidence: true
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__tool_prior_free_plan"
     protocol: "single_turn_multi_image"
@@ -179,7 +181,8 @@ prompts:
     clean_evidence: false
     intervention_type: "helper_prior"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__strong_decomposition_free_plan"
     protocol: "single_turn_multi_image"
@@ -191,6 +194,7 @@ prompts:
     system_prompt: |
       你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
       不要输出低层关节动作。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作或移动的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -200,6 +204,7 @@ prompts:
       6. 只有当直接操作明显更简单、更安全、更稳定时，才选择直接操作。
       7. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       8. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够。
+      
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -233,6 +238,7 @@ prompts:
     system_prompt: |
       你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
       不要输出低层关节动作。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作或移动的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -242,6 +248,7 @@ prompts:
       6. 只有当直接操作明显更简单、更安全、更稳定时，才选择直接操作。
       7. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       8. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够。
+      
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -259,7 +266,8 @@ prompts:
     clean_evidence: false
     intervention_type: "relation_decomposition"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__search_explicit_strong_decomposition_free_plan"
     protocol: "single_turn_multi_image"
@@ -271,9 +279,11 @@ prompts:
     system_prompt: |
       你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
       不要输出低层关节动作。
+      
       注意：当前图像只是机器人当前视野，不代表完整环境。
       你可以规划短程检查附近区域，例如相邻台面、柜边、地面、桌旁或当前房间内的近处区域。
       短程搜索必须服务于当前任务目标，不要进行无目的探索。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作、移动、收纳、取出或清理的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -284,6 +294,7 @@ prompts:
       7. 只有当直接操作明显更简单、更安全、更稳定，并且不会显著增加往返次数或掉落风险时，才选择直接操作。
       8. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       9. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够，以及为什么不需要短程寻找辅助物体。
+      
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
     response_schema_text: |
@@ -316,9 +327,11 @@ prompts:
     system_prompt: |
       你是一个家庭移动机器人。请根据图像和任务，给出可执行的高层计划。
       不要输出低层关节动作。
+      
       注意：当前图像只是机器人当前视野，不代表完整环境。
       你可以规划短程检查附近区域，例如相邻台面、柜边、地面、桌旁或当前房间内的近处区域。
       短程搜索必须服务于当前任务目标，不要进行无目的探索。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作、移动、收纳、取出或清理的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -329,6 +342,7 @@ prompts:
       7. 只有当直接操作明显更简单、更安全、更稳定，并且不会显著增加往返次数或掉落风险时，才选择直接操作。
       8. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       9. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够，以及为什么不需要短程寻找辅助物体。
+      
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
     response_schema_text: |
@@ -345,7 +359,8 @@ prompts:
     clean_evidence: false
     intervention_type: "search_explicit_relation_decomposition"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__structured_tool_probe"
     protocol: "single_turn_multi_image"
@@ -427,7 +442,8 @@ prompts:
     clean_evidence: false
     diagnostic_type: "action_chain"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__natural_free_plan_humanoid_dual_arm"
     protocol: "single_turn_multi_image"
@@ -491,7 +507,8 @@ prompts:
         "reason": "string"
       }
     clean_evidence: true
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__efficient_safe_free_plan_humanoid_dual_arm"
     protocol: "single_turn_multi_image"
@@ -557,7 +574,8 @@ prompts:
         "reason": "string"
       }
     clean_evidence: true
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__tool_prior_free_plan_humanoid_dual_arm"
     protocol: "single_turn_multi_image"
@@ -629,7 +647,8 @@ prompts:
     clean_evidence: false
     intervention_type: "helper_prior"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__strong_decomposition_free_plan_humanoid_dual_arm"
     protocol: "single_turn_multi_image"
@@ -644,6 +663,7 @@ prompts:
       不要假设你可以直接拿住许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设手臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节动作。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作或移动的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -653,6 +673,7 @@ prompts:
       6. 只有当双手直接操作明显更简单、更安全、更稳定时，才选择直接操作。
       7. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       8. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够。
+      
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -689,6 +710,7 @@ prompts:
       不要假设你可以直接拿住许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设手臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节动作。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作或移动的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -698,6 +720,7 @@ prompts:
       6. 只有当双手直接操作明显更简单、更安全、更稳定时，才选择直接操作。
       7. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       8. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够。
+      
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -715,7 +738,8 @@ prompts:
     clean_evidence: false
     intervention_type: "relation_decomposition"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__search_explicit_strong_decomposition_free_plan_humanoid_dual_arm"
     protocol: "single_turn_multi_image"
@@ -730,9 +754,11 @@ prompts:
       不要假设你可以直接拿住许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设手臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节动作。
+      
       注意：当前图像只是机器人当前视野，不代表完整环境。
       你可以规划短程检查附近区域，例如相邻台面、柜边、地面、桌旁或当前房间内的近处区域。
       短程搜索必须服务于当前任务目标，不要进行无目的探索。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作、移动、收纳、取出或清理的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -743,6 +769,7 @@ prompts:
       7. 只有当双手直接操作明显更简单、更安全、更稳定，并且不会显著增加往返次数或掉落风险时，才选择直接操作。
       8. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       9. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够，以及为什么不需要短程寻找辅助物体。
+      
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
     response_schema_text: |
@@ -778,9 +805,11 @@ prompts:
       不要假设你可以直接拿住许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设手臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节动作。
+      
       注意：当前图像只是机器人当前视野，不代表完整环境。
       你可以规划短程检查附近区域，例如相邻台面、柜边、地面、桌旁或当前房间内的近处区域。
       短程搜索必须服务于当前任务目标，不要进行无目的探索。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作、移动、收纳、取出或清理的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -791,6 +820,7 @@ prompts:
       7. 只有当双手直接操作明显更简单、更安全、更稳定，并且不会显著增加往返次数或掉落风险时，才选择直接操作。
       8. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       9. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够，以及为什么不需要短程寻找辅助物体。
+      
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
     response_schema_text: |
@@ -807,7 +837,8 @@ prompts:
     clean_evidence: false
     intervention_type: "search_explicit_relation_decomposition"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__structured_tool_action_chain_probe_humanoid_dual_arm"
     protocol: "single_turn_multi_image"
@@ -895,7 +926,8 @@ prompts:
     clean_evidence: false
     diagnostic_type: "action_chain"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__natural_free_plan_quadruped_single_arm"
     protocol: "single_turn_multi_image"
@@ -961,7 +993,8 @@ prompts:
         "reason": "string"
       }
     clean_evidence: true
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__efficient_safe_free_plan_quadruped_single_arm"
     protocol: "single_turn_multi_image"
@@ -1029,7 +1062,8 @@ prompts:
         "reason": "string"
       }
     clean_evidence: true
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__tool_prior_free_plan_quadruped_single_arm"
     protocol: "single_turn_multi_image"
@@ -1103,7 +1137,8 @@ prompts:
     clean_evidence: false
     intervention_type: "helper_prior"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__strong_decomposition_free_plan_quadruped_single_arm"
     protocol: "single_turn_multi_image"
@@ -1119,6 +1154,7 @@ prompts:
       不要假设你可以直接携带许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节或步态动作。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作或移动的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -1128,6 +1164,7 @@ prompts:
       6. 只有当单臂夹爪直接操作明显更简单、更安全、更稳定时，才选择直接操作。
       7. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       8. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够。
+      
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -1165,6 +1202,7 @@ prompts:
       不要假设你可以直接携带许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节或步态动作。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作或移动的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -1174,6 +1212,7 @@ prompts:
       6. 只有当单臂夹爪直接操作明显更简单、更安全、更稳定时，才选择直接操作。
       7. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       8. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够。
+      
       如果需要先检查附近区域，请明确说明。
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
@@ -1191,7 +1230,8 @@ prompts:
     clean_evidence: false
     intervention_type: "relation_decomposition"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__search_explicit_strong_decomposition_free_plan_quadruped_single_arm"
     protocol: "single_turn_multi_image"
@@ -1207,9 +1247,11 @@ prompts:
       不要假设你可以直接携带许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节或步态动作。
+      
       注意：当前图像只是机器人当前视野，不代表完整环境。
       你可以规划短程检查附近区域，例如相邻台面、柜边、地面、桌旁或当前房间内的近处区域。
       短程搜索必须服务于当前任务目标，不要进行无目的探索。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作、移动、收纳、取出或清理的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -1220,6 +1262,7 @@ prompts:
       7. 只有当单臂夹爪直接操作明显更简单、更安全、更稳定，并且不会显著增加往返次数或掉落风险时，才选择直接操作。
       8. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       9. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够，以及为什么不需要短程寻找辅助物体。
+      
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
     response_schema_text: |
@@ -1256,9 +1299,11 @@ prompts:
       不要假设你可以直接携带许多松散、分离的物体。
       对于家具下方深而狭窄的空间，不要假设机械臂一定能直接够到目标物体。
       只给出高层可执行计划，不要输出低层关节或步态动作。
+      
       注意：当前图像只是机器人当前视野，不代表完整环境。
       你可以规划短程检查附近区域，例如相邻台面、柜边、地面、桌旁或当前房间内的近处区域。
       短程搜索必须服务于当前任务目标，不要进行无目的探索。
+      
       在制定计划前，请系统检查以下问题：
       1. 当前任务真正要操作、移动、收纳、取出或清理的目标物是什么？
       2. 图像中是否存在除目标物之外、可能帮助完成任务的辅助物体？
@@ -1269,6 +1314,7 @@ prompts:
       7. 只有当单臂夹爪直接操作明显更简单、更安全、更稳定，并且不会显著增加往返次数或掉落风险时，才选择直接操作。
       8. 如果使用辅助物体，计划中必须体现完整顺序：先获得或准备辅助物体，再让辅助物体作用于目标物，最后完成搬运、取出、收纳或清理。
       9. 如果不使用辅助物体，请在原因中说明为什么直接操作已经足够，以及为什么不需要短程寻找辅助物体。
+      
       输出必须是单个合法 JSON 对象。
       不要输出 markdown、解释、评论或代码块。
     response_schema_text: |
@@ -1285,7 +1331,8 @@ prompts:
     clean_evidence: false
     intervention_type: "search_explicit_relation_decomposition"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"
   - prompt_id: "multi_image__structured_tool_action_chain_probe_quadruped_single_arm"
     protocol: "single_turn_multi_image"
@@ -1375,5 +1422,6 @@ prompts:
     clean_evidence: false
     diagnostic_type: "action_chain"
     evidence_note: "Intervention or diagnostic prompt; not clean sequential evidence."
-    turn1_user_prompt_template: "任务：{instruction}"
+    turn1_user_prompt_template: |
+      任务：{instruction}
     turn2_user_prompt: "机器人现在获得了一个新的观察 O1。请结合上一轮看到的 O0 和当前 O1，为同一个原始任务更新高层计划。如果当前新观察中存在对原任务有用的物体，请说明如何使用；如果不适合，请说明是否继续检查附近区域或直接执行。仍然只输出同一 JSON schema。"

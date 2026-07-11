@@ -1,0 +1,67 @@
+===== DATE =====
+Fri Jul 10 13:49:36 CST 2026
+===== GIT =====
+?? outputs/logs/
+v1.3-do-the-two-view-test-benchmark
+===== GPU =====
+Fri Jul 10 13:49:37 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.133.07             Driver Version: 570.133.07     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA RTX A6000               Off |   00000000:13:00.0 Off |                  Off |
+| 52%   76C    P0            184W /  300W |   10643MiB /  49140MiB |    100%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA RTX A6000               Off |   00000000:64:00.0 Off |                  Off |
+| 61%   83C    P0            177W /  300W |   10705MiB /  49140MiB |    100%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA RTX A6000               Off |   00000000:CA:00.0 Off |                  Off |
+| 65%   82C    P0            152W /  300W |    9977MiB /  49140MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA RTX A6000               Off |   00000000:E3:00.0 Off |                  Off |
+| 60%   85C    P0            286W /  300W |   10295MiB /  49140MiB |     98%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            3268      G   /usr/lib/xorg/Xorg                        4MiB |
+|    0   N/A  N/A         3637472      C   ...forge3/envs/pi3det/bin/python      10620MiB |
+|    1   N/A  N/A            3268      G   /usr/lib/xorg/Xorg                        4MiB |
+|    1   N/A  N/A         3637473      C   ...forge3/envs/pi3det/bin/python      10682MiB |
+|    2   N/A  N/A            3268      G   /usr/lib/xorg/Xorg                        4MiB |
+|    2   N/A  N/A         3446627      C   ...conda_envs/trellis/bin/python       9954MiB |
+|    3   N/A  N/A            3268      G   /usr/lib/xorg/Xorg                        4MiB |
+|    3   N/A  N/A         3446628      C   ...conda_envs/trellis/bin/python      10272MiB |
++-----------------------------------------------------------------------------------------+
+===== OLLAMA MODELS =====
+NAME                                 ID              SIZE      MODIFIED    
+llama3.2-vision:11b-instruct-q8_0    a5b7471a68aa    12 GB     10 days ago    
+gemma3:27b-it-q8_0                   273cbcd67032    29 GB     10 days ago    
+minicpm-v4.5:q8_0                    d3a452c30a41    9.8 GB    10 days ago    
+qwen3.5:35b                          3460ffeede54    23 GB     10 days ago    
+qwen3-vl:30b-a3b-instruct-q4_K_M     c871fc73fabc    19 GB     10 days ago    
+qwen3-vl:32b-instruct-q4_K_M         c9a60b1a1a13    20 GB     10 days ago    
+qwen3-vl:8b                          901cae732162    6.1 GB    11 days ago    
+gemma3:12b                           f4031aab637d    8.1 GB    11 days ago    
+qwen3-vl:4b                          1343d82ebee3    3.3 GB    11 days ago    
+REQUIRED_MODELS_VISIBLE=YES
+
+===== SCREEN =====
+/usr/bin/screen
+There are screens on:
+	200857.runze	(07/08/26 16:09:55)	(Detached)
+	2514132.runze_ollama	(07/02/26 13:27:26)	(Attached)
+	1733940.ollama_log	(06/30/26 00:11:04)	(Detached)
+	2866587.m2g	(06/29/26 14:53:09)	(Detached)
+4 Sockets in /run/screen/S-yurunze.
+PREPARE_EXIT=0
