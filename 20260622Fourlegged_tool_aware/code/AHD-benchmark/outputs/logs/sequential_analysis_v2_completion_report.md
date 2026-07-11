@@ -1,7 +1,8 @@
 # Sequential O0/O1 Analysis V2 Completion Report
 
 - Candidate VLM experiments were not rerun; analysis used existing raw_responses.jsonl files only.
-- The response-level VLM judge was not rerun.
+- The response-level VLM judge was rerun with the revised O0/O1 judging prompt.
+- Judge model: qwen3-vl:32b-instruct-q4_K_M
 - Core manual review pack: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/sequential_o0_o1_core_clean_4models/analysis_v2/manual_review_pack_v2.md
 - Sensitivity manual review pack: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/test_current_vlm/tool_counterexample_benchmark/outputs/sequential_o0_o1_prompt_sensitivity_3models/analysis_v2/manual_review_pack_v2.md
 - Review images: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sequential_analysis_v2_review_images
@@ -305,3 +306,43 @@ V2 distinguishes physical O1 helper use from embodiment batching and direct mult
 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__tool_prior_free_plan | same_o1_container_000001 | fail |
 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__tool_prior_free_plan_humanoid_dual_arm | same_o1_container_000001 | fail |
 | ollama_qwen3_vl_32b_instruct_q4_K_M | two_turn__tool_prior_free_plan_quadruped_single_arm | same_o1_container_000001 | fail |
+
+## Core Response Judge
+
+# Sequential Response VLM Judge Summary
+
+- judge model: qwen3-vl:32b-instruct-q4_K_M
+- source evaluation rows: 384
+- eligible ok_eval rows: 338
+- selected judge rows: 338
+- successfully judged rows: 338
+- judge errors: 0
+- pass: 217
+- fail: 121
+- needs_review: 0
+- full heuristic agreement: 77
+- heuristic disagreement: 261
+- non-independent judge rows: 96
+
+The response VLM judge is a secondary metric and does not replace the heuristic evaluator.
+Rows judged by the same model family/checkpoint are explicitly marked non-independent.
+
+## Prompt Sensitivity Response Judge
+
+# Sequential Response VLM Judge Summary
+
+- judge model: qwen3-vl:32b-instruct-q4_K_M
+- source evaluation rows: 540
+- eligible ok_eval rows: 526
+- selected judge rows: 526
+- successfully judged rows: 526
+- judge errors: 0
+- pass: 342
+- fail: 184
+- needs_review: 0
+- full heuristic agreement: 66
+- heuristic disagreement: 460
+- non-independent judge rows: 180
+
+The response VLM judge is a secondary metric and does not replace the heuristic evaluator.
+Rows judged by the same model family/checkpoint are explicitly marked non-independent.
