@@ -1,0 +1,33 @@
+Strict VLM judge v2 only; candidate VLM evaluations will not be rerun.
+Judge model: qwen3-vl:32b-instruct-q4_K_M
+Limit: none
+judged 5/338: ('positive_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__efficient_safe_free_plan') status=ok
+judged 10/338: ('positive_aggregate_001', 'ollama_qwen3_vl_8b', 'multi_image__natural_free_plan_humanoid_dual_arm') status=error
+judged 15/338: ('positive_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__natural_free_plan_quadruped_single_arm') status=ok
+judged 20/338: ('positive_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__natural_free_plan') status=ok
+judged 25/338: ('positive_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan') status=ok
+judged 30/338: ('positive_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__efficient_safe_free_plan_humanoid_dual_arm') status=ok
+judged 35/338: ('positive_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan_quadruped_single_arm') status=ok
+judged 40/338: ('wrong_helper_negative_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan') status=ok
+judged 45/338: ('wrong_helper_negative_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__efficient_safe_free_plan_humanoid_dual_arm') status=ok
+judged 50/338: ('positive_reach_001', 'ollama_qwen3_vl_8b', 'two_turn__efficient_safe_free_plan_quadruped_single_arm') status=ok
+judged 55/338: ('wrong_helper_negative_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan') status=ok
+judged 60/338: ('wrong_helper_negative_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan_humanoid_dual_arm') status=ok
+judged 65/338: ('wrong_helper_negative_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan_quadruped_single_arm') status=ok
+judged 70/338: ('no_tool_control_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan') status=ok
+judged 75/338: ('no_tool_control_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__efficient_safe_free_plan_humanoid_dual_arm') status=ok
+judged 80/338: ('no_tool_control_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan_quadruped_single_arm') status=ok
+judged 85/338: ('same_o1_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__natural_free_plan') status=ok
+judged 90/338: ('wrong_helper_negative_reach_001', 'ollama_qwen3_vl_8b', 'two_turn__natural_free_plan_humanoid_dual_arm') status=ok
+judged 95/338: ('same_o1_aggregate_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'multi_image__natural_free_plan_quadruped_single_arm') status=ok
+judged 100/338: ('same_o1_direct_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan') status=ok
+judged 105/338: ('same_o1_direct_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__natural_free_plan_humanoid_dual_arm') status=ok
+judged 110/338: ('no_tool_control_001', 'ollama_qwen3_vl_8b', 'two_turn__efficient_safe_free_plan') status=ok
+judged 115/338: ('same_o1_direct_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan_quadruped_single_arm') status=ok
+judged 120/338: ('same_o1_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan') status=ok
+judged 125/338: ('same_o1_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan_humanoid_dual_arm') status=ok
+judged 130/338: ('same_o1_reach_001', 'ollama_qwen3_vl_32b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan_quadruped_single_arm') status=ok
+judged 135/338: ('positive_aggregate_001', 'ollama_qwen3_vl_30b_a3b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan') status=ok
+judged 140/338: ('positive_aggregate_001', 'ollama_qwen3_vl_30b_a3b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan_humanoid_dual_arm') status=ok
+judged 145/338: ('positive_aggregate_001', 'ollama_qwen3_vl_30b_a3b_instruct_q4_K_M', 'two_turn__efficient_safe_free_plan_quadruped_single_arm') status=ok
+judged 150/338: ('positive_reach_001', 'ollama_qwen3_vl_30b_a3b_instruct_q4_K_M', 'multi_image__natural_free_plan_humanoid_dual_arm') status=ok
