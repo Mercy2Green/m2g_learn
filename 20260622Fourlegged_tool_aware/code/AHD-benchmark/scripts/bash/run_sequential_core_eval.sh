@@ -50,6 +50,7 @@ if [[ "${RUN_JUDGE}" == "1" ]]; then
   python sequential_o0_o1/scripts/judge_sequential_responses.py \
     --input_dir "${OUTPUT_DIR}" \
     --judge_model qwen3-vl:32b-instruct-q4_K_M \
+    --judge_version legacy \
     --output_dir "${OUTPUT_DIR}/response_judge_qwen32" \
     --overwrite
 fi

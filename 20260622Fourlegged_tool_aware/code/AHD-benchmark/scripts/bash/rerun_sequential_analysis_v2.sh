@@ -33,12 +33,14 @@ python sequential_o0_o1/scripts/resummarize_existing_sequential_eval_v2.py \
 python sequential_o0_o1/scripts/judge_sequential_responses.py \
   --input_dir "${CORE_DIR}" \
   --judge_model "${JUDGE_MODEL}" \
+  --judge_version legacy \
   --output_dir "${CORE_JUDGE_DIR}" \
   --overwrite
 
 python sequential_o0_o1/scripts/judge_sequential_responses.py \
   --input_dir "${SENSITIVITY_DIR}" \
   --judge_model "${JUDGE_MODEL}" \
+  --judge_version legacy \
   --output_dir "${SENSITIVITY_JUDGE_DIR}" \
   --overwrite
 

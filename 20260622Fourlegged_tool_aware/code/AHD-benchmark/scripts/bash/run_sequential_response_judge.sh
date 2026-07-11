@@ -11,6 +11,7 @@ cd "${BENCHMARK_DIR}"
 python sequential_o0_o1/scripts/judge_sequential_responses.py \
   --input_dir "${INPUT_DIR}" \
   --judge_model "${JUDGE_MODEL}" \
+  --judge_version legacy \
   --output_dir "${OUTPUT_DIR}" \
   --overwrite \
   "$@"
