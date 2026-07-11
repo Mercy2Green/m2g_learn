@@ -1,0 +1,5 @@
+# Sequential Heuristic / VLM Judge Disagreements
+
+The VLM judge is secondary evidence. Review these cases manually before drawing conclusions.
+
+- positive_aggregate_001 / ollama_qwen3_vl_30b_a3b_instruct_q4_K_M / multi_image__natural_free_plan: heuristic=fail/unclear/unclear; judge=fail/continue_search/none; status=ok; reason=The candidate response fails to recognize that the O1 image (which shows multiple bottles on a kitchen counter) is directly relevant to the O0 task (delivering water to a bedroom). Instead of leveraging the observed bottles as the target objects for transport, the plan incorrectly treats them as individual items requiring multiple trips. The gold expectation requires identifying an aggregate transport helper (e.g., a tray or cart) to carry all bottles at once, but the response does not propose any such helper and instead plans for inefficient sequential delivery. This indicates failure to use O1 objects appropriately for O0 target fulfillment and misjudges the need for a helper.

@@ -1,0 +1,273 @@
+models:
+  - model_id: bailian_qwen_vl_plus
+    provider: openai_compatible
+    provider_label: bailian
+    enabled: true
+    api_key_env: BAILIAN_API_KEY
+    base_url: "${BAILIAN_BASE_URL}"
+    model_name: qwen-vl-plus
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: bailian_qwen_vl_max
+    provider: openai_compatible
+    provider_label: bailian
+    enabled: false
+    api_key_env: BAILIAN_API_KEY
+    base_url: "${BAILIAN_BASE_URL}"
+    model_name: qwen-vl-max
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: bailian_qwen_omni_turbo
+    provider: openai_compatible
+    provider_label: bailian
+    enabled: false
+    api_key_env: BAILIAN_API_KEY
+    base_url: "${BAILIAN_BASE_URL}"
+    model_name: qwen-omni-turbo
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: dashscope_qwen_vl_plus
+    provider: openai_compatible
+    provider_label: dashscope
+    enabled: false
+    api_key_env: DASHSCOPE_API_KEY
+    base_url: "${DASHSCOPE_BASE_URL}"
+    model_name: qwen-vl-plus
+    strength_role: qwen_main
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+    response_format_json: false
+    image_transport: data_url
+    extra_body: {}
+
+  - model_id: ollama_qwen3_vl_8b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: true
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:8b
+    strength_role: qwen_main
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 180
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_4b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: true
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:4b
+    strength_role: local_small_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 180
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_gemma3_12b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: true
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: gemma3:12b
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 180
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_gemma3_27b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: gemma3:27b
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 240
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_30b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:30b
+    strength_role: qwen_main
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1024
+    timeout_seconds: 240
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_32b_instruct_q4_K_M
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:32b-instruct-q4_K_M
+    strength_role: qwen_main
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_vl_30b_a3b_instruct_q4_K_M
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3-vl:30b-a3b-instruct-q4_K_M
+    strength_role: local_strong_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_qwen3_5_35b
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: qwen3.5:35b
+    strength_role: local_strong_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_minicpm_v4_5_q8_0
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: minicpm-v4.5:q8_0
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 300
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: ollama_gemma3_27b_it_q8_0
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: gemma3:27b-it-q8_0
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 420
+    retries: 1
+    format_json: true
+    num_ctx: 8192
+    keep_alive: 10m
+
+  - model_id: ollama_llama3_2_vision_11b_instruct_q8_0
+    provider: ollama
+    provider_label: ollama_local
+    enabled: false
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model_name: llama3.2-vision:11b-instruct-q8_0
+    strength_role: local_open_vlm
+    supports_vision: true
+    temperature: 0.01
+    max_tokens: 1536
+    timeout_seconds: 300
+    retries: 1
+    format_json: true
+    num_ctx: 4096
+    keep_alive: 10m
+
+  - model_id: openai_default
+    provider: openai
+    provider_label: openai
+    enabled: false
+    model_name: "${OPENAI_MODEL}"
+    strength_role: closed_strong
+    temperature: 0.0
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+
+  - model_id: gemini_default
+    provider: gemini
+    provider_label: gemini
+    enabled: false
+    model_name: "${GEMINI_MODEL}"
+    strength_role: closed_strong
+    temperature: 0.0
+    max_tokens: 1024
+    timeout_seconds: 60
+    retries: 2
+
+  - model_id: mock
+    provider: mock
+    provider_label: mock
+    enabled: false
+    model_name: mock
+    strength_role: mock
+    temperature: 0.0
+    max_tokens: 1024
+    timeout_seconds: 5
+    retries: 0

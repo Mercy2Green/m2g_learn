@@ -1,0 +1,6 @@
+model_overrides:
+  - model_id: ollama_qwen3_vl_8b
+    max_tokens: 2048
+    num_ctx: 8192
+    format_json: true
+    reason: "Sequential O0/O1 requests need more generation and context budget than the old single-image smoke config."
