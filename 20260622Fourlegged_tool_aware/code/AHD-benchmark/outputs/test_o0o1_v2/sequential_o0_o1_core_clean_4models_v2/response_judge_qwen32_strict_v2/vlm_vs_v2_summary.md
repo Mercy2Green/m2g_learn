@@ -1,0 +1,16 @@
+# Strict VLM Judge V2 vs Heuristic V2
+
+| group by | value | comparable | both pass | both fail | VLM pass / v2 fail | v2 pass / VLM fail | VLM pass / v2 review | v2 pass / VLM review | exact agreement | rate |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| overall | all | 337 | 56 | 109 | 3 | 9 | 92 | 3 | 169 | 0.501 |
+| model_id | ollama_qwen3_5_35b | 91 | 10 | 29 | 1 | 4 | 23 | 1 | 40 | 0.440 |
+| model_id | ollama_qwen3_vl_30b_a3b_instruct_q4_K_M | 96 | 17 | 32 | 0 | 4 | 24 | 0 | 51 | 0.531 |
+| model_id | ollama_qwen3_vl_32b_instruct_q4_K_M | 96 | 15 | 29 | 1 | 1 | 33 | 2 | 45 | 0.469 |
+| model_id | ollama_qwen3_vl_8b | 54 | 14 | 19 | 1 | 0 | 12 | 0 | 33 | 0.611 |
+| protocol | single_turn_multi_image | 161 | 17 | 59 | 1 | 0 | 46 | 0 | 78 | 0.484 |
+| protocol | two_turn_sequential | 176 | 39 | 50 | 2 | 9 | 46 | 3 | 91 | 0.517 |
+| sample_type | no_tool_control | 43 | 10 | 0 | 0 | 0 | 29 | 0 | 10 | 0.233 |
+| sample_type | positive_aggregate | 45 | 2 | 36 | 0 | 6 | 0 | 1 | 38 | 0.844 |
+| sample_type | positive_reach | 40 | 0 | 40 | 0 | 0 | 0 | 0 | 40 | 1.000 |
+| sample_type | same_o1_different_o0 | 127 | 24 | 33 | 1 | 3 | 56 | 2 | 61 | 0.480 |
+| sample_type | wrong_helper_negative | 82 | 20 | 0 | 2 | 0 | 7 | 0 | 20 | 0.244 |
