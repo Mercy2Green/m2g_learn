@@ -20,6 +20,7 @@ class OllamaProvider(VLMProvider):
         self.format_json = bool(model_config.get("format_json", False))
         self.num_ctx = _optional_int(model_config.get("num_ctx"))
         self.keep_alive = str(model_config.get("keep_alive", "") or "")
+        self.think = model_config.get("think")
 
         if not self.model_name:
             raise ProviderError(f"{self.model_id}: model_name is required for Ollama provider. Run: ollama pull <model_name>")
@@ -59,6 +60,8 @@ class OllamaProvider(VLMProvider):
             payload["format"] = "json"
         if self.keep_alive:
             payload["keep_alive"] = self.keep_alive
+        if self.think is not None:
+            payload["think"] = bool(self.think)
 
         response_json = self._post_chat(payload)
         raw_text = response_json.get("message", {}).get("content", "")
@@ -68,6 +71,7 @@ class OllamaProvider(VLMProvider):
             "format_json": self.format_json,
             "num_ctx": self.num_ctx,
             "keep_alive": self.keep_alive,
+            "think": self.think,
             "ollama_done": response_json.get("done"),
             "eval_count": response_json.get("eval_count"),
             "eval_duration": response_json.get("eval_duration"),

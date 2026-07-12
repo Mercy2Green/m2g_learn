@@ -1,0 +1,5 @@
+Single-turn image-ingestion diagnostic only; original candidate benchmark will not be rerun.
+Models: ollama_qwen3_5_35b
+Sample limit: none
+Wrote diagnostic outputs: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sanity_check_single_turn_two_images
+Wrote completion report: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/logs/check_single_turn_two_image_ingestion_completion_report.md

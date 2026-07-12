@@ -1,0 +1,30 @@
+Single-turn image-ingestion diagnostic only; original candidate benchmark will not be rerun.
+Models: ollama_qwen3_5_35b
+Sample limit: none
+diagnostic 1/25: positive_aggregate_001 / ollama_qwen3_5_35b / O0_O1 error=False
+diagnostic 2/25: positive_aggregate_001 / ollama_qwen3_5_35b / O1_O0 error=False
+diagnostic 3/25: positive_aggregate_001 / ollama_qwen3_5_35b / O0_only error=False
+diagnostic 4/25: positive_aggregate_001 / ollama_qwen3_5_35b / O1_only error=False
+diagnostic 5/25: positive_aggregate_001 / ollama_qwen3_5_35b / O0_O0 error=False
+diagnostic 6/25: no_tool_control_001 / ollama_qwen3_5_35b / O0_O1 error=False
+diagnostic 7/25: no_tool_control_001 / ollama_qwen3_5_35b / O1_O0 error=False
+diagnostic 8/25: no_tool_control_001 / ollama_qwen3_5_35b / O0_only error=False
+diagnostic 9/25: no_tool_control_001 / ollama_qwen3_5_35b / O1_only error=False
+diagnostic 10/25: no_tool_control_001 / ollama_qwen3_5_35b / O0_O0 error=False
+diagnostic 11/25: same_o1_aggregate_001 / ollama_qwen3_5_35b / O0_O1 error=False
+diagnostic 12/25: same_o1_aggregate_001 / ollama_qwen3_5_35b / O1_O0 error=False
+diagnostic 13/25: same_o1_aggregate_001 / ollama_qwen3_5_35b / O0_only error=False
+diagnostic 14/25: same_o1_aggregate_001 / ollama_qwen3_5_35b / O1_only error=False
+diagnostic 15/25: same_o1_aggregate_001 / ollama_qwen3_5_35b / O0_O0 error=False
+diagnostic 16/25: same_o1_direct_001 / ollama_qwen3_5_35b / O0_O1 error=False
+diagnostic 17/25: same_o1_direct_001 / ollama_qwen3_5_35b / O1_O0 error=False
+diagnostic 18/25: same_o1_direct_001 / ollama_qwen3_5_35b / O0_only error=False
+diagnostic 19/25: same_o1_direct_001 / ollama_qwen3_5_35b / O1_only error=False
+diagnostic 20/25: same_o1_direct_001 / ollama_qwen3_5_35b / O0_O0 error=False
+diagnostic 21/25: wrong_helper_negative_aggregate_001 / ollama_qwen3_5_35b / O0_O1 error=False
+diagnostic 22/25: wrong_helper_negative_aggregate_001 / ollama_qwen3_5_35b / O1_O0 error=False
+diagnostic 23/25: wrong_helper_negative_aggregate_001 / ollama_qwen3_5_35b / O0_only error=False
+diagnostic 24/25: wrong_helper_negative_aggregate_001 / ollama_qwen3_5_35b / O1_only error=False
+diagnostic 25/25: wrong_helper_negative_aggregate_001 / ollama_qwen3_5_35b / O0_O0 error=False
+Wrote diagnostic outputs: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sanity_check_single_turn_two_images
+Wrote completion report: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/logs/check_single_turn_two_image_ingestion_completion_report.md

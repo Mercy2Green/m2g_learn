@@ -1,0 +1,10 @@
+Single-turn image-ingestion diagnostic only; original candidate benchmark will not be rerun.
+Models: ollama_qwen3_5_35b
+Sample limit: 1
+diagnostic 1/5: positive_aggregate_001 / ollama_qwen3_5_35b / O0_O1 error=False
+diagnostic 2/5: positive_aggregate_001 / ollama_qwen3_5_35b / O1_O0 error=False
+diagnostic 3/5: positive_aggregate_001 / ollama_qwen3_5_35b / O0_only error=False
+diagnostic 4/5: positive_aggregate_001 / ollama_qwen3_5_35b / O1_only error=False
+diagnostic 5/5: positive_aggregate_001 / ollama_qwen3_5_35b / O0_O0 error=False
+Wrote diagnostic outputs: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/sanity_check_single_turn_two_images
+Wrote completion report: /home/yurunze/peter_ws/m2g_learn/20260622Fourlegged_tool_aware/code/AHD-benchmark/outputs/logs/check_single_turn_two_image_ingestion_completion_report.md
