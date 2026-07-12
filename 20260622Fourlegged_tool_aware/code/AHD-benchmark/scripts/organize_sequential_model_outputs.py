@@ -107,6 +107,7 @@ def build_sample(destination: Path, sample_id: str, rows: list[dict[str, Any]]) 
         combined.extend([
             f"## {row['protocol']} | {row['prompt_id']}", "",
             f"Detailed file: [`{protocol_dir.name}/{filename}`](./{protocol_dir.name}/{filename})", "",
+            render_prompt_sections(row), "",
             render_response_sections(row), "",
         ])
     (destination / "ALL_OUTPUTS.md").write_text("\n".join(combined) + "\n", encoding="utf-8")
@@ -127,9 +128,29 @@ def render_output(row: dict[str, Any]) -> str:
         "## Images", "",
         f"- O0: `{row.get('o0_image_path', '')}`", f"- O0 absolute: `{resolved_o0}`",
         f"- O1: `{row.get('o1_image_path', '')}`", f"- O1 absolute: `{resolved_o1}`", "",
+        render_prompt_sections(row), "",
         render_response_sections(row),
     ]
     return "\n".join(lines) + "\n"
+
+
+def render_prompt_sections(row: dict[str, Any]) -> str:
+    protocol = str(row.get("protocol", ""))
+    descriptions = {
+        "single_turn_multi_image": "O0 and O1 are provided together in one user message; the displayed final response is produced in that single call.",
+        "two_turn_sequential": "Turn 1 provides O0 for an initial plan. Turn 2 keeps that assistant response in conversation history and provides O1 for the final updated plan.",
+    }
+    system_prompt = str(row.get("system_prompt", ""))
+    turn1_prompt = str(row.get("user_prompt_turn1", ""))
+    turn2_prompt = str(row.get("user_prompt_turn2", ""))
+    return "\n".join([
+        "## Protocol And Prompt Content", "",
+        f"- protocol id: `{protocol}`", f"- prompt id: `{row.get('prompt_id', '')}`",
+        f"- protocol behavior: {descriptions.get(protocol, 'See the raw message sequence below.')}", "",
+        "### System Prompt", "", fenced_text(system_prompt or "(empty)"), "",
+        "### User Prompt Turn 1", "", fenced_text(turn1_prompt or "(empty)"), "",
+        "### User Prompt Turn 2", "", fenced_text(turn2_prompt or "(not applicable)"),
+    ])
 
 
 def render_response_sections(row: dict[str, Any]) -> str:
@@ -144,6 +165,11 @@ def render_response_sections(row: dict[str, Any]) -> str:
 def fenced(value: str) -> str:
     fence = "````" if "```" in value else "```"
     return f"{fence}json\n{value}\n{fence}"
+
+
+def fenced_text(value: str) -> str:
+    fence = "````" if "```" in value else "```"
+    return f"{fence}text\n{value}\n{fence}"
 
 
 def resolve_image(value: str) -> Path:
