@@ -1,0 +1,9 @@
+evaluator_version: sequential_text_evaluator_v3
+excluded_sample_rules:
+  positive_reach: excluded_untrusted_image
+  same_o1_reach: excluded_untrusted_image
+conditional_markers: ["若", "如果", "if", "when available", "尝试", "评估是否", "确认能否", "可考虑", "potentially"]
+container_helpers: ["托盘", "烤盘", "盘子", "篮子", "筐", "箱子", "盒子", "袋子", "包", "tray", "baking tray", "basket", "box", "bag", "tote", "pan", "container"]
+wrong_objects: ["铅笔", "手机", "台灯", "枕头", "布", "书", "pencil", "phone", "lamp", "pillow", "cloth", "book"]
+load_actions: ["放入", "放进", "装入", "装进", "装载", "收集到", "集中到", "摆放在", "put", "place", "load", "collect into", "organize on"]
+transport_actions: ["搬运", "运送", "送到", "携带", "carry", "transport", "deliver", "move"]

@@ -1,0 +1,1 @@
+{"audit_confidence": "high", "audit_override_reason": "Authoritative manual fact: clear baking tray / tray suitable for container_for_multiple_objects.", "candidate_helper_function": "container_for_multiple_objects", "candidate_helper_present": "yes", "candidate_helper_type": "baking_tray", "candidate_helper_visibility": "clear", "match_basename": "container_o1_000001.jpg"}

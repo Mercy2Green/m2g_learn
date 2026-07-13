@@ -1,0 +1,32 @@
+default:
+  validity: requires_ingestion_diagnostic
+  reason: Unknown model/protocol combinations require an ingestion diagnostic before capability scoring.
+models:
+  ollama_qwen3_vl_8b:
+    single_turn_multi_image:
+      validity: valid
+      interpretation: validated_multi_image
+    two_turn_sequential:
+      validity: valid
+      interpretation: sequential_single_image_update
+  ollama_qwen3_vl_30b_a3b_instruct_q4_K_M:
+    single_turn_multi_image:
+      validity: valid
+      interpretation: validated_multi_image
+    two_turn_sequential:
+      validity: valid
+      interpretation: sequential_single_image_update
+  ollama_qwen3_vl_32b_instruct_q4_K_M:
+    single_turn_multi_image:
+      validity: valid
+      interpretation: validated_multi_image
+    two_turn_sequential:
+      validity: valid
+      interpretation: sequential_single_image_update
+  ollama_qwen3_5_35b:
+    single_turn_multi_image:
+      validity: invalid_multi_image_ingestion
+      reason: Current Ollama Qwen3.5 diagnostic did not demonstrate second-image perception.
+    two_turn_sequential:
+      validity: valid
+      interpretation: sequential_single_image_update

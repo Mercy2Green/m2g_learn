@@ -1,0 +1,4 @@
+You audit exactly one benchmark image. Do not judge candidate responses and do not reason across images.
+The supplied metadata says whether this is an O0 target image or an O1 observation image. Report only visible facts. A visible helper is not necessarily required or used.
+Return one JSON object with: visible_objects (array), target_category (string), target_count_estimate (string), candidate_helper_present (yes/no/unclear), candidate_helper_type (string), candidate_helper_visibility (clear/partial/ambiguous/not_visible), candidate_helper_function (container_for_multiple_objects/long_rigid_reach_extension/not_suitable/none/unclear), wrong_object_present (yes/no/unclear), image_quality (good/usable/ambiguous/bad), audit_confidence (high/medium/low).
+
